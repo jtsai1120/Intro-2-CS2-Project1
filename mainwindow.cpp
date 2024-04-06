@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-
 #include <QObject>
 #include <QDebug>
 #include <QTimer>
@@ -18,7 +17,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // 設定 view
-    view->setFixedSize(1400, 620);
+    view->setFixedSize(1402, 622);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     // 開始畫面
@@ -37,6 +36,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
      */
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if(event->key() == Qt::Key_A) {
+        key_press = "left";
+        qDebug() << "Move Left";
+    }
+    else if(event->key() == Qt::Key_D) {
+        key_press = "right";
+        qDebug() << "Move Right";
+    }
+    else if(event->key() == Qt::Key_W) {
+        key_press = "up";
+        qDebug() << "Jump";
+    }
+    else key_press = "other";
+}
+
 void MainWindow::update_frame() {
     switch(game_status) {
         case 0:
@@ -53,7 +68,7 @@ void MainWindow::update_frame() {
 }
 
 void MainWindow::on_start_button_clicked() {
-    qDebug() << "Start Button Clicked!\n";
+    qDebug() << "Start Button Clicked!";
     game_init();
 }
 
@@ -96,10 +111,9 @@ void MainWindow::game_init() {
     }
 
     // add mario
-    Mario_pic.load(":/Dataset/image/Mario_small/s_mario_stand_R.png");
-    Mario = new QGraphicsPixmapItem(Mario_pic);
-    Mario->setPos(100, 620 - floor_brick.height() - Mario_pic.height());
-    cur_scene->addItem(Mario);
+    mario.set_cur_scene(cur_scene);
+    mario.set_floor_brick_height(floor_brick.height());
+    mario.game_init();
 
 }
 

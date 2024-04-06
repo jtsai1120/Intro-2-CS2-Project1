@@ -2,12 +2,14 @@
 #define MAINWINDOW_H
 
 #include "ButtonItem.h"
+#include "mario.h"
 #include <vector>
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPixmap>
 #include <QPushButton>
+#include <QKeyEvent>
 #include <QLabel>
 
 class MainWindow : public QMainWindow {
@@ -15,6 +17,11 @@ class MainWindow : public QMainWindow {
 
     public:
         MainWindow(QWidget *parent = nullptr);
+
+        int get_floor_brick_height() { return floor_brick.height(); }
+
+    protected:
+        void keyPressEvent(QKeyEvent *event);
 
     private slots:
         void update_frame(); // 畫面更新
@@ -28,6 +35,8 @@ class MainWindow : public QMainWindow {
         void game_init();
         //void end_init();
 
+        QString key_press;
+
         QGraphicsView *view = new QGraphicsView;
 
         QGraphicsScene *cur_scene;
@@ -35,17 +44,18 @@ class MainWindow : public QMainWindow {
 
         QPixmap start_bg;
         QGraphicsPixmapItem *start_bg_item;
+
         QPushButton *start_button = new QPushButton;
         QPixmap start_button_pic;
         ButtonItem *start_button_item;
 
         QPixmap game_bg;
         QGraphicsPixmapItem *game_bg_item;
+
         QPixmap floor_brick;
         std::vector<QGraphicsPixmapItem*> floor_brick_items;
 
-        QPixmap Mario_pic;
-        QGraphicsItem *Mario;
+        Mario mario;
 
         QTimer *refreshing_timer;
 
