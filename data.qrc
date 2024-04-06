@@ -1,0 +1,74 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Dataset/image/background.png</file>
+        <file>Dataset/image/bullet.png</file>
+        <file>Dataset/image/characters.png</file>
+        <file>Dataset/image/flower1.1.png</file>
+        <file>Dataset/image/flower1.2.png</file>
+        <file>Dataset/image/flower1.3.png</file>
+        <file>Dataset/image/flower1.4.png</file>
+        <file>Dataset/image/flower1.5.png</file>
+        <file>Dataset/image/flower1.6.png</file>
+        <file>Dataset/image/forest1.png</file>
+        <file>Dataset/image/Ltortoise1.png</file>
+        <file>Dataset/image/Ltortoise2.png</file>
+        <file>Dataset/image/object1.png</file>
+        <file>Dataset/image/object2.png</file>
+        <file>Dataset/image/Rtortoise1.png</file>
+        <file>Dataset/image/Rtortoise2.png</file>
+        <file>Dataset/image/shell1.png</file>
+        <file>Dataset/image/shell2.png</file>
+        <file>Dataset/image/shell3.png</file>
+        <file>Dataset/image/shell4.png</file>
+        <file>Dataset/image/start_btn.png</file>
+        <file>Dataset/image/start_screen.png</file>
+        <file>Dataset/image/super star.png</file>
+        <file>Dataset/image/tower1.png</file>
+        <file>Dataset/image/toxic mushroom1.png</file>
+        <file>Dataset/image/toxic mushroom2.png</file>
+        <file>Dataset/image/toxic mushroom3.png</file>
+        <file>Dataset/image/brick/box brick.png</file>
+        <file>Dataset/image/brick/broken brick.png</file>
+        <file>Dataset/image/brick/floor brick.png</file>
+        <file>Dataset/image/brick/normal brick.png</file>
+        <file>Dataset/image/brick/stone brick.png</file>
+        <file>Dataset/image/brick/water pipe.png</file>
+        <file>Dataset/image/item/coin.png</file>
+        <file>Dataset/image/item/Fire Flower.png</file>
+        <file>Dataset/image/item/flag.png</file>
+        <file>Dataset/image/item/flag-pole.png</file>
+        <file>Dataset/image/item/super mushroom.png</file>
+        <file>Dataset/image/Mario_big/b_mario_die.png</file>
+        <file>Dataset/image/Mario_big/mario_L_jump1.png</file>
+        <file>Dataset/image/Mario_big/mario_L_jump2.png</file>
+        <file>Dataset/image/Mario_big/mario_L_jump3.png</file>
+        <file>Dataset/image/Mario_big/mario_L_jump4.png</file>
+        <file>Dataset/image/Mario_big/mario_L_run0.png</file>
+        <file>Dataset/image/Mario_big/mario_L_run1.png</file>
+        <file>Dataset/image/Mario_big/mario_L_run2.png</file>
+        <file>Dataset/image/Mario_big/mario_L_stand.png</file>
+        <file>Dataset/image/Mario_big/mario_R_jump1.png</file>
+        <file>Dataset/image/Mario_big/mario_R_jump2.png</file>
+        <file>Dataset/image/Mario_big/mario_R_jump3.png</file>
+        <file>Dataset/image/Mario_big/mario_R_jump4.png</file>
+        <file>Dataset/image/Mario_big/mario_R_run0.png</file>
+        <file>Dataset/image/Mario_big/mario_R_run1.png</file>
+        <file>Dataset/image/Mario_big/mario_R_run2.png</file>
+        <file>Dataset/image/Mario_big/mario_R_stand.png</file>
+        <file>Dataset/image/Mario_big/mario_stop_L.png</file>
+        <file>Dataset/image/Mario_big/mario_stop_R.png</file>
+        <file>Dataset/image/Mario_small/s_mario_die.png</file>
+        <file>Dataset/image/Mario_small/s_mario_jump1_L.png</file>
+        <file>Dataset/image/Mario_small/s_mario_jump1_R.png</file>
+        <file>Dataset/image/Mario_small/s_mario_jump2_L.png</file>
+        <file>Dataset/image/Mario_small/s_mario_jump2_R.png</file>
+        <file>Dataset/image/Mario_small/s_mario_run1_L.png</file>
+        <file>Dataset/image/Mario_small/s_mario_run1_R.png</file>
+        <file>Dataset/image/Mario_small/s_mario_run2_L.png</file>
+        <file>Dataset/image/Mario_small/s_mario_run2_R.png</file>
+        <file>Dataset/image/Mario_small/s_mario_stand_L.png</file>
+        <file>Dataset/image/Mario_small/s_mario_stand_R.png</file>
+        <file>Dataset/image/Mario_small/s_mario_stop_L.png</file>
+        <file>Dataset/image/Mario_small/s_mario_stop_R.png</file>
+    </qresource>
+</RCC>
