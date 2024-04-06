@@ -1,11 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "ButtonItem.h"
+#include <vector>
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPixmap>
 #include <QPushButton>
+#include <QLabel>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -31,9 +34,18 @@ class MainWindow : public QMainWindow {
         QGraphicsScene start_scene, game_scene, end_scene;
 
         QPixmap start_bg;
+        QGraphicsPixmapItem *start_bg_item;
         QPushButton *start_button = new QPushButton;
         QPixmap start_button_pic;
+        ButtonItem *start_button_item;
 
+        QPixmap game_bg;
+        QGraphicsPixmapItem *game_bg_item;
+        QPixmap floor_brick;
+        std::vector<QGraphicsPixmapItem*> floor_brick_items;
+
+        QPixmap Mario_pic;
+        QGraphicsItem *Mario;
 
         QTimer *refreshing_timer;
 
