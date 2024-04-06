@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-
 #include <QObject>
 #include <QDebug>
 #include <QTimer>
@@ -18,7 +17,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // 設定 view
-    view->setFixedSize(1400, 620);
+    view->setFixedSize(1402, 622);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     // 開始畫面
@@ -37,6 +36,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
      */
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if(event->key() == Qt::Key_A) {
+        all_move("left");
+        qDebug() << "Move Left";
+    }
+    else if(event->key() == Qt::Key_D) {
+        all_move("right");
+        key_press = "right";
+        qDebug() << "Move Right";
+    }
+    else if(event->key() == Qt::Key_W) {
+        all_move("up");
+        key_press = "up";
+        qDebug() << "Jump";
+    }
+    else key_press = "other";
+}
+
 void MainWindow::update_frame() {
     switch(game_status) {
         case 0:
@@ -53,24 +70,25 @@ void MainWindow::update_frame() {
 }
 
 void MainWindow::on_start_button_clicked() {
-    qDebug() << "Start Button Clicked!\n";
+    qDebug() << "Start Button Clicked!";
     game_init();
 }
 
 void MainWindow::start_init() {
     game_status = 0;
     cur_scene = &start_scene;
+
     // add start_bg
     start_bg.load(":/Dataset/image/start_screen.png");
     start_bg = start_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
-    QGraphicsPixmapItem *start_bg_item = new QGraphicsPixmapItem(start_bg);
+    start_bg_item = new QGraphicsPixmapItem(start_bg);
     cur_scene->addItem(start_bg_item);
 
     // add start_button
     start_button_pic.load(":/Dataset/image/start_btn.png");
     start_button->setIcon(QIcon(start_button_pic));
     start_button->setIconSize(start_button_pic.size());
-    ButtonItem *start_button_item = new ButtonItem(start_button);
+    start_button_item = new ButtonItem(start_button);
     start_button_item->setPos(1400 / 2- start_button->width() / 2, 450);
     cur_scene->addItem(start_button_item);
 }
@@ -78,11 +96,31 @@ void MainWindow::start_init() {
 void MainWindow::game_init() {
     game_status = 1;
     cur_scene = &game_scene;
+
     // add game_bg
-    QPixmap game_bg(":/Dataset/image/background.png");
+    game_bg.load(":/Dataset/image/background.png");
     game_bg = game_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
-    QGraphicsPixmapItem *game_bg_item = new QGraphicsPixmapItem(game_bg);
+    game_bg_item = new QGraphicsPixmapItem(game_bg);
     cur_scene->addItem(game_bg_item);
+
+    // add floor
+    floor_brick.load(":/Dataset/image/brick/floor brick.png");
+    const int floor_num = 1400 / floor_brick.width();
+    for (int i = 0 ; i < floor_num ; i++) {
+        floor_brick_items.push_back(new QGraphicsPixmapItem(floor_brick));
+        floor_brick_items[i]->setPos(i * floor_brick.width(), 620 - floor_brick.height());
+        cur_scene->addItem(floor_brick_items[i]);
+    }
+
+    // add mario
+    mario.set_cur_scene(cur_scene);
+    mario.set_floor_brick_height(floor_brick.height());
+    mario.game_init();
+
+}
+
+void MainWindow::all_move(QString s) {
+
 }
 
 
