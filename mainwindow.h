@@ -36,6 +36,7 @@ class MainWindow : public QMainWindow {
         //void end_init();
 
         QString key_press;
+        void all_move(QString s);
 
         QGraphicsView *view = new QGraphicsView;
 

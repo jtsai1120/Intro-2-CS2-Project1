@@ -38,14 +38,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if(event->key() == Qt::Key_A) {
-        key_press = "left";
+        all_move("left");
         qDebug() << "Move Left";
     }
     else if(event->key() == Qt::Key_D) {
+        all_move("right");
         key_press = "right";
         qDebug() << "Move Right";
     }
     else if(event->key() == Qt::Key_W) {
+        all_move("up");
         key_press = "up";
         qDebug() << "Jump";
     }
@@ -114,6 +116,10 @@ void MainWindow::game_init() {
     mario.set_cur_scene(cur_scene);
     mario.set_floor_brick_height(floor_brick.height());
     mario.game_init();
+
+}
+
+void MainWindow::all_move(QString s) {
 
 }
 
