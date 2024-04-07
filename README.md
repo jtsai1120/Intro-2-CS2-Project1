@@ -8,8 +8,7 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 - Group Number : 16
 - Group Member :
   - 蔡承希
-  - 蔡辰鑫
-<<<<<<< HEAD
+  - 蔡辰鑫 (✅)
 
 # 0407 Log
 
@@ -22,7 +21,5 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 思考要怎麼實現的部分：
 1. mario jump
 2. mario 改變方向時也改圖片方向(換成反方向的圖片)
-=======
  
 
->>>>>>> cc79301 (commit message)
