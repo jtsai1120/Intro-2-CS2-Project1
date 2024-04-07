@@ -9,6 +9,7 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 - Group Member :
   - 蔡承希
   - 蔡辰鑫 (✅)
+  - 黃士洵
 
 # 0407 Log
 
