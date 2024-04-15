@@ -19,19 +19,23 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 - 因為 game_init() (遊戲場景布置、初始化) 內容太多太大，因此新增一個 mainwindow_game_init.h 來寫。
 - 修正 floor_brick 物件寫法，讓 Floor_brick(Class) 一次只生成一個 floor_brick(Object)，再把布置許多 floor_bricks 的工作交給 Mainwindow::game_init()
 - 實現：mario 改變方向的同時，改圖片方向(換成反方向的圖片)
+- 新增 Coin(Class)
+- 新增碰撞偵測(放在mainwindow::all_move_detection)
+- 新增 Score(Class) 
+- 實現當 mario 觸碰到 coin 後，coin 會消失且 score += 1
 
 ### 注意事項：
->  view_x 可以視為馬力歐的 x 座標，但並非馬力歐的真實座標，
+-   view_x 可以視為馬力歐的 x 座標，但並非馬力歐的真實座標，
+-  當 coin 被撿到時，雖然可以讓它從 cur_scene 消失，但它座標還是在那邊，所以仍會觸發碰撞式。因此我讓 coin 被碰到後 y 座標直接移到 1000，也就是完全消失在畫面中。
+
 
 ### 預計下次要完成：
-1. mario jump () (要先實現物件觸碰)
+1. mario jump () 
+    - 想法：偵測mario左下角的點和右下角的點是否有碰撞磚塊類(幫所有磚塊進行標籤) 
 2. 新增更多 scene、物件
 3. 敵人物件
 4. 抵達終點->結束畫面
 5. mario 跑步動畫 (setPixmap: run1_L -> run2_L -> run1_L -> ...)
-
-### 思考如何實現：
-1. 物件觸碰事件 --> 如何實現?
 
 # 0407 Log (jtsai)
 
