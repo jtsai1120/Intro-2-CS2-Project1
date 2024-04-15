@@ -55,6 +55,7 @@ class MainWindow : public QMainWindow {
 
         //QPixmap floor_brick; -> 寫成物件
         //std::vector<QGraphicsPixmapItem*> floor_brick_items;
+        int floor_bric
 
         Mario mario;
 
