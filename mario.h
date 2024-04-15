@@ -11,7 +11,6 @@ class Mario {
 
         void game_init();
         void set_cur_scene(QGraphicsScene *s) { cur_scene = s; }
-        void set_floor_brick_height(int h) { floor_brick_height = h; }
 
         void move(QString s);
 
@@ -23,9 +22,9 @@ class Mario {
         int dx, dy;
         bool is_jumping;
 
-        QGraphicsScene *cur_scene;
+        static const int floor_brick_height = 100;
 
-        int floor_brick_height;
+        QGraphicsScene *cur_scene;
 };
 
 #endif // MARIO_H

@@ -3,6 +3,8 @@
 
 #include "ButtonItem.h"
 #include "mario.h"
+#include "game_bg.h"
+#include "floor_brick.h"
 #include <vector>
 #include <QMainWindow>
 #include <QGraphicsScene>
@@ -17,8 +19,6 @@ class MainWindow : public QMainWindow {
 
     public:
         MainWindow(QWidget *parent = nullptr);
-
-        // int get_floor_brick_height() { return floor_brick.height(); }
 
     protected:
         void keyPressEvent(QKeyEvent *event);
@@ -50,11 +50,9 @@ class MainWindow : public QMainWindow {
         QPixmap start_button_pic;
         ButtonItem *start_button_item;
 
-        //QPixmap game_bg; -> 寫成物件
-        //QGraphicsPixmapItem *game_bg_item;
+        Game_bg game_bg;
 
-        //QPixmap floor_brick; -> 寫成物件
-        //std::vector<QGraphicsPixmapItem*> floor_brick_items;
+        Floor_brick floor_bricks;
 
         Mario mario;
 

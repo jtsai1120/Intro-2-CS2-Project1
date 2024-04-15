@@ -99,26 +99,15 @@ void MainWindow::game_init() {
     game_status = 1;
     cur_scene = &game_scene;
 
-    /* add game_bg --> 寫成物件
-    game_bg.load(":/Dataset/image/background.png");
-    game_bg = game_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
-    game_bg_item = new QGraphicsPixmapItem(game_bg);
-    cur_scene->addItem(game_bg_item);
-    */
+    // add game_bg
+    cur_scene->addItem(game_bg.game_bg_item);
 
-    /* add floor --> 寫成物件
-    floor_brick.load(":/Dataset/image/brick/floor brick.png");
-    const int floor_num = 1400 / floor_brick.width();
-    for (int i = 0 ; i < floor_num ; i++) {
-        floor_brick_items.push_back(new QGraphicsPixmapItem(floor_brick));
-        floor_brick_items[i]->setPos(i * floor_brick.width(), 620 - floor_brick.height());
-        cur_scene->addItem(floor_brick_items[i]);
-    }
-    */
+    // add floor_bricks_item(s)
+    for (QGraphicsPixmapItem* item : floor_bricks.floor_brick_items)
+        cur_scene->addItem(item);
 
     // add mario
     mario.set_cur_scene(cur_scene);
-    mario.set_floor_brick_height(floor_brick_height);
     mario.game_init();
 
 }
