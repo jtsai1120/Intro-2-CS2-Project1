@@ -4,28 +4,27 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include <QString>
+#include "floor_brick.h"
 
 class Mario {
     public:
         Mario();
+        void move(int dx, int dy);
+        QGraphicsPixmapItem *mario;
+        void set_x(int new_x) { x = new_x; }
+        void change_direction_picture(QString s);
 
-        void game_init();
-        void set_cur_scene(QGraphicsScene *s) { cur_scene = s; }
-        void set_floor_brick_height(int h) { floor_brick_height = h; }
-
-        void move(QString s);
-
+        static const int small_mario_height = 52;
+        static const int init_x = 450, init_y = 620 - Floor_brick::floor_brick_height - small_mario_height;
     private:
-        QPixmap Mario_pic;
-        QGraphicsItem *mario;
-
+        QPixmap mario_stand_R, mario_stand_L;
+        QPixmap mario_run1_L, mario_run2_L;
+        QPixmap mario_run1_R, mario_run2_R;
+        QPixmap mario_die;
         int x, y;
-        int dx, dy;
         bool is_jumping;
 
-        QGraphicsScene *cur_scene;
-
-        int floor_brick_height;
 };
 
 #endif // MARIO_H

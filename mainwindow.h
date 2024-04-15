@@ -3,6 +3,8 @@
 
 #include "ButtonItem.h"
 #include "mario.h"
+#include "game_bg.h"
+#include "floor_brick.h"
 #include <vector>
 #include <QMainWindow>
 #include <QGraphicsScene>
@@ -17,8 +19,6 @@ class MainWindow : public QMainWindow {
 
     public:
         MainWindow(QWidget *parent = nullptr);
-
-        int get_floor_brick_height() { return floor_brick.height(); }
 
     protected:
         void keyPressEvent(QKeyEvent *event);
@@ -35,10 +35,11 @@ class MainWindow : public QMainWindow {
         void game_init();
         //void end_init();
 
-        QString key_press;
-        void all_move(QString s);
+        void all_move_detection(QString s); // 檢查是馬力歐要左右動、要跳，還是其他所有物件要動(隨view)
+        void all_horizontal_move(int moving_unit);
 
         QGraphicsView *view = new QGraphicsView;
+        int view_x; // Equals to mario's x coordinates between the scenes;
 
         QGraphicsScene *cur_scene;
         QGraphicsScene start_scene, game_scene, end_scene;
@@ -50,17 +51,14 @@ class MainWindow : public QMainWindow {
         QPixmap start_button_pic;
         ButtonItem *start_button_item;
 
-        QPixmap game_bg;
-        QGraphicsPixmapItem *game_bg_item;
+        Game_bg game_bg;
 
-        QPixmap floor_brick;
-        std::vector<QGraphicsPixmapItem*> floor_brick_items;
+        std::vector<Floor_brick*> floor_bricks;
 
         Mario mario;
 
         QTimer *refreshing_timer;
 
-        //void game_frame();
 
 };
 #endif // MAINWINDOW_H

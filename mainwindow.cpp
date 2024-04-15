@@ -7,6 +7,9 @@
 #include <QGraphicsItem>
 #include <QPushButton>
 #include "ButtonItem.h"
+#include "mario.h"
+
+#include "mainwindow_game_init.h"
 
 /*
  * gamestatus:
@@ -16,14 +19,14 @@
  */
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    // 設定 view
+    // 設定 view 視窗相關設定
     view->setFixedSize(1402, 622);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    // 開始畫面
-    game_status = 0;
-    connect(start_button, SIGNAL(clicked()), this, SLOT(on_start_button_clicked()));
+    // 呼叫 start_init() 新增開始畫面物件、基本遊戲設定；
     start_init();
+    // 將開始按鈕連接至訊號槽
+    connect(start_button, SIGNAL(clicked()), this, SLOT(on_start_button_clicked()));
     // 每 1ms 觸發畫面更新
     refreshing_timer = new QTimer(this); // 建立計時器
     refreshing_timer->start(1); // 每 1ms更新一次
@@ -34,24 +37,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
      * 再來，我們把此計時器的 timeout()訊號(Signal)連接到 this(此MainWindow物件) 的 update_object()訊號槽(Slot)
      * 也就是每當計時器的 timeout() 被觸發，就會執行 this 的 update_object() -> 每 1 ms更新一次畫面
      */
-}
-
-void MainWindow::keyPressEvent(QKeyEvent *event) {
-    if(event->key() == Qt::Key_A) {
-        all_move("left");
-        qDebug() << "Move Left";
-    }
-    else if(event->key() == Qt::Key_D) {
-        all_move("right");
-        key_press = "right";
-        qDebug() << "Move Right";
-    }
-    else if(event->key() == Qt::Key_W) {
-        all_move("up");
-        key_press = "up";
-        qDebug() << "Jump";
-    }
-    else key_press = "other";
 }
 
 void MainWindow::update_frame() {
@@ -71,19 +56,20 @@ void MainWindow::update_frame() {
 
 void MainWindow::on_start_button_clicked() {
     qDebug() << "Start Button Clicked!";
+    // 呼叫 game_init() 新增遊戲畫面物件：
     game_init();
 }
 
 void MainWindow::start_init() {
+    // 設定遊戲狀態為初始畫面
     game_status = 0;
+    // 將要提交給 view 的 (ptr)cur_scene 設為 &start_scene
     cur_scene = &start_scene;
-
     // add start_bg
     start_bg.load(":/Dataset/image/start_screen.png");
     start_bg = start_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
     start_bg_item = new QGraphicsPixmapItem(start_bg);
     cur_scene->addItem(start_bg_item);
-
     // add start_button
     start_button_pic.load(":/Dataset/image/start_btn.png");
     start_button->setIcon(QIcon(start_button_pic));
@@ -93,34 +79,66 @@ void MainWindow::start_init() {
     cur_scene->addItem(start_button_item);
 }
 
-void MainWindow::game_init() {
-    game_status = 1;
-    cur_scene = &game_scene;
+// void MainWindow::game_init() 已移植到 mainwindow_game_init.h
 
-    // add game_bg
-    game_bg.load(":/Dataset/image/background.png");
-    game_bg = game_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
-    game_bg_item = new QGraphicsPixmapItem(game_bg);
-    cur_scene->addItem(game_bg_item);
-
-    // add floor
-    floor_brick.load(":/Dataset/image/brick/floor brick.png");
-    const int floor_num = 1400 / floor_brick.width();
-    for (int i = 0 ; i < floor_num ; i++) {
-        floor_brick_items.push_back(new QGraphicsPixmapItem(floor_brick));
-        floor_brick_items[i]->setPos(i * floor_brick.width(), 620 - floor_brick.height());
-        cur_scene->addItem(floor_brick_items[i]);
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if (game_status == 1) {
+        if (event->key() == Qt::Key_A) // a (left)
+            all_move_detection("left");
+        else if (event->key() == Qt::Key_D) // d (right)
+            all_move_detection("right");
+        else if (event->key() == Qt::Key_W) // w (up)
+            all_move_detection("up");
     }
-
-    // add mario
-    mario.set_cur_scene(cur_scene);
-    mario.set_floor_brick_height(floor_brick.height());
-    mario.game_init();
-
 }
 
-void MainWindow::all_move(QString s) {
+void MainWindow::all_move_detection(QString s) {
+    // Move Left or Right
+    const int moving_unit = 10;
+    if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
+        if (s == "left" && view_x > 0) {
+            view_x -= moving_unit;
+            mario.move(-1 * moving_unit, 0);
+        } else if (s == "right") {
+            if (view_x == Mario::init_x)
+                all_horizontal_move(-1 * moving_unit);
+            else
+                mario.move(moving_unit, 0);
+            view_x += moving_unit;
+        }
+    } else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
+        if (s == "left") {
+            if (view_x == 1400 * 5 - 1402 + Mario::init_x)
+                all_horizontal_move(moving_unit);
+            else
+                mario.move(-1 * moving_unit, 0);
+            view_x -= moving_unit;
+        } else if (s == "right" && view_x < 1400 * 5 ) {
+            if (view_x == 1400 * 5 - 1402 + Mario::init_x)
+                mario.set_x(view_x);
+            view_x += moving_unit;
+            mario.move(moving_unit, 0);
+        }
+    } else {
+        if (s == "left") {
+            view_x -= moving_unit;
+            all_horizontal_move(moving_unit);
+        } else if (s == "right") {
+            view_x += moving_unit;
+            all_horizontal_move(-1 * moving_unit);
+        }
+    }
 
+    // Jump
+    if (s == "up") {
+
+    }
+}
+
+void MainWindow::all_horizontal_move(int moving_unit) {
+    mario.change_direction_picture((moving_unit>0)? "stand_L":"stand_R");
+    game_bg.move(moving_unit, 0);
+    for (Floor_brick* i : floor_bricks) i->move(moving_unit);
 }
 
 
