@@ -44,7 +44,6 @@ class MainWindow : public QMainWindow {
         QGraphicsScene *cur_scene;
         QGraphicsScene start_scene, game_scene, end_scene;
 
-
         QPixmap start_bg;
         QGraphicsPixmapItem *start_bg_item;
 
@@ -54,7 +53,7 @@ class MainWindow : public QMainWindow {
 
         Game_bg game_bg;
 
-        Floor_brick floor_bricks;
+        std::vector<Floor_brick*> floor_bricks;
 
         Mario mario;
 

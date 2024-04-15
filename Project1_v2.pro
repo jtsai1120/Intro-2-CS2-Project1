@@ -20,6 +20,7 @@ HEADERS += \
     floor_brick.h \
     game_bg.h \
     mainwindow.h \
+    mainwindow_game_init.h \
     mario.h
 
 # Default rules for deployment.

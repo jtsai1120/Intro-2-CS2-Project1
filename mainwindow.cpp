@@ -9,6 +9,8 @@
 #include "ButtonItem.h"
 #include "mario.h"
 
+#include "mainwindow_game_init.h"
+
 /*
  * gamestatus:
  * 0 => 開始畫面
@@ -77,22 +79,7 @@ void MainWindow::start_init() {
     cur_scene->addItem(start_button_item);
 }
 
-void MainWindow::game_init() {
-    game_status = 1;
-    cur_scene = &game_scene;
-    view_x = Mario::init_x; // Equals to mario's x coordinates between the scenes;
-
-    // add game_bg
-    cur_scene->addItem(game_bg.game_bg_item);
-
-    // add floor_bricks_item(s)
-    for (QGraphicsPixmapItem* item : floor_bricks.floor_brick_items)
-        cur_scene->addItem(item);
-
-    // add mario
-    cur_scene->addItem(mario.mario);
-
-}
+// void MainWindow::game_init() 已移植到 mainwindow_game_init.h
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (game_status == 1) {
@@ -149,7 +136,9 @@ void MainWindow::all_move_detection(QString s) {
 }
 
 void MainWindow::all_horizontal_move(int moving_unit) {
+    mario.change_direction_picture((moving_unit>0)? "stand_L":"stand_R");
     game_bg.move(moving_unit, 0);
+    for (Floor_brick* i : floor_bricks) i->move(moving_unit);
 }
 
 
