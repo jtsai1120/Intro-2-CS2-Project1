@@ -7,7 +7,6 @@
 class Floor_brick {
     public:
         Floor_brick();
-        //std::vector<QGraphicsPixmapItem*> floor_brick_items;
         QGraphicsPixmapItem *floor_brick_item;
 
         static const int floor_brick_width = 50;

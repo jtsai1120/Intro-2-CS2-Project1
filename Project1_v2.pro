@@ -9,19 +9,23 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    coin.cpp \
     floor_brick.cpp \
     game_bg.cpp \
     main.cpp \
     mainwindow.cpp \
-    mario.cpp
+    mario.cpp \
+    score.cpp
 
 HEADERS += \
     ButtonItem.h \
+    coin.h \
     floor_brick.h \
     game_bg.h \
     mainwindow.h \
     mainwindow_game_init.h \
-    mario.h
+    mario.h \
+    score.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

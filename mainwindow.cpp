@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 
 void MainWindow::update_frame() {
+    // 設定視窗(view)的場景(scene)
     switch(game_status) {
         case 0:
             view->setScene(&start_scene);
@@ -133,12 +134,21 @@ void MainWindow::all_move_detection(QString s) {
     if (s == "up") {
 
     }
+
+    // 偵測移動過程是否與其他物件碰撞
+    if(mario.mario->collidesWithItem(coins[0]->coin_item)) {
+        qDebug() << "mario touch coin !";
+        cur_scene->removeItem(coins[0]->coin_item);
+        coins[0]->set_xy(0, 1000);
+        score.add_score(1);
+    }
 }
 
 void MainWindow::all_horizontal_move(int moving_unit) {
     mario.change_direction_picture((moving_unit>0)? "stand_L":"stand_R");
     game_bg.move(moving_unit, 0);
     for (Floor_brick* i : floor_bricks) i->move(moving_unit);
+    for (Coin* i : coins) i->move(moving_unit, 0);
 }
 
 

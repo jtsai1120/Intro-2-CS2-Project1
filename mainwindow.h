@@ -5,7 +5,10 @@
 #include "mario.h"
 #include "game_bg.h"
 #include "floor_brick.h"
+#include "coin.h"
+#include "score.h"
 #include <vector>
+#include <string>
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -51,14 +54,15 @@ class MainWindow : public QMainWindow {
         QPixmap start_button_pic;
         ButtonItem *start_button_item;
 
+        // game scene
+        Score score;
         Game_bg game_bg;
-
         std::vector<Floor_brick*> floor_bricks;
-
         Mario mario;
+        std::vector<Coin*> coins;
+
 
         QTimer *refreshing_timer;
-
 
 };
 #endif // MAINWINDOW_H
