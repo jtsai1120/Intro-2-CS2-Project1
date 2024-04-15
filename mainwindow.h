@@ -35,8 +35,8 @@ class MainWindow : public QMainWindow {
         void game_init();
         //void end_init();
 
-        void all_move_detection(QString s); // 檢查是馬力歐要動，還是其他所有物件要動
-
+        void all_move_detection(QString s); // 檢查是馬力歐要左右動、要跳，還是其他所有物件要動(隨view)
+        void all_horizontal_move(int moving_unit);
 
         QGraphicsView *view = new QGraphicsView;
         int view_x; // Equals to mario's x coordinates between the scenes;
