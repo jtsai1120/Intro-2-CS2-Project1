@@ -30,8 +30,10 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 
 
 ### 預計下次要完成：
-1. mario jump () 
-    - 想法：偵測mario左下角的點和右下角的點是否有碰撞磚塊類(幫所有磚塊進行標籤) 
+1. mario jump & fall 
+    - 想法：偵測 mario 左下角的點 ***(x, y+mario.height())*** 和右下角的點 ***(x+mario.width(), y+mario.height())*** 是否有碰撞磚塊類(幫所有磚塊進行標籤) 
+    - 設立一個 bool is_grounded，若起跳或落下時為 0
+    - 記得要實現重力加速度
 2. 新增更多 scene、物件
 3. 敵人物件
 4. 抵達終點->結束畫面
