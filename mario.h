@@ -8,23 +8,19 @@
 class Mario {
     public:
         Mario();
-
-        void game_init();
-        void set_cur_scene(QGraphicsScene *s) { cur_scene = s; }
-
-        void move(QString s);
-
-    private:
-        QPixmap Mario_pic;
-        QGraphicsItem *mario;
-
-        int x, y;
-        int dx, dy;
-        bool is_jumping;
+        void move(int dx, int dy);
+        QGraphicsPixmapItem *mario;
+        void set_x(int new_x) { x = new_x; }
 
         static const int floor_brick_height = 100;
+        static const int small_mario_height = 52;
+        static const int init_x = 450, init_y = 620 - floor_brick_height - small_mario_height;
+    private:
+        QPixmap Mario_pic;
+        int x, y;
+        bool is_jumping;
 
-        QGraphicsScene *cur_scene;
+
 };
 
 #endif // MARIO_H

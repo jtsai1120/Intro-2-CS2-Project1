@@ -37,24 +37,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
      */
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event) {
-    if(event->key() == Qt::Key_A) {
-        all_move("left");
-        qDebug() << "Move Left";
-    }
-    else if(event->key() == Qt::Key_D) {
-        all_move("right");
-        key_press = "right";
-        qDebug() << "Move Right";
-    }
-    else if(event->key() == Qt::Key_W) {
-        all_move("up");
-        key_press = "up";
-        qDebug() << "Jump";
-    }
-    else key_press = "other";
-}
-
 void MainWindow::update_frame() {
     switch(game_status) {
         case 0:
@@ -98,6 +80,7 @@ void MainWindow::start_init() {
 void MainWindow::game_init() {
     game_status = 1;
     cur_scene = &game_scene;
+    view_x = Mario::init_x; // Equals to mario's x coordinates between the scenes;
 
     // add game_bg
     cur_scene->addItem(game_bg.game_bg_item);
@@ -107,13 +90,67 @@ void MainWindow::game_init() {
         cur_scene->addItem(item);
 
     // add mario
-    mario.set_cur_scene(cur_scene);
-    mario.game_init();
+    cur_scene->addItem(mario.mario);
 
 }
 
-void MainWindow::all_move(QString s) {
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if (game_status == 1) {
+        if (event->key() == Qt::Key_A) // a (left)
+            all_move_detection("left");
+        else if (event->key() == Qt::Key_D) // d (right)
+            all_move_detection("right");
+        else if (event->key() == Qt::Key_W) // w (up)
+            all_move_detection("up");
+    }
+}
 
+void MainWindow::all_move_detection(QString s) {
+    // Move Left or Right
+    const int moving_unit = 10;
+    if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
+        if (s == "left" && view_x > 0) {
+            view_x -= moving_unit;
+            mario.move(-1 * moving_unit, 0);
+        } else if (s == "right") {
+            if (view_x == Mario::init_x)
+                game_bg.move(-1 * moving_unit, 0);
+            else
+                mario.move(moving_unit, 0);
+            view_x += moving_unit;
+        }
+    } else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
+        if (s == "left") {
+            if (view_x == 1400 * 5 - 1402 + Mario::init_x)
+                game_bg.move(moving_unit, 0);
+            else
+                mario.move(-1 * moving_unit, 0);
+            view_x -= moving_unit;
+        } else if (s == "right" && view_x < 1400 * 5 ) {
+            if (view_x == 1400 * 5 - 1402 + Mario::init_x)
+                mario.set_x(view_x);
+            view_x += moving_unit;
+            mario.move(moving_unit, 0);
+        }
+    } else {
+        if (s == "left") {
+            view_x -= moving_unit;
+            game_bg.move(moving_unit, 0);
+        } else if (s == "right") {
+            view_x += moving_unit;
+
+            game_bg.move(-1 * moving_unit, 0);
+        } else if (s == "up") {
+
+        }
+    }
+
+    // Jump
+    if (s == "up") {
+
+    }
+
+    qDebug() << "view_x: " << view_x;
 }
 
 

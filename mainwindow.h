@@ -35,13 +35,15 @@ class MainWindow : public QMainWindow {
         void game_init();
         //void end_init();
 
-        QString key_press;
-        void all_move(QString s);
+        void all_move_detection(QString s); // 檢查是馬力歐要動，還是其他所有物件要動
+
 
         QGraphicsView *view = new QGraphicsView;
+        int view_x; // Equals to mario's x coordinates between the scenes;
 
         QGraphicsScene *cur_scene;
         QGraphicsScene start_scene, game_scene, end_scene;
+
 
         QPixmap start_bg;
         QGraphicsPixmapItem *start_bg_item;
