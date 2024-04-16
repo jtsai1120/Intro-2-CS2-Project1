@@ -38,6 +38,7 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 3. 敵人物件
 4. 抵達終點->結束畫面
 5. mario 跑步動畫 (setPixmap: run1_L -> run2_L -> run1_L -> ...)
+6. 碰撞偵測好像不能寫在 all_move_detection，因為有可能 mario 不移動但是敵人移動觸碰到 mario
 
 # 0407 Log (jtsai)
 
