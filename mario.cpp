@@ -58,14 +58,14 @@ bool Mario::is_grounded() {
         if (item->contains(item->mapFromScene(x, y + ((cur_size=="small")? small_mario_height : big_mario_height)))) {
             QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
             if(check_whether_ground_brick(PixmapItem)) {
-                qDebug() << "left foot is grounded";
+                //qDebug() << "left foot is grounded";
                 _is_grounded = 1;
             }
         }
         if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), (y + ((cur_size=="small")? small_mario_height : big_mario_height))))) {
             QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
             if(check_whether_ground_brick(PixmapItem)) {
-                qDebug() << "right foot is grounded";
+                //qDebug() << "right foot is grounded";
                 _is_grounded = 1;
             }
         }
@@ -85,27 +85,21 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
 }
 
 void Mario::jump() {
-    /*
-    QTimer timer;
-    QObject::connect(&timer, &QTimer::timeout, [&]() {
-         timer.start(1000);
-    });
-    */
-    //if (is_grounded()) {
+
+    if (is_grounded()) {
         change_direction_picture((cur_direction=='R')? "jump_R" : "jump_L");
-        y -= 50;
-        mario->setPos(x,y);
-        qDebug() << ((is_grounded())? "grounded" : "not grounded");
-        /*
+
+
         vy = vy0;
-        while(!is_grounded()) {
+        while(!is_grounded() || vy < 0 ) {
             //if (coliision) {}
             y += vy;
             mario->setPos(x, y);
+            qDebug() << "y: " << y;
             vy += ay;
-            QThread::sleep(1000);
+
 
         }
-    }*/
+    }
 }
 

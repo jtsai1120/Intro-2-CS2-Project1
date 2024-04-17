@@ -19,6 +19,7 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 ### 注意事項
 
 ### 預計下次完成
+- mario fall 
 - 要新增 keyReleaseEvent，嘗試解決 mario 移動卡頓問題嗎 ?
 - 考慮跳起來時撞到頭的問題
 
