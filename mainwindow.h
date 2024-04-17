@@ -7,6 +7,7 @@
 #include "floor_brick.h"
 #include "coin.h"
 #include "score.h"
+#include "stone_brick.h"
 #include <vector>
 #include <string>
 #include <QMainWindow>
@@ -61,7 +62,9 @@ class MainWindow : public QMainWindow {
         std::vector<Floor_brick*> floor_bricks;
         Mario mario;
         std::vector<Coin*> coins;
+        std::vector<Stone_brick*> stone_bricks;
 
+        // KeyEvents (Pressed=1, Released=0)
         bool left_key_state, right_key_state, up_key_state;
 
         QTimer *refreshing_timer;
