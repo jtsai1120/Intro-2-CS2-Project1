@@ -37,10 +37,13 @@ void Mario::move() {
             change_direction_picture("jump_L");
     }
     x += dx;
-    y += dy;
-    mario->setPos(x, y);
     dx = 0;
-    dy = 0;
+    y += dy;
+    if (!is_grounded()) dy += ay;
+    else dy = 0;
+
+    mario->setPos(x, y);
+
 }
 
 void Mario::change_direction_picture(QString s) {
@@ -99,18 +102,8 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
 }
 
 void Mario::jump() {
-    if (is_grounded()) {
-        vy = vy0;
-        while( !is_grounded() || vy < 0 ) {
-            //if (coliision) {} 碰到頭頂怎麼辦
-            dy = vy;
-            vy += ay;
-            /*
-            QTime dieTime = QTime::currentTime().addMSecs(100);
-            while (QTime::currentTime() < dieTime)
-                QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-                */
-        }
+    if (is_grounded()) { // 防止二次跳
+        dy = vy0;
     }
 }
 

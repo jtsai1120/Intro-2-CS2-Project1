@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(start_button, SIGNAL(clicked()), this, SLOT(on_start_button_clicked()));
     // 每 1ms 觸發畫面更新
     refreshing_timer = new QTimer(this); // 建立計時器
-    refreshing_timer->start(2); // 每 1ms更新一次
+    refreshing_timer->start(20); // 每 1ms更新一次
     connect(refreshing_timer, SIGNAL(timeout()), this, SLOT(update_frame())); // 連接訊號
     /* 這段首先建立了一個計時器 refreshing_timer，
      * 並設定計時器時長為 1ms，也就是每過 1ms，
@@ -91,17 +91,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (game_status == 1) {
         if (event->key() == Qt::Key_A) {// a (left)
             left_key_state = 1;
-            //all_move_detection("left");
             qDebug() << "mario left";
         }
         else if (event->key() == Qt::Key_D) {// d (right)
             right_key_state = 1;
-            //all_move_detection("right");
             qDebug() << "mario right";
         }
         else if (event->key() == Qt::Key_W) // w (up)
             up_key_state = 1;
-            //all_move_detection("up");
     }
 }
 
@@ -119,7 +116,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 void MainWindow::all_move_detection() {
     if (left_key_state || right_key_state || up_key_state) {
         // Move Left or Right
-        const int moving_unit = 1;
+        const int moving_unit = 10;
         if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
             if (left_key_state && view_x > 0) {
                 mario.cur_direction = 'L';

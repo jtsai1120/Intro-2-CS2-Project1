@@ -40,7 +40,6 @@ class Mario {
         bool is_grounded();
         bool check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem);
 
-        int vy;
         const int vy0 = -20;
         const int ay = 2;
         // since one jump = 100 pixels = v^2/(2*-a)
