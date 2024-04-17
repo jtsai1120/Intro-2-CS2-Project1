@@ -95,7 +95,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
 void MainWindow::all_move_detection(QString s) {
     // Move Left or Right
-    const int moving_unit = 10;
+    const int moving_unit = 15;
     if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
         if (s == "left" && view_x > 0) {
             view_x -= moving_unit;
@@ -132,7 +132,7 @@ void MainWindow::all_move_detection(QString s) {
 
     // Jump
     if (s == "up") {
-
+        mario.jump();
     }
 
     // 偵測移動過程是否與其他物件碰撞
