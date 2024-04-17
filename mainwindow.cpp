@@ -46,6 +46,7 @@ void MainWindow::update_frame() {
             view->setScene(&start_scene);
             break;
         case 1:
+            mario.move();
             view->setScene(&game_scene);
             break;
         case 2:
@@ -102,33 +103,39 @@ void MainWindow::all_move_detection(QString s) {
     const int moving_unit = 15;
     if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
         if (s == "left" && view_x > 0) {
+            mario.cur_direction = 'L';
             view_x -= moving_unit;
-            mario.move(-1 * moving_unit, 0);
+            mario.dx = -1 * moving_unit;
         } else if (s == "right") {
+            mario.cur_direction = 'R';
             if (view_x == Mario::init_x)
                 all_horizontal_move(-1 * moving_unit);
             else
-                mario.move(moving_unit, 0);
+                mario.dx = moving_unit;
             view_x += moving_unit;
         }
     } else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
         if (s == "left") {
+            mario.cur_direction = 'L';
             if (view_x == 1400 * 5 - 1402 + Mario::init_x)
                 all_horizontal_move(moving_unit);
             else
-                mario.move(-1 * moving_unit, 0);
+                mario.dx = -1 * moving_unit;
             view_x -= moving_unit;
         } else if (s == "right" && view_x < 1400 * 5 ) {
+            mario.cur_direction = 'R';
             if (view_x == 1400 * 5 - 1402 + Mario::init_x)
                 mario.set_x(view_x);
             view_x += moving_unit;
-            mario.move(moving_unit, 0);
+            mario.dx = moving_unit;
         }
     } else {
         if (s == "left") {
+            mario.cur_direction = 'L';
             view_x -= moving_unit;
             all_horizontal_move(moving_unit);
         } else if (s == "right") {
+            mario.cur_direction = 'R';
             view_x += moving_unit;
             all_horizontal_move(-1 * moving_unit);
         }
@@ -150,7 +157,6 @@ void MainWindow::all_move_detection(QString s) {
 }
 
 void MainWindow::all_horizontal_move(int moving_unit) {
-    mario.change_direction_picture((moving_unit>0)? "stand_L":"stand_R");
     game_bg.move(moving_unit, 0);
     for (Floor_brick* i : floor_bricks) i->move(moving_unit);
     for (Coin* i : coins) i->move(moving_unit, 0);

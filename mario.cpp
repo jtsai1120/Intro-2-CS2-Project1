@@ -15,6 +15,8 @@ Mario::Mario() {
     mario = new QGraphicsPixmapItem(mario_stand_R);
     x = init_x;
     y = init_y;
+    dx = 0;
+    dy = 0;
     mario->setPos(x, y);
     cur_direction = 'R';
     cur_size = "small";
@@ -22,9 +24,8 @@ Mario::Mario() {
     //qDebug() << "height=" << mario_stand_R.height();
 }
 
-void Mario::move(int dx, int dy) {
-    cur_direction = (dx>=0)? 'R':'L';
-    if (dx>=0) {
+void Mario::move() {
+    if (cur_direction == 'R') {
         if (is_grounded())
             change_direction_picture("stand_R");
         else
@@ -38,6 +39,8 @@ void Mario::move(int dx, int dy) {
     x += dx;
     y += dy;
     mario->setPos(x, y);
+    dx = 0;
+    dy = 0;
 }
 
 void Mario::change_direction_picture(QString s) {
@@ -82,7 +85,6 @@ bool Mario::is_grounded() {
             }
         }
     }
-    //if (_is_grounded)
     return _is_grounded;
 }
 
@@ -97,23 +99,20 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
 }
 
 void Mario::jump() {
-
     if (is_grounded()) {
         change_direction_picture((cur_direction=='R')? "jump_R" : "jump_L");
-
         //QObject::connect(&timer, &QTimer::timeout, this, SLOT(fly()));
         vy = vy0;
         while( !is_grounded() || vy < 0 ) { // ( !is_grounded() || vy < 0)
             //if (coliision) {} 碰到頭頂怎麼辦
-            y += vy;
-            mario->setPos(x, y);
+            dy = vy;
             vy += ay;
             QTime dieTime = QTime::currentTime().addMSecs(100);
             while (QTime::currentTime() < dieTime)
                 QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
         }
     }
-    change_direction_picture((cur_direction=='R')? "stand_R" : "stand_L");
+    dy = 0;
 }
 
 

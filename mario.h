@@ -10,7 +10,7 @@
 class Mario {
     public:
         Mario();
-        void move(int dx, int dy);
+        void move();
         QGraphicsPixmapItem *mario;
         void set_x(int new_x) { x = new_x; }
         void change_direction_picture(QString s);
@@ -27,6 +27,7 @@ class Mario {
         static const int init_x = 450, init_y = 620 - Floor_brick::floor_brick_height - small_mario_height;
 
         int dx, dy;
+        char cur_direction;
 
     private:
         QPixmap mario_stand_R, mario_stand_L;
@@ -38,7 +39,7 @@ class Mario {
         int x, y;
         bool is_grounded();
         bool check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem);
-        char cur_direction;
+
         int vy;
         const int vy0 = -20;
         const int ay = 2;
