@@ -30,6 +30,10 @@ void MainWindow::game_init() {
         }
 
         // add mario
+        mario.cur_scene = cur_scene;
+        mario.game_bg_item = game_bg.game_bg_item;
+        for (Floor_brick *i : floor_bricks)
+            mario.floor_brick_items.push_back(i->floor_brick_item);
         cur_scene->addItem(mario.mario);
 
         // add coin

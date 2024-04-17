@@ -9,6 +9,20 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 - 蔡辰鑫 
 - 黃士洵
 
+// test
+
+# 0417 Log (jtsai)
+
+### 此次新增
+- 新增 Mario.jump()、Mario.is_grounded()、Mario.check_whether_ground_brick()
+
+### 注意事項
+
+### 預計下次完成
+- mario fall 
+- 要新增 keyReleaseEvent，嘗試解決 mario 移動卡頓問題嗎 ?
+- 考慮跳起來時撞到頭的問題
+
 # 0416 Log (jtsai)
 
 ### 此次新增：
@@ -39,6 +53,7 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 4. 抵達終點->結束畫面
 5. mario 跑步動畫 (setPixmap: run1_L -> run2_L -> run1_L -> ...)
 6. 碰撞偵測好像不能寫在 all_move_detection，因為有可能 mario 不移動但是敵人移動觸碰到 mario
+    - 要讓敵人自己內部寫一個碰撞偵測嗎 ?
 
 # 0407 Log (jtsai)
 

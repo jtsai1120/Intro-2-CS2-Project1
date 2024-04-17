@@ -25,6 +25,7 @@ class MainWindow : public QMainWindow {
 
     protected:
         void keyPressEvent(QKeyEvent *event);
+        void keyReleaseEvent(QKeyEvent *event);
 
     private slots:
         void update_frame(); // 畫面更新
@@ -38,7 +39,7 @@ class MainWindow : public QMainWindow {
         void game_init();
         //void end_init();
 
-        void all_move_detection(QString s); // 檢查是馬力歐要左右動、要跳，還是其他所有物件要動(隨view)
+        void all_move_detection(); // 檢查是馬力歐要左右動、要跳，還是其他所有物件要動(隨view)
         void all_horizontal_move(int moving_unit);
 
         QGraphicsView *view = new QGraphicsView;
@@ -61,6 +62,7 @@ class MainWindow : public QMainWindow {
         Mario mario;
         std::vector<Coin*> coins;
 
+        bool left_key_state, right_key_state, up_key_state;
 
         QTimer *refreshing_timer;
 
