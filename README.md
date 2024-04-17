@@ -9,6 +9,8 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 - 蔡辰鑫 
 - 黃士洵
 
+// test
+
 # 0417 Log (jtsai)
 
 ### 此次新增
