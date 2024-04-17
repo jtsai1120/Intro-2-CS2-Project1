@@ -15,7 +15,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mario.cpp \
-    score.cpp
+    score.cpp \
+    stone_brick.cpp
 
 HEADERS += \
     ButtonItem.h \
@@ -25,7 +26,8 @@ HEADERS += \
     mainwindow.h \
     mainwindow_game_init.h \
     mario.h \
-    score.h
+    score.h \
+    stone_brick.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

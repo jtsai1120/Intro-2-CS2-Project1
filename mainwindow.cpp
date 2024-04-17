@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(start_button, SIGNAL(clicked()), this, SLOT(on_start_button_clicked()));
     // 每 1ms 觸發畫面更新
     refreshing_timer = new QTimer(this); // 建立計時器
-    refreshing_timer->start(20); // 每 1ms更新一次
+    refreshing_timer->start(10); // 每 1ms更新一次
     connect(refreshing_timer, SIGNAL(timeout()), this, SLOT(update_frame())); // 連接訊號
     /* 這段首先建立了一個計時器 refreshing_timer，
      * 並設定計時器時長為 1ms，也就是每過 1ms，
@@ -91,11 +91,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (game_status == 1) {
         if (event->key() == Qt::Key_A) {// a (left)
             left_key_state = 1;
-            qDebug() << "mario left";
+            //qDebug() << "mario left";
         }
         else if (event->key() == Qt::Key_D) {// d (right)
             right_key_state = 1;
-            qDebug() << "mario right";
+            //qDebug() << "mario right";
         }
         else if (event->key() == Qt::Key_W) // w (up)
             up_key_state = 1;
@@ -115,61 +115,81 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 
 void MainWindow::all_move_detection() {
     if (left_key_state || right_key_state || up_key_state) {
+        mario.is_moving = 1;
+        //qDebug() << "mario is moving";
         // Move Left or Right
-        const int moving_unit = 10;
+        const int moving_unit = 5;
         if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
             if (left_key_state && view_x > 0) {
                 mario.cur_direction = 'L';
-                view_x -= moving_unit;
-                mario.dx = -1 * moving_unit;
+                if (!mario.is_hit_right_side()) {
+                    view_x -= moving_unit;
+                    mario.dx = -1 * moving_unit;
+                }
             } else if (right_key_state) {
                 mario.cur_direction = 'R';
-                if (view_x == Mario::init_x)
-                    all_horizontal_move(-1 * moving_unit);
-                else
-                    mario.dx = moving_unit;
-                view_x += moving_unit;
+                if (!mario.is_hit_left_side()) {
+                    if (view_x == Mario::init_x)
+                        all_horizontal_move(-1 * moving_unit);
+                    else
+                        mario.dx = moving_unit;
+                    view_x += moving_unit;
+                }
             }
         } else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
             if (left_key_state) {
                 mario.cur_direction = 'L';
-                if (view_x == 1400 * 5 - 1402 + Mario::init_x)
-                    all_horizontal_move(moving_unit);
-                else
-                    mario.dx = -1 * moving_unit;
-                view_x -= moving_unit;
+                if (!mario.is_hit_right_side()) {
+                    if (view_x == 1400 * 5 - 1402 + Mario::init_x)
+                        all_horizontal_move(moving_unit);
+                    else
+                        mario.dx = -1 * moving_unit;
+                    view_x -= moving_unit;
+                }
             } else if (right_key_state && view_x < 1400 * 5 ) {
                 mario.cur_direction = 'R';
-                if (view_x == 1400 * 5 - 1402 + Mario::init_x)
-                    mario.set_x(view_x);
-                view_x += moving_unit;
-                mario.dx = moving_unit;
+                if (!mario.is_hit_left_side()) {
+                    if (view_x == 1400 * 5 - 1402 + Mario::init_x)
+                        mario.set_x(view_x);
+                    view_x += moving_unit;
+                    mario.dx = moving_unit;
+                }
             }
         } else {
             if (left_key_state) {
                 mario.cur_direction = 'L';
-                view_x -= moving_unit;
-                all_horizontal_move(moving_unit);
+                if (!mario.is_hit_right_side()) {
+                    view_x -= moving_unit;
+                    all_horizontal_move(moving_unit);
+                }
             } else if (right_key_state) {
                 mario.cur_direction = 'R';
-                view_x += moving_unit;
-                all_horizontal_move(-1 * moving_unit);
+                if (!mario.is_hit_left_side()) {
+                    view_x += moving_unit;
+                    all_horizontal_move(-1 * moving_unit);
+                }
             }
         }
 
         // Jump
         if (up_key_state) {
-            qDebug() << "mario jump";
+            //qDebug() << "mario jump";
             mario.jump();
         }
 
         // 偵測移動過程是否與其他物件碰撞
-        if(mario.mario->collidesWithItem(coins[0]->coin_item)) {
-            qDebug() << "mario touch coin !";
-            cur_scene->removeItem(coins[0]->coin_item);
-            coins[0]->set_xy(0, 1000);
-            score.add_score(1);
+        // coins
+        for (int i = 0; i < static_cast<int>(coins.size()); i++) {
+            if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
+                qDebug() << "mario get coin !";
+                cur_scene->removeItem(coins[i]->coin_item);
+                coins[i]->set_xy(0, 1000);
+                score.add_score(1);
+            }
         }
+
+    } else {
+        mario.is_moving = 0;
     }
 }
 
@@ -177,6 +197,7 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     game_bg.move(moving_unit, 0);
     for (Floor_brick* i : floor_bricks) i->move(moving_unit);
     for (Coin* i : coins) i->move(moving_unit, 0);
+    for (Stone_brick* i : stone_bricks) i->move(moving_unit);
 }
 
 

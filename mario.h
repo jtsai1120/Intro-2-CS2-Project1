@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QString>
 #include "floor_brick.h"
+#include "stone_brick.h"
 
 class Mario {
     public:
@@ -18,16 +19,24 @@ class Mario {
 
         QGraphicsScene *cur_scene;
         QGraphicsPixmapItem *game_bg_item;
-        std::vector<QGraphicsPixmapItem*> floor_brick_items;
+        std::vector<Floor_brick*> floor_bricks;
+        std::vector<Stone_brick*> stone_bricks;
 
         static const int small_mario_height = 52;
         static const int big_mario_height = 80;
-        static const int small_mario_width = 50;
-        static const int big_mario_width = 56;
+        static const int small_mario_width = 36; // original = 50
+        static const int big_mario_width = 40; // original = 56
         static const int init_x = 450, init_y = 620 - Floor_brick::floor_brick_height - small_mario_height;
 
-        int dx, dy;
+        int dx;
+        double dy;
         char cur_direction;
+        bool is_moving;
+        bool is_grounded();
+        bool check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem);
+        bool is_crack_head(); // 撞到頭
+        bool is_hit_left_side(); // 撞到方塊兩左側
+        bool is_hit_right_side(); // 撞到方塊兩右側
 
     private:
         QPixmap mario_stand_R, mario_stand_L;
@@ -36,15 +45,15 @@ class Mario {
         QPixmap mario_die;
         QPixmap mario_jump_L, mario_jump_R;
 
-        int x, y;
-        bool is_grounded();
-        bool check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem);
-
-        const int vy0 = -20;
-        const int ay = 2;
-        // since one jump = 100 pixels = v^2/(2*-a)
-        // let a = -2, v(initial) = 20
+        int x; double y;
+        const double vy0 = -6;
+        const double ay = 0.18;
+        // since one jump = 100 pixels = v^2/(2*a)
+        // let a = 0.18, v(initial) = -6
         QString cur_size;
+        QString cur_pixmap;
+
+
 
 };
 

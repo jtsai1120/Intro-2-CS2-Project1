@@ -15,13 +15,17 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 
 ### 此次新增
 - 新增 Mario.jump()、Mario.is_grounded()、Mario.check_whether_ground_brick()
-
-### 注意事項
+- 改順 mario movement
+- 太多了好懶
 
 ### 預計下次完成
-- mario fall 
-- 要新增 keyReleaseEvent，嘗試解決 mario 移動卡頓問題嗎 ?
-- 考慮跳起來時撞到頭的問題
+1. HP (摔到洞裡、碰到敵人等等會扣血? 看題目報告)
+2. 新增更多 scene、物件
+3. 敵人物件
+4. 抵達終點->結束畫面
+5. mario 跑步動畫 (setPixmap: run1_L -> run2_L -> run1_L -> ...)
+6. 碰撞偵測好像不能寫在 all_move_detection，因為有可能 mario 不移動但是敵人移動觸碰到 mario
+    - 要讓敵人自己內部寫一個碰撞偵測
 
 # 0416 Log (jtsai)
 
