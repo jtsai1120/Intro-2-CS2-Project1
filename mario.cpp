@@ -100,19 +100,18 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
 
 void Mario::jump() {
     if (is_grounded()) {
-        change_direction_picture((cur_direction=='R')? "jump_R" : "jump_L");
-        //QObject::connect(&timer, &QTimer::timeout, this, SLOT(fly()));
         vy = vy0;
-        while( !is_grounded() || vy < 0 ) { // ( !is_grounded() || vy < 0)
+        while( !is_grounded() || vy < 0 ) {
             //if (coliision) {} 碰到頭頂怎麼辦
             dy = vy;
             vy += ay;
+            /*
             QTime dieTime = QTime::currentTime().addMSecs(100);
             while (QTime::currentTime() < dieTime)
                 QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+                */
         }
     }
-    dy = 0;
 }
 
 

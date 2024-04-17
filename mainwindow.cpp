@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(start_button, SIGNAL(clicked()), this, SLOT(on_start_button_clicked()));
     // 每 1ms 觸發畫面更新
     refreshing_timer = new QTimer(this); // 建立計時器
-    refreshing_timer->start(1); // 每 1ms更新一次
+    refreshing_timer->start(2); // 每 1ms更新一次
     connect(refreshing_timer, SIGNAL(timeout()), this, SLOT(update_frame())); // 連接訊號
     /* 這段首先建立了一個計時器 refreshing_timer，
      * 並設定計時器時長為 1ms，也就是每過 1ms，
@@ -37,15 +37,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
      * 再來，我們把此計時器的 timeout()訊號(Signal)連接到 this(此MainWindow物件) 的 update_object()訊號槽(Slot)
      * 也就是每當計時器的 timeout() 被觸發，就會執行 this 的 update_object() -> 每 1 ms更新一次畫面
      */
+    left_key_state = 0;
+    right_key_state = 0;
+    up_key_state = 0;
 }
 
 void MainWindow::update_frame() {
     // 設定視窗(view)的場景(scene)
-    switch(game_status) {
+    switch (game_status) {
         case 0:
             view->setScene(&start_scene);
             break;
         case 1:
+            all_move_detection();
             mario.move();
             view->setScene(&game_scene);
             break;
@@ -86,73 +90,89 @@ void MainWindow::start_init() {
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (game_status == 1) {
         if (event->key() == Qt::Key_A) {// a (left)
-            all_move_detection("left");
+            left_key_state = 1;
+            //all_move_detection("left");
             qDebug() << "mario left";
         }
         else if (event->key() == Qt::Key_D) {// d (right)
-            all_move_detection("right");
+            right_key_state = 1;
+            //all_move_detection("right");
             qDebug() << "mario right";
         }
         else if (event->key() == Qt::Key_W) // w (up)
-            all_move_detection("up");
+            up_key_state = 1;
+            //all_move_detection("up");
     }
 }
 
-void MainWindow::all_move_detection(QString s) {
-    // Move Left or Right
-    const int moving_unit = 15;
-    if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
-        if (s == "left" && view_x > 0) {
-            mario.cur_direction = 'L';
-            view_x -= moving_unit;
-            mario.dx = -1 * moving_unit;
-        } else if (s == "right") {
-            mario.cur_direction = 'R';
-            if (view_x == Mario::init_x)
-                all_horizontal_move(-1 * moving_unit);
-            else
-                mario.dx = moving_unit;
-            view_x += moving_unit;
-        }
-    } else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
-        if (s == "left") {
-            mario.cur_direction = 'L';
-            if (view_x == 1400 * 5 - 1402 + Mario::init_x)
-                all_horizontal_move(moving_unit);
-            else
+void MainWindow::keyReleaseEvent(QKeyEvent *event) {
+    if (game_status == 1) {
+        if (event->key() == Qt::Key_A) // a (left)
+            left_key_state = 0;
+        else if (event->key() == Qt::Key_D)  // d (right)
+            right_key_state = 0;
+        else if (event->key() == Qt::Key_W) // w (up)
+            up_key_state = 0;
+    }
+}
+
+void MainWindow::all_move_detection() {
+    if (left_key_state || right_key_state || up_key_state) {
+        // Move Left or Right
+        const int moving_unit = 1;
+        if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
+            if (left_key_state && view_x > 0) {
+                mario.cur_direction = 'L';
+                view_x -= moving_unit;
                 mario.dx = -1 * moving_unit;
-            view_x -= moving_unit;
-        } else if (s == "right" && view_x < 1400 * 5 ) {
-            mario.cur_direction = 'R';
-            if (view_x == 1400 * 5 - 1402 + Mario::init_x)
-                mario.set_x(view_x);
-            view_x += moving_unit;
-            mario.dx = moving_unit;
+            } else if (right_key_state) {
+                mario.cur_direction = 'R';
+                if (view_x == Mario::init_x)
+                    all_horizontal_move(-1 * moving_unit);
+                else
+                    mario.dx = moving_unit;
+                view_x += moving_unit;
+            }
+        } else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
+            if (left_key_state) {
+                mario.cur_direction = 'L';
+                if (view_x == 1400 * 5 - 1402 + Mario::init_x)
+                    all_horizontal_move(moving_unit);
+                else
+                    mario.dx = -1 * moving_unit;
+                view_x -= moving_unit;
+            } else if (right_key_state && view_x < 1400 * 5 ) {
+                mario.cur_direction = 'R';
+                if (view_x == 1400 * 5 - 1402 + Mario::init_x)
+                    mario.set_x(view_x);
+                view_x += moving_unit;
+                mario.dx = moving_unit;
+            }
+        } else {
+            if (left_key_state) {
+                mario.cur_direction = 'L';
+                view_x -= moving_unit;
+                all_horizontal_move(moving_unit);
+            } else if (right_key_state) {
+                mario.cur_direction = 'R';
+                view_x += moving_unit;
+                all_horizontal_move(-1 * moving_unit);
+            }
         }
-    } else {
-        if (s == "left") {
-            mario.cur_direction = 'L';
-            view_x -= moving_unit;
-            all_horizontal_move(moving_unit);
-        } else if (s == "right") {
-            mario.cur_direction = 'R';
-            view_x += moving_unit;
-            all_horizontal_move(-1 * moving_unit);
+
+        // Jump
+        if (up_key_state) {
+            qDebug() << "mario jump";
+            mario.jump();
         }
-    }
 
-    // Jump
-    if (s == "up") {
-        qDebug() << "mario jump";
-        mario.jump();
-    }
-
-    // 偵測移動過程是否與其他物件碰撞
-    if(mario.mario->collidesWithItem(coins[0]->coin_item)) {
-        qDebug() << "mario touch coin !";
-        cur_scene->removeItem(coins[0]->coin_item);
-        coins[0]->set_xy(0, 1000);
-        score.add_score(1);
+        // 偵測移動過程是否與其他物件碰撞
+        if(mario.mario->collidesWithItem(coins[0]->coin_item)) {
+            qDebug() << "mario touch coin !";
+            cur_scene->removeItem(coins[0]->coin_item);
+            coins[0]->set_xy(0, 1000);
+            score.add_score(1);
+        }
     }
 }
 
