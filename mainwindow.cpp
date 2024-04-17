@@ -84,10 +84,14 @@ void MainWindow::start_init() {
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (game_status == 1) {
-        if (event->key() == Qt::Key_A) // a (left)
+        if (event->key() == Qt::Key_A) {// a (left)
             all_move_detection("left");
-        else if (event->key() == Qt::Key_D) // d (right)
+            qDebug() << "mario left";
+        }
+        else if (event->key() == Qt::Key_D) {// d (right)
             all_move_detection("right");
+            qDebug() << "mario right";
+        }
         else if (event->key() == Qt::Key_W) // w (up)
             all_move_detection("up");
     }
@@ -132,6 +136,7 @@ void MainWindow::all_move_detection(QString s) {
 
     // Jump
     if (s == "up") {
+        qDebug() << "mario jump";
         mario.jump();
     }
 

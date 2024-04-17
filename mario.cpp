@@ -3,7 +3,9 @@
 #include <QString>
 #include <QDebug>
 #include <QTimer>
-#include <QThread>
+#include <QTime>
+#include <QObject>
+#include <QCoreApplication>
 
 Mario::Mario() {
     mario_stand_R.load(":/Dataset/image/Mario_small/s_mario_stand_R.png");
@@ -22,7 +24,17 @@ Mario::Mario() {
 
 void Mario::move(int dx, int dy) {
     cur_direction = (dx>=0)? 'R':'L';
-    change_direction_picture((dx>=0)? "stand_R":"stand_L");
+    if (dx>=0) {
+        if (is_grounded())
+            change_direction_picture("stand_R");
+        else
+            change_direction_picture("jump_R");
+    } else {
+        if (is_grounded())
+            change_direction_picture("stand_L");
+        else
+            change_direction_picture("jump_L");
+    }
     x += dx;
     y += dy;
     mario->setPos(x, y);
@@ -70,7 +82,7 @@ bool Mario::is_grounded() {
             }
         }
     }
-    if (_is_grounded) change_direction_picture((cur_direction=='R')? "stand_R" : "stand_L");
+    //if (_is_grounded)
     return _is_grounded;
 }
 
@@ -89,17 +101,20 @@ void Mario::jump() {
     if (is_grounded()) {
         change_direction_picture((cur_direction=='R')? "jump_R" : "jump_L");
 
-
+        //QObject::connect(&timer, &QTimer::timeout, this, SLOT(fly()));
         vy = vy0;
-        while(!is_grounded() || vy < 0 ) {
-            //if (coliision) {}
+        while( !is_grounded() || vy < 0 ) { // ( !is_grounded() || vy < 0)
+            //if (coliision) {} 碰到頭頂怎麼辦
             y += vy;
             mario->setPos(x, y);
-            qDebug() << "y: " << y;
             vy += ay;
-
-
+            QTime dieTime = QTime::currentTime().addMSecs(100);
+            while (QTime::currentTime() < dieTime)
+                QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
         }
     }
+    change_direction_picture((cur_direction=='R')? "stand_R" : "stand_L");
 }
+
+
 

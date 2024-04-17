@@ -25,6 +25,9 @@ class Mario {
         static const int small_mario_width = 50;
         static const int big_mario_width = 56;
         static const int init_x = 450, init_y = 620 - Floor_brick::floor_brick_height - small_mario_height;
+
+        int dx, dy;
+
     private:
         QPixmap mario_stand_R, mario_stand_L;
         QPixmap mario_run1_L, mario_run2_L;
@@ -42,6 +45,7 @@ class Mario {
         // since one jump = 100 pixels = v^2/(2*-a)
         // let a = -2, v(initial) = 20
         QString cur_size;
+
 };
 
 #endif // MARIO_H
