@@ -6,6 +6,7 @@
 #include <QTime>
 #include <QObject>
 #include <QCoreApplication>
+#include <QRectF>
 
 Mario::Mario() {
     mario_stand_R.load(":/Dataset/image/Mario_small/s_mario_stand_R.png");
@@ -61,8 +62,17 @@ void Mario::move() {
         }
     }
     change_direction_picture(cur_pixmap);
+    /*
+    if (is_hit_left_side())
+        qDebug() << "hit left side!";
+    if (is_hit_right_side())
+        qDebug() << "hit right side!";
+    if (is_crack_head())
+        qDebug() << "is crack head";
+    */
     x += dx;
     dx = 0;
+
     y += dy;
     if (is_crack_head()) dy = 1;
     else if (!is_grounded()) dy += ay;
@@ -94,11 +104,17 @@ void Mario::change_direction_picture(QString s) {
     else qDebug() << "Mario Pixmap Error";
 }
 
+void Mario::jump() {
+    if (is_grounded()) { // 防止二次跳
+        dy = vy0;
+    }
+}
+
 bool Mario::is_grounded() {
     QList<QGraphicsItem *> items = cur_scene->items();
     bool _is_grounded = 0;
     for (QGraphicsItem *item : items) {
-        if (item->contains(item->mapFromScene(x, y + ((cur_size=="small")? small_mario_height : big_mario_height)))) {
+        if (item->contains(item->mapFromScene(x + 10, y + ((cur_size=="small")? small_mario_height : big_mario_height)))) {
             QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
             if(check_whether_ground_brick(PixmapItem)) {
                 //qDebug() << "left foot is grounded";
@@ -138,17 +154,11 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
     return is_ground_brick;
 }
 
-void Mario::jump() {
-    if (is_grounded()) { // 防止二次跳
-        dy = vy0;
-    }
-}
-
 bool Mario::is_crack_head() {
     QList<QGraphicsItem *> items = cur_scene->items();
     bool _is_crack_head = 0;
     for (QGraphicsItem *item : items) {
-        if (item->contains(item->mapFromScene(x, y))) {
+        if (item->contains(item->mapFromScene(x + 10, y))) {
             QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
             if(check_whether_ground_brick(PixmapItem)) {
                 _is_crack_head = 1;
@@ -164,24 +174,36 @@ bool Mario::is_crack_head() {
     return _is_crack_head;
 }
 
-bool Mario::is_hit_side() {
+bool Mario::is_hit_left_side() {
     QList<QGraphicsItem *> items = cur_scene->items();
-    bool _is_hit_side = 0;
+    bool _is_hit_left_side = 0;
+    QRectF rect1 = mario->sceneBoundingRect();
     for (QGraphicsItem *item : items) {
-        if (item->contains(item->mapFromScene(x, y + ((cur_size=="small")? small_mario_height : big_mario_height)/2))) {
-            QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
-            if(check_whether_ground_brick(PixmapItem)) {
-                _is_hit_side = 1;
-            }
-        }
-        if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), y + ((cur_size=="small")? small_mario_height : big_mario_height)/2))) {
-            QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
-            if(check_whether_ground_brick(PixmapItem)) {
-                _is_hit_side = 1;
-            }
+        QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
+        if (check_whether_ground_brick(PixmapItem)) {
+            QRectF rect2 = item->sceneBoundingRect();
+            if (rect1.right()>rect2.left()&&rect1.left()<rect2.left())
+                if (rect1.bottom() - 10 > rect2.top() && rect1.top() < rect2.bottom())
+                    _is_hit_left_side = 1;
         }
     }
-    return _is_hit_side;
+    return _is_hit_left_side;
+}
+
+bool Mario::is_hit_right_side() {
+    QList<QGraphicsItem *> items = cur_scene->items();
+    bool _is_hit_right_side = 0;
+    QRectF rect1 = mario->sceneBoundingRect();
+    for (QGraphicsItem *item : items) {
+        QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
+        if (check_whether_ground_brick(PixmapItem)) {
+            QRectF rect2 = item->sceneBoundingRect();
+            if (rect1.left()<rect2.right()&&rect1.right()>rect2.right())
+                if (rect1.bottom() - 10 > rect2.top() && rect1.top() < rect2.bottom())
+                    _is_hit_right_side = 1;
+        }
+    }
+    return _is_hit_right_side;
 }
 
 

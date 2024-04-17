@@ -15,6 +15,7 @@ void MainWindow::game_init() {
     cur_scene = &game_scene;
     view_x = Mario::init_x; // Equals to mario's x coordinates between the scenes;
 
+
     // Scene 1
         // add game_bg
         cur_scene->addItem(game_bg.game_bg_item);
@@ -31,17 +32,30 @@ void MainWindow::game_init() {
         }
 
         // add stone_bricks
-        stone_bricks.push_back(new Stone_brick);
-        stone_bricks.push_back(new Stone_brick);
-        stone_bricks[0]->set_xy(600, 410);
-        stone_bricks[1]->set_xy(800, 330);
-        cur_scene->addItem(stone_bricks[0]->stone_brick_item);
-        cur_scene->addItem(stone_bricks[1]->stone_brick_item);
+        std::vector<std::vector<int>> stone_bricks_list = {
+            {800, 620 - Floor_brick::floor_brick_height - Stone_brick::stone_brick_height},
+            {800, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {800, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
+            {650, 620 - Floor_brick::floor_brick_height - Stone_brick::stone_brick_height},
+        };
+        for (int i = 0; i < static_cast<int>(stone_bricks_list.size()); i++) {
+            stone_bricks.push_back(new Stone_brick);
+            stone_bricks[i]->set_xy(stone_bricks_list[i][0], stone_bricks_list[i][1]);
+            cur_scene->addItem(stone_bricks[i]->stone_brick_item);
+        }
+
 
         // add coins
-        coins.push_back(new Coin);
-        coins[0]->set_xy(800, 620 - Floor_brick::floor_brick_height - Coin::coin_height);
-        cur_scene->addItem(coins[0]->coin_item);
+        std::vector<std::vector<int>> coins_list = {
+            {1000, 620 - Floor_brick::floor_brick_height - Coin::coin_height},
+            {800, stone_bricks_list[2][1] - Coin::coin_height}
+        };
+        for (int i = 0; i < static_cast<int>(coins_list.size()); i++) {
+            coins.push_back(new Coin);
+            coins[i]->set_xy(coins_list[i][0], coins_list[i][1]);
+            cur_scene->addItem(coins[i]->coin_item);
+        }
+
 
         // add mario
         mario.cur_scene = cur_scene;

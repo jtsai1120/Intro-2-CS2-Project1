@@ -32,6 +32,11 @@ class Mario {
         double dy;
         char cur_direction;
         bool is_moving;
+        bool is_grounded();
+        bool check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem);
+        bool is_crack_head(); // 撞到頭
+        bool is_hit_left_side(); // 撞到方塊兩左側
+        bool is_hit_right_side(); // 撞到方塊兩右側
 
     private:
         QPixmap mario_stand_R, mario_stand_L;
@@ -41,14 +46,10 @@ class Mario {
         QPixmap mario_jump_L, mario_jump_R;
 
         int x; double y;
-        bool is_grounded();
-        bool check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem);
-        bool is_crack_head(); // 撞到頭
-
         const double vy0 = -6;
         const double ay = 0.18;
         // since one jump = 100 pixels = v^2/(2*a)
-        // let a = -2, v(initial) = 20
+        // let a = 0.18, v(initial) = -6
         QString cur_size;
         QString cur_pixmap;
 
