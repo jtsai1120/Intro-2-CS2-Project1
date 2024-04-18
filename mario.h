@@ -21,6 +21,7 @@ class Mario : public QObject {
         void move();
         QGraphicsPixmapItem *mario;
         void set_x(int new_x) { x = new_x; }
+        int get_y() { return y; }
         void change_direction_picture(QString s);
         void jump();
         void change();
@@ -38,7 +39,8 @@ class Mario : public QObject {
         static const int big_mario_height = 80;
         static const int small_mario_width = 36; // original = 50
         static const int big_mario_width = 40; // original = 56
-        static const int init_x = 450, init_y = 620 - Floor_brick::floor_brick_height - small_mario_height;
+        static const int init_x = 450;
+        static const int init_y = 620 - Floor_brick::floor_brick_height - small_mario_height;
 
         int dx;
         double dy;
@@ -49,6 +51,7 @@ class Mario : public QObject {
         bool is_crack_head(); // 撞到頭
         bool is_hit_left_side(); // 撞到方塊兩左側
         bool is_hit_right_side(); // 撞到方塊兩右側
+        bool movable;
 
     private:
         QPixmap mario_stand_R, mario_stand_L;

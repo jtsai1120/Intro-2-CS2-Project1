@@ -12,6 +12,7 @@ class Hp {
         const int x = 115;
         const int y = 0;
 
+        int get_hp() { return hp_point; }
         void add_hp(int n);
         void sub_hp(int n);
 

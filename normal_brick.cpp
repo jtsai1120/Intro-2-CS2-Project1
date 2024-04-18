@@ -6,7 +6,6 @@ Normal_brick::Normal_brick() {
     normal_brick_item = new QGraphicsPixmapItem(normal_brick_pic);
     dx = 0;
     dy = 0;
-
 }
 
 void Normal_brick::set_xy(int new_x, int new_y) {

@@ -31,74 +31,78 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     //qDebug() << "width=" << mario_stand_R.width();
     //qDebug() << "height=" << mario_stand_R.height();
     is_passed_jump_cd = 1;
+    movable = 1;
 }
 
 void Mario::change(){
-    if (cur_direction == 'R') {
-        if (is_grounded()) {
-            if (is_moving) {
-                if (cur_pixmap != "run1_R")
-                    cur_pixmap = "run1_R";
-                else
-                    cur_pixmap = "run2_R";
+    if (movable) {
+        if (cur_direction == 'R') {
+            if (is_grounded()) {
+                if (is_moving) {
+                    if (cur_pixmap != "run1_R")
+                        cur_pixmap = "run1_R";
+                    else
+                        cur_pixmap = "run2_R";
+                }
+            }
+       }
+       else{
+            if (is_grounded()) {
+                if (is_moving) {
+                   if (cur_pixmap != "run1_L")
+                        cur_pixmap = "run1_L";
+                    else
+                        cur_pixmap = "run2_L";
+                }
             }
         }
-   }
-   else{
-        if (is_grounded()) {
-            if (is_moving) {
-               if (cur_pixmap != "run1_L")
-                    cur_pixmap = "run1_L";
-                else
-                    cur_pixmap = "run2_L";
-            }
-        }
+        //qDebug()<<"change";
+        change_direction_picture(cur_pixmap);
     }
-    //qDebug()<<"change";
-    change_direction_picture(cur_pixmap);
 }
 
 void Mario::move() {
-    if (cur_direction == 'R') {
-        if (is_grounded()) {
-            if (!is_moving)
-                cur_pixmap = "stand_R";
-            else if (!is_passed_jump_cd)
-                cur_pixmap = "stand_R";
+    if (movable) {
+        if (cur_direction == 'R') {
+            if (is_grounded()) {
+                if (!is_moving)
+                    cur_pixmap = "stand_R";
+                else if (!is_passed_jump_cd)
+                    cur_pixmap = "stand_R";
+            }
+            else {
+                cur_pixmap = "jump_R";
+            }
+        } else {
+            if (is_grounded()) {
+                if (!is_moving)
+                    cur_pixmap = "stand_L";
+                else if (!is_passed_jump_cd)
+                    cur_pixmap = "stand_L";
+            }
+            else {
+                cur_pixmap = "jump_L";
+            }
         }
-        else {
-            cur_pixmap = "jump_R";
-        }
-    } else {
-        if (is_grounded()) {
-            if (!is_moving)
-                cur_pixmap = "stand_L";
-            else if (!is_passed_jump_cd)
-                cur_pixmap = "stand_L";
-        }
-        else {
-            cur_pixmap = "jump_L";
-        }
+        change_direction_picture(cur_pixmap);
+        /*
+        if (is_hit_left_side())
+            qDebug() << "hit left side!";
+        if (is_hit_right_side())
+            qDebug() << "hit right side!";
+        if (is_crack_head())
+            qDebug() << "is crack head";
+        */
+        x += dx;
+        dx = 0;
+
+        y += dy;
+        if (is_crack_head()) dy = 1;
+        else if (!is_grounded()) dy += ay;
+        else dy = 0;
+
+        mario->setPos(x, y);
     }
-    change_direction_picture(cur_pixmap);
-    /*
-    if (is_hit_left_side())
-        qDebug() << "hit left side!";
-    if (is_hit_right_side())
-        qDebug() << "hit right side!";
-    if (is_crack_head())
-        qDebug() << "is crack head";
-    */
-    x += dx;
-    dx = 0;
-
-    y += dy;
-    if (is_crack_head()) dy = 1;
-    else if (!is_grounded()) dy += ay;
-    else dy = 0;
-
-    mario->setPos(x, y);
-
 }
 
 void Mario::change_direction_picture(QString s) {

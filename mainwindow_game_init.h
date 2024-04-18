@@ -29,6 +29,11 @@ void MainWindow::game_init() {
             cur_scene->addItem(game_bgs[i]->game_bg_item);
         }
 
+        // add flag pole & flag
+        cur_scene->addItem(flag_pole.flag_pole_item);
+        flag.mario = &mario;
+        cur_scene->addItem(flag.flag_item);
+
         // score text
         cur_scene->addItem(score.score_text);
 
@@ -36,18 +41,16 @@ void MainWindow::game_init() {
         cur_scene->addItem(hp.hp_text);
 
         // add floor_bricks_items
-        const int floor_num_in_a_scene = 1000 / Floor_brick::floor_brick_width;
-        for (int i = 0 ; i < floor_num_in_a_scene ; i++) {
+        const int max_floor_brick_num_in_a_scene = 1400 / Floor_brick::floor_brick_width;
+        for (int i = 0 ; i < 5 * max_floor_brick_num_in_a_scene ; i++) {
             floor_bricks.push_back(new Floor_brick);
-            floor_bricks[i]->set_x(i * Floor_brick::floor_brick_width);
+            if ((i+7) % max_floor_brick_num_in_a_scene == 0
+                  || (i+8) % max_floor_brick_num_in_a_scene == 0 )
+                floor_bricks[i]->set_x(-100);
+            else
+                floor_bricks[i]->set_x(i * Floor_brick::floor_brick_width);
             cur_scene->addItem(floor_bricks[i]->floor_brick_item);
         }
-        for (int i = 20 ; i < 2 * floor_num_in_a_scene ; i++) {
-            floor_bricks.push_back(new Floor_brick);
-            floor_bricks[i]->set_x(500 + i * Floor_brick::floor_brick_width);
-            cur_scene->addItem(floor_bricks[i]->floor_brick_item);
-        }
-
 
         // add stone_bricks
         std::vector<std::vector<int>> stone_bricks_list = {
@@ -128,6 +131,7 @@ void MainWindow::game_init() {
         mario.water_pipes = water_pipes;
 
         cur_scene->addItem(mario.mario);
+
 }
 
 
