@@ -64,7 +64,7 @@ class MainWindow : public QMainWindow {
         // game scene
         Score score;
         Hp hp;
-        Game_bg game_bg, game_bg1, game_bg2, game_bg3, game_bg4;
+        std::vector<Game_bg*> game_bgs;
         Mario mario;
         std::vector<Coin*> coins;
         std::vector<Stone_brick*> stone_bricks;

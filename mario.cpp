@@ -126,9 +126,6 @@ void Mario::change_direction_picture(QString s) {
 void Mario::jump() {
     if (is_grounded() && is_passed_jump_cd) { // 防止二次跳
         dy = vy0;
-        is_passed_jump_cd = 0;
-        QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
-        jump_cd.start(520);
     }
 }
 
@@ -222,8 +219,12 @@ bool Mario::is_crack_head() {
                     }
             }
         }
-        if (_is_crack_head && _is_crack_noraml_brick)
+        if (_is_crack_head && _is_crack_noraml_brick) {
             hit_normal_brick->crack();
+            is_passed_jump_cd = 0;
+            QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
+            jump_cd.start(520);
+        }
 
     }
     return _is_crack_head;

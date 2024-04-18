@@ -26,7 +26,6 @@ class Mario : public QObject {
         void change();
 
         QGraphicsScene *cur_scene;
-        QGraphicsPixmapItem *game_bg_item;
         std::vector<Floor_brick*> floor_bricks;
         std::vector<Stone_brick*> stone_bricks;
         std::vector<Normal_brick*> normal_bricks;

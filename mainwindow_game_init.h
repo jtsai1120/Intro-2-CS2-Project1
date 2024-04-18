@@ -23,15 +23,11 @@ void MainWindow::game_init() {
 
     // Game Scene
         // add game_bg
-        cur_scene->addItem(game_bg.game_bg_item);
-        cur_scene->addItem(game_bg1.game_bg_item);
-        cur_scene->addItem(game_bg2.game_bg_item);
-        cur_scene->addItem(game_bg3.game_bg_item);
-        cur_scene->addItem(game_bg4.game_bg_item);
-        game_bg1.set(1);//向右方平移一個螢幕大小
-        game_bg2.set(2);
-        game_bg3.set(3);
-        game_bg4.set(4);
+        for (int i = 0; i < 5; i++) {
+            game_bgs.push_back(new Game_bg);
+            game_bgs[i]->set(i);
+            cur_scene->addItem(game_bgs[i]->game_bg_item);
+        }
 
         // score text
         cur_scene->addItem(score.score_text);
@@ -69,7 +65,7 @@ void MainWindow::game_init() {
 
         // add normal_bricks
         std::vector<std::vector<int>> normal_bricks_list = {
-            {950, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
+            {200, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
             //{950, 620 - Floor_brick::floor_brick_height - 1 * Normal_brick::normal_brick_height},
         };
         for (int i = 0; i < static_cast<int>(normal_bricks_list.size()); i++) {
@@ -109,7 +105,6 @@ void MainWindow::game_init() {
             cur_scene->addItem(water_pipes[i]->water_pipe_item);
         }
 
-
         // add coins
         std::vector<std::vector<int>> coins_list = {
             {1000, 620 - Floor_brick::floor_brick_height - Coin::coin_height},
@@ -121,10 +116,8 @@ void MainWindow::game_init() {
             cur_scene->addItem(coins[i]->coin_item);
         }
 
-
         // add mario
         mario.cur_scene = cur_scene;
-        mario.game_bg_item = game_bg.game_bg_item;
 
         // 設定mario 的磚塊位置
         mario.floor_bricks = floor_bricks;

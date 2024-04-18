@@ -210,7 +210,6 @@ void MainWindow::all_move_detection() {
 
         }
 
-
         // 偵測移動過程是否與其他物件碰撞
         // coins
         for (int i = 0; i < static_cast<int>(coins.size()); i++) {
@@ -228,12 +227,7 @@ void MainWindow::all_move_detection() {
 }
 
 void MainWindow::all_horizontal_move(int moving_unit) {
-    game_bg.move(moving_unit, 0);
-    game_bg1.move(moving_unit, 0);
-    game_bg2.move(moving_unit, 0);
-    game_bg3.move(moving_unit, 0);
-    game_bg4.move(moving_unit, 0);
-
+    for (Game_bg* i : game_bgs) i->move(moving_unit, 0);
     for (Coin* i : coins) i->move(moving_unit, 0);
     for (Floor_brick* i : floor_bricks) i->move(moving_unit);
     for (Stone_brick* i : stone_bricks) i->move(moving_unit);
