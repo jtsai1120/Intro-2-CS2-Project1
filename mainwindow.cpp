@@ -113,12 +113,12 @@ void MainWindow::end_init() {
     win_or_lose_text->setPos(380, 200);
     QString win_or_lose_text_combined = " You ";
     if (mario.get_y() > 620) {
-        win_or_lose_text_combined = win_or_lose_text_combined + "Lose (Fall UnderGround)";
+        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Fall UnderGround";
     } else
     if (hp.get_hp() == 0) {
-        win_or_lose_text_combined = win_or_lose_text_combined + "Lose (HP->0)";
+        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, HP -> 0";
     } else if (score.get_score() <= 20) {
-        win_or_lose_text_combined = win_or_lose_text_combined + "Lose (Score<=20)";
+        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Score <= 20)";
     } else { // win
         win_or_lose_text_combined = win_or_lose_text_combined + "Win";
     }
