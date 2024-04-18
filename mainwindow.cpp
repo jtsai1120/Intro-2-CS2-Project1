@@ -120,12 +120,18 @@ void MainWindow::all_move_detection() {
         //qDebug() << "mario is moving";
         // Move Left or Right
         const int moving_unit = 5;
+        int distance=0;
         if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
             if (left_key_state && view_x > 0) {
                 mario.cur_direction = 'L';
                 if (!mario.is_hit_right_side()) {
                     view_x -= moving_unit;
                     mario.dx = -1 * moving_unit;
+                    distance+=5;
+                    if (distance==moving_unit){
+                        mario.change();
+                        distance=0;
+                   }
                 }
             } else if (right_key_state) {
                 mario.cur_direction = 'R';
@@ -135,6 +141,11 @@ void MainWindow::all_move_detection() {
                     else
                         mario.dx = moving_unit;
                     view_x += moving_unit;
+                    distance+=5;
+                    if (distance==moving_unit){
+                        mario.change();
+                        distance=0;
+                   }
                 }
             }
         } else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
@@ -146,6 +157,11 @@ void MainWindow::all_move_detection() {
                     else
                         mario.dx = -1 * moving_unit;
                     view_x -= moving_unit;
+                    distance+=5;
+                    if (distance==moving_unit){
+                        mario.change();
+                        distance=0;
+                   }
                 }
             } else if (right_key_state && view_x < 1400 * 5 ) {
                 mario.cur_direction = 'R';
@@ -154,6 +170,11 @@ void MainWindow::all_move_detection() {
                         mario.set_x(view_x);
                     view_x += moving_unit;
                     mario.dx = moving_unit;
+                    distance+=5;
+                    if (distance==moving_unit){
+                        mario.change();
+                        distance=0;
+                   }
                 }
             }
         } else {
@@ -162,12 +183,22 @@ void MainWindow::all_move_detection() {
                 if (!mario.is_hit_right_side()) {
                     view_x -= moving_unit;
                     all_horizontal_move(moving_unit);
+                    distance+=5;
+                    if (distance==moving_unit){
+                        mario.change();
+                        distance=0;
+                   }
                 }
             } else if (right_key_state) {
                 mario.cur_direction = 'R';
                 if (!mario.is_hit_left_side()) {
                     view_x += moving_unit;
                     all_horizontal_move(-1 * moving_unit);
+                    distance+=5;
+                    if (distance==moving_unit){
+                        mario.change();
+                        distance=0;
+                   }
                 }
             }
         }

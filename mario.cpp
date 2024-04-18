@@ -32,7 +32,7 @@ Mario::Mario() {
     //qDebug() << "height=" << mario_stand_R.height();
 }
 
-void Mario::move() {
+void Mario::change(){
     if (cur_direction == 'R') {
         if (is_grounded()) {
             if (is_moving) {
@@ -41,14 +41,9 @@ void Mario::move() {
                 else
                     cur_pixmap = "run2_R";
             }
-            else {
-                cur_pixmap = "stand_R";
-            }
         }
-        else {
-            cur_pixmap = "jump_R";
-        }
-    } else {
+   }
+   else{
         if (is_grounded()) {
             if (is_moving) {
                if (cur_pixmap != "run1_L")
@@ -56,8 +51,27 @@ void Mario::move() {
                 else
                     cur_pixmap = "run2_L";
             }
-            else
-                cur_pixmap = "stand_L";
+        }
+    }
+    qDebug()<<"change";
+    change_direction_picture(cur_pixmap);
+}
+
+void Mario::move() {
+    if (cur_direction == 'R') {
+        if (is_grounded()) {
+            if (!is_moving) {
+               cur_pixmap = "stand_R";
+            }
+        }
+        else {
+            cur_pixmap = "jump_R";
+        }
+    } else {
+        if (is_grounded()) {
+            if (!is_moving) {
+               cur_pixmap = "stand_L";
+            }
         }
         else {
             cur_pixmap = "jump_L";
@@ -92,11 +106,11 @@ void Mario::change_direction_picture(QString s) {
     else if (s == "run1_L")
         mario->setPixmap(mario_run1_L);
     else if (s == "run2_L")
-        mario->setPixmap(mario_run1_L);
+        mario->setPixmap(mario_run2_L);
     else if (s == "run1_R")
-        mario->setPixmap(mario_run1_L);
+        mario->setPixmap(mario_run1_R);
     else if (s == "run2_R")
-        mario->setPixmap(mario_run1_L);
+        mario->setPixmap(mario_run2_R);
     else if (s == "die")
         mario->setPixmap(mario_die);
     else if (s == "jump_L")

@@ -21,6 +21,7 @@ class Mario {
         void set_x(int new_x) { x = new_x; }
         void change_direction_picture(QString s);
         void jump();
+        void change();
 
         QGraphicsScene *cur_scene;
         QGraphicsPixmapItem *game_bg_item;
