@@ -36,6 +36,9 @@ void MainWindow::game_init() {
         // score text
         cur_scene->addItem(score.score_text);
 
+        // hp text
+        cur_scene->addItem(hp.hp_text);
+
         // add floor_bricks_items
         const int floor_num_in_a_scene = 1000 / Floor_brick::floor_brick_width;
         for (int i = 0 ; i < floor_num_in_a_scene ; i++) {

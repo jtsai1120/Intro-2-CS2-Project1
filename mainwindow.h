@@ -12,6 +12,7 @@
 #include "box_brick.h"
 #include "broken_brick.h"
 #include "water_pipe.h"
+#include "hp.h"
 #include <vector>
 #include <string>
 #include <QMainWindow>
@@ -62,6 +63,7 @@ class MainWindow : public QMainWindow {
 
         // game scene
         Score score;
+        Hp hp;
         Game_bg game_bg, game_bg1, game_bg2, game_bg3, game_bg4;
         Mario mario;
         std::vector<Coin*> coins;

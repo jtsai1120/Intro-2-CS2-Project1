@@ -14,6 +14,7 @@ SOURCES += \
     coin.cpp \
     floor_brick.cpp \
     game_bg.cpp \
+    hp.cpp \
     main.cpp \
     mainwindow.cpp \
     mario.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     coin.h \
     floor_brick.h \
     game_bg.h \
+    hp.h \
     mainwindow.h \
     mainwindow_game_init.h \
     mario.h \
