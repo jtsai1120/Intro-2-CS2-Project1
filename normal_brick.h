@@ -10,14 +10,22 @@ public:
     QGraphicsPixmapItem *normal_brick_item;
 
     void set_xy(int new_x, int new_y);
-    void move(int dx);
-    void crack(double dy);//撞擊反應
+    void move();
+    void crack();//撞擊反應
 
     static const int normal_brick_height = 50;
     static const int normal_brick_width = 50;
+    int init_y;
+
+    int dx;
+    double dy;
+
 private:
     QPixmap normal_brick_pic;
-    int x, y;
+    int x;
+    double y;
+    const double vy0 = -2;
+    const double ay = 0.08;
 
 };
 

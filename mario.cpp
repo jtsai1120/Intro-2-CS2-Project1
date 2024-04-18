@@ -116,15 +116,14 @@ bool Mario::is_grounded() {
     QList<QGraphicsItem *> items = cur_scene->items();
     bool _is_grounded = 0;
     for (QGraphicsItem *item : items) {
-        if (item->contains(item->mapFromScene(x + 10, y + ((cur_size=="small")? small_mario_height : big_mario_height)))) {
-            QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
+        QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
+        if (item->contains(item->mapFromScene(x + 10, y + ((cur_size=="small")? small_mario_height : big_mario_height)))) {  
             if(check_whether_ground_brick(PixmapItem)) {
                 //qDebug() << "left foot is grounded";
                 _is_grounded = 1;
             }
         }
         if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), (y + ((cur_size=="small")? small_mario_height : big_mario_height))))) {
-            QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
             if(check_whether_ground_brick(PixmapItem)) {
                 //qDebug() << "right foot is grounded";
                 _is_grounded = 1;
@@ -152,11 +151,8 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
 
     // check whether normal brick
     for (Normal_brick *i : normal_bricks)
-        if (i->normal_brick_item == PixmapItem){
-            i->crack(dy);
+        if (i->normal_brick_item == PixmapItem)
             is_ground_brick = 1;
-            //bug:似乎不是碰到normal block也會觸發
-        }
 
     // check whether box brick
     for (Box_brick *i : box_bricks)
@@ -175,19 +171,33 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
 bool Mario::is_crack_head() {
     QList<QGraphicsItem *> items = cur_scene->items();
     bool _is_crack_head = 0;
+    bool _is_crack_noraml_brick = 0;
+    Normal_brick *hit_normal_brick;
     for (QGraphicsItem *item : items) {
+        QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
         if (item->contains(item->mapFromScene(x + 10, y))) {
-            QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
             if(check_whether_ground_brick(PixmapItem)) {
                 _is_crack_head = 1;
+                for (Normal_brick *i : normal_bricks)
+                    if (i->normal_brick_item == PixmapItem) {
+                        _is_crack_noraml_brick = 1;
+                        hit_normal_brick = i;
+                    }
             }
         }
         if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), y))) {
-            QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
             if(check_whether_ground_brick(PixmapItem)) {
                 _is_crack_head = 1;
+                for (Normal_brick *i : normal_bricks)
+                    if (i->normal_brick_item == PixmapItem) {
+                        _is_crack_noraml_brick = 1;
+                        hit_normal_brick = i;
+                    }
             }
         }
+        if (_is_crack_head && _is_crack_noraml_brick)
+            hit_normal_brick->crack();
+
     }
     return _is_crack_head;
 }

@@ -21,7 +21,7 @@ void MainWindow::game_init() {
     view_x = Mario::init_x; // Equals to mario's x coordinates between the scenes;
 
 
-    // Scene 1
+    // Game Scene
         // add game_bg
         cur_scene->addItem(game_bg.game_bg_item);
         cur_scene->addItem(game_bg1.game_bg_item);
@@ -66,11 +66,13 @@ void MainWindow::game_init() {
 
         // add normal_bricks
         std::vector<std::vector<int>> normal_bricks_list = {
-            {950, 620 - Floor_brick::floor_brick_height - 2 * Normal_brick::normal_brick_height},
+            {950, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
+            //{950, 620 - Floor_brick::floor_brick_height - 1 * Normal_brick::normal_brick_height},
         };
         for (int i = 0; i < static_cast<int>(normal_bricks_list.size()); i++) {
             normal_bricks.push_back(new Normal_brick);
             normal_bricks[i]->set_xy(normal_bricks_list[i][0], normal_bricks_list[i][1]);
+            normal_bricks[i]->init_y = normal_bricks_list[i][1];
             cur_scene->addItem(normal_bricks[i]->normal_brick_item);
         }
 
