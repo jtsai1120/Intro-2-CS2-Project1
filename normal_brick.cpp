@@ -16,7 +16,6 @@ void Normal_brick::set_xy(int new_x, int new_y) {
 }
 
 void Normal_brick::move() {
-    qDebug() << "dy=" << dy;
 
     x += dx;
     dx = 0;
