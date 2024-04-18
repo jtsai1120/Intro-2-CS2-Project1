@@ -3,12 +3,12 @@
 #include <QString>
 #include <QDebug>
 #include <QTimer>
-#include <QTime>
 #include <QObject>
 #include <QCoreApplication>
 #include <QRectF>
+#include <QLabel>
 
-Mario::Mario() {
+Mario::Mario(QWidget *parent) : QObject(parent) {
     mario_stand_R.load(":/Dataset/image/Mario_small/s_mario_stand_R.png");
     mario_stand_L.load(":/Dataset/image/Mario_small/s_mario_stand_L.png");
     mario_jump_R.load(":/Dataset/image/Mario_small/s_mario_jump1_R.png");
@@ -30,6 +30,7 @@ Mario::Mario() {
     is_moving = 0;
     //qDebug() << "width=" << mario_stand_R.width();
     //qDebug() << "height=" << mario_stand_R.height();
+    is_passed_jump_cd = 1;
 }
 
 void Mario::change(){
@@ -53,25 +54,27 @@ void Mario::change(){
             }
         }
     }
-    qDebug()<<"change";
+    //qDebug()<<"change";
     change_direction_picture(cur_pixmap);
 }
 
 void Mario::move() {
     if (cur_direction == 'R') {
         if (is_grounded()) {
-            if (!is_moving) {
-               cur_pixmap = "stand_R";
-            }
+            if (!is_moving)
+                cur_pixmap = "stand_R";
+            else if (!is_passed_jump_cd)
+                cur_pixmap = "stand_R";
         }
         else {
             cur_pixmap = "jump_R";
         }
     } else {
         if (is_grounded()) {
-            if (!is_moving) {
-               cur_pixmap = "stand_L";
-            }
+            if (!is_moving)
+                cur_pixmap = "stand_L";
+            else if (!is_passed_jump_cd)
+                cur_pixmap = "stand_L";
         }
         else {
             cur_pixmap = "jump_L";
@@ -121,10 +124,20 @@ void Mario::change_direction_picture(QString s) {
 }
 
 void Mario::jump() {
-    if (is_grounded()) { // 防止二次跳
+    if (is_grounded() && is_passed_jump_cd) { // 防止二次跳
         dy = vy0;
+        is_passed_jump_cd = 0;
+        QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
+        jump_cd.start(520);
     }
 }
+
+void Mario::jump_cd_trigger() {
+    jump_cd.stop();
+    //qDebug() << "jump cd passed!";
+    is_passed_jump_cd = 1;
+}
+
 
 bool Mario::is_grounded() {
     QList<QGraphicsItem *> items = cur_scene->items();
@@ -247,5 +260,6 @@ bool Mario::is_hit_right_side() {
     }
     return _is_hit_right_side;
 }
+
 
 

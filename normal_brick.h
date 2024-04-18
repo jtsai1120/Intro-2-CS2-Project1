@@ -25,7 +25,7 @@ private:
     int x;
     double y;
     const double vy0 = -2;
-    const double ay = 0.08;
+    const double ay = 0.15;
 
 };
 

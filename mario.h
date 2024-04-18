@@ -3,8 +3,10 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QObject>
 #include <QPixmap>
 #include <QString>
+#include <QTimer>
 #include "stone_brick.h"
 #include "normal_brick.h"
 #include "floor_brick.h"
@@ -12,10 +14,10 @@
 #include "broken_brick.h"
 #include "water_pipe.h"
 
-
-class Mario {
+class Mario : public QObject {
+    Q_OBJECT
     public:
-        Mario();
+        Mario(QWidget *parent = nullptr);
         void move();
         QGraphicsPixmapItem *mario;
         void set_x(int new_x) { x = new_x; }
@@ -64,7 +66,11 @@ class Mario {
         QString cur_size;
         QString cur_pixmap;
 
+        QTimer jump_cd;
+        bool is_passed_jump_cd;
 
+    private slots:
+        void jump_cd_trigger();
 
 };
 
