@@ -5,8 +5,13 @@
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 #include <QString>
-#include "floor_brick.h"
 #include "stone_brick.h"
+#include "normal_brick.h"
+#include "floor_brick.h"
+#include "box_brick.h"
+#include "broken_brick.h"
+#include "water_pipe.h"
+
 
 class Mario {
     public:
@@ -21,6 +26,11 @@ class Mario {
         QGraphicsPixmapItem *game_bg_item;
         std::vector<Floor_brick*> floor_bricks;
         std::vector<Stone_brick*> stone_bricks;
+        std::vector<Normal_brick*> normal_bricks;
+        std::vector<Box_brick*> box_bricks;
+        std::vector<Broken_brick*> broken_bricks;
+        std::vector<Water_pipe*> water_pipes;
+
 
         static const int small_mario_height = 52;
         static const int big_mario_height = 80;

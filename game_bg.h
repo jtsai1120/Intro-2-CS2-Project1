@@ -7,6 +7,7 @@
 class Game_bg {
     public:
         Game_bg();
+        void set(int bg_count);
         QGraphicsPixmapItem *game_bg_item;
         void move(int dx, int dy);
     private:

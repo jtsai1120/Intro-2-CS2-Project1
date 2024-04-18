@@ -44,7 +44,8 @@ void Mario::move() {
             else {
                 cur_pixmap = "stand_R";
             }
-        } else {
+        }
+        else {
             cur_pixmap = "jump_R";
         }
     } else {
@@ -57,7 +58,8 @@ void Mario::move() {
             }
             else
                 cur_pixmap = "stand_L";
-        } else {
+        }
+        else {
             cur_pixmap = "jump_L";
         }
     }
@@ -144,15 +146,31 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
             is_ground_brick = 1;
 
     // check whether broken brick
+    for (Broken_brick *i : broken_bricks)
+        if (i->broken_brick_item == PixmapItem)
+            is_ground_brick = 1;
 
     // check whether normal brick
+    for (Normal_brick *i : normal_bricks)
+        if (i->normal_brick_item == PixmapItem){
+            i->crack(dy);
+            is_ground_brick = 1;
+            //bug:似乎不是碰到normal block也會觸發
+        }
 
     // check whether box brick
+    for (Box_brick *i : box_bricks)
+        if (i->box_brick_item == PixmapItem)
+            is_ground_brick = 1;
 
     // check whether water pipe
+    for (Water_pipe *i : water_pipes)
+        if (i->water_pipe_item == PixmapItem)
+            is_ground_brick = 1;
 
     return is_ground_brick;
 }
+
 
 bool Mario::is_crack_head() {
     QList<QGraphicsItem *> items = cur_scene->items();

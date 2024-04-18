@@ -4,10 +4,14 @@
 #include "ButtonItem.h"
 #include "mario.h"
 #include "game_bg.h"
-#include "floor_brick.h"
 #include "coin.h"
 #include "score.h"
 #include "stone_brick.h"
+#include "normal_brick.h"
+#include "floor_brick.h"
+#include "box_brick.h"
+#include "broken_brick.h"
+#include "water_pipe.h"
 #include <vector>
 #include <string>
 #include <QMainWindow>
@@ -58,11 +62,16 @@ class MainWindow : public QMainWindow {
 
         // game scene
         Score score;
-        Game_bg game_bg;
-        std::vector<Floor_brick*> floor_bricks;
+        Game_bg game_bg, game_bg1, game_bg2, game_bg3, game_bg4;
         Mario mario;
         std::vector<Coin*> coins;
         std::vector<Stone_brick*> stone_bricks;
+        std::vector<Normal_brick*> normal_bricks;
+        std::vector<Floor_brick*> floor_bricks;
+        std::vector<Box_brick*> box_bricks;
+        std::vector<Broken_brick*> broken_bricks;
+        std::vector<Water_pipe*> water_pipes;
+
 
         // KeyEvents (Pressed=1, Released=0)
         bool left_key_state, right_key_state, up_key_state;
