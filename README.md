@@ -11,6 +11,11 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 
 // test
 
+# 0418 Log (huang)
+- 新增完整的5面背景
+- normal block 的 bump 機制不完整
+-  其他方塊完成填充(只有算進碰撞，沒有功能)
+
 # 0417 Log (jtsai)
 
 ### 此次新增

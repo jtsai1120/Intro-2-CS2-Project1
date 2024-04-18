@@ -50,6 +50,7 @@ void MainWindow::update_frame() {
             break;
         case 1:
             all_move_detection();
+            for(Normal_brick *i : normal_bricks) i->move();
             mario.move();
             view->setScene(&game_scene);
             break;
@@ -175,7 +176,9 @@ void MainWindow::all_move_detection() {
         if (up_key_state) {
             //qDebug() << "mario jump";
             mario.jump();
+
         }
+
 
         // 偵測移動過程是否與其他物件碰撞
         // coins
@@ -195,9 +198,19 @@ void MainWindow::all_move_detection() {
 
 void MainWindow::all_horizontal_move(int moving_unit) {
     game_bg.move(moving_unit, 0);
-    for (Floor_brick* i : floor_bricks) i->move(moving_unit);
+    game_bg1.move(moving_unit, 0);
+    game_bg2.move(moving_unit, 0);
+    game_bg3.move(moving_unit, 0);
+    game_bg4.move(moving_unit, 0);
+
     for (Coin* i : coins) i->move(moving_unit, 0);
+    for (Floor_brick* i : floor_bricks) i->move(moving_unit);
     for (Stone_brick* i : stone_bricks) i->move(moving_unit);
+    for (Normal_brick* i : normal_bricks) i->dx = moving_unit;
+    for (Box_brick* i : box_bricks) i->move(moving_unit);
+    for (Broken_brick* i : broken_bricks) i->move(moving_unit);
+    for (Water_pipe* i : water_pipes) i->move(moving_unit);
+
 }
 
 
