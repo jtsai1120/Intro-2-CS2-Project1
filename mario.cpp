@@ -193,6 +193,11 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
         if (i->water_pipe_item == PixmapItem)
             is_ground_brick = 1;
 
+    // check whether invisible brick
+    for (Invisible_brick *i : invisible_bricks)
+        if (i->invisible_brick_item == PixmapItem)
+            is_ground_brick = 1;
+
     return is_ground_brick;
 }
 

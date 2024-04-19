@@ -12,6 +12,7 @@
 #include "box_brick.h"
 #include "broken_brick.h"
 #include "water_pipe.h"
+#include "invisible_brick.h"
 #include "hp.h"
 #include "flag.h"
 #include "flag_pole.h"
@@ -83,6 +84,7 @@ class MainWindow : public QMainWindow {
         std::vector<Box_brick*> box_bricks;
         std::vector<Broken_brick*> broken_bricks;
         std::vector<Water_pipe*> water_pipes;
+        std::vector<Invisible_brick*> invisible_bricks;
 
 
         // KeyEvents (Pressed=1, Released=0)

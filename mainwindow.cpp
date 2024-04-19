@@ -192,7 +192,7 @@ void MainWindow::all_move_detection() {
                 }
             }
         }
-        else if (view_x >= 1400 * 4 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
+        else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
             if (left_key_state) {
                 mario.cur_direction = 'L';
                 if (!mario.is_hit_right_side()) {
@@ -289,6 +289,7 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Broken_brick* i : broken_bricks) i->dx = moving_unit;
     for (Box_brick* i : box_bricks) i->move(moving_unit);
     for (Water_pipe* i : water_pipes) i->move(moving_unit);
+    for (Invisible_brick* i : invisible_bricks) i->move(moving_unit);
 
 }
 

@@ -11,6 +11,10 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 
 // test
 
+# 0420 Log (huang)
+- 新增物件: invisible brick = 顏色和背景相同的stone brick
+- 最遠起跳點用invisible brick 延長一些，大幅增加成功率
+
 # 0419 Log (huang)
 - 讓broken brick 順利從畫面消失
 - 讓box brick 觸發後更換造型，且不能再重複觸發

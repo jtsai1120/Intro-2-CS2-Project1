@@ -11,6 +11,8 @@
 #include "box_brick.h"
 #include "broken_brick.h"
 #include "water_pipe.h"
+#include "invisible_brick.h"
+
 
 #include <QDebug>
 
@@ -54,6 +56,18 @@ void MainWindow::game_init() {
             cur_scene->addItem(floor_bricks[i]->floor_brick_item);
         }
 
+        // add invisible_bricks
+        std::vector<std::vector<int>> invisible_bricks_list = {
+            {750 - 10, 620 - Floor_brick::floor_brick_height - 6 * Invisible_brick::invisible_brick_height},
+
+        };
+        for (int i = 0; i < static_cast<int>(invisible_bricks_list.size()); i++) {
+            invisible_bricks.push_back(new Invisible_brick);
+            invisible_bricks[i]->set_xy(invisible_bricks_list[i][0], invisible_bricks_list[i][1]);
+            cur_scene->addItem(invisible_bricks[i]->invisible_brick_item);
+        }
+
+
         // add stone_bricks
         std::vector<std::vector<int>> stone_bricks_list = {
             {200, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
@@ -67,7 +81,7 @@ void MainWindow::game_init() {
             {150, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {400, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {450, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
-            {500, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            //{500, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {550, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
             {600, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
             {650, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
@@ -175,6 +189,7 @@ void MainWindow::game_init() {
         mario.box_bricks = box_bricks;
         mario.broken_bricks = broken_bricks;
         mario.water_pipes = water_pipes;
+        mario.invisible_bricks = invisible_bricks;
 
         cur_scene->addItem(mario.mario);
 

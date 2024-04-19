@@ -17,6 +17,7 @@ SOURCES += \
     floor_brick.cpp \
     game_bg.cpp \
     hp.cpp \
+    invisible_brick.cpp \
     main.cpp \
     mainwindow.cpp \
     mario.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     floor_brick.h \
     game_bg.h \
     hp.h \
+    invisible_brick.h \
     mainwindow.h \
     mainwindow_game_init.h \
     mario.h \

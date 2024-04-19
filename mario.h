@@ -13,6 +13,7 @@
 #include "box_brick.h"
 #include "broken_brick.h"
 #include "water_pipe.h"
+#include "invisible_brick.h"
 
 class Mario : public QObject {
     Q_OBJECT
@@ -33,6 +34,7 @@ class Mario : public QObject {
         std::vector<Box_brick*> box_bricks;
         std::vector<Broken_brick*> broken_bricks;
         std::vector<Water_pipe*> water_pipes;
+        std::vector<Invisible_brick*> invisible_bricks;
 
 
         static const int small_mario_height = 52;
