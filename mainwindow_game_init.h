@@ -100,7 +100,7 @@ void MainWindow::game_init() {
         // add normal_bricks
         std::vector<std::vector<int>> normal_bricks_list = {
             {400, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
-            {450, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
+            //{450, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
 
             {1000, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
