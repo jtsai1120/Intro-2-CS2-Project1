@@ -23,40 +23,73 @@ void MainWindow::game_init() {
 
     // Game Scene
         // add game_bg
-        cur_scene->addItem(game_bg.game_bg_item);
-        cur_scene->addItem(game_bg1.game_bg_item);
-        cur_scene->addItem(game_bg2.game_bg_item);
-        cur_scene->addItem(game_bg3.game_bg_item);
-        cur_scene->addItem(game_bg4.game_bg_item);
-        game_bg1.set(1);//向右方平移一個螢幕大小
-        game_bg2.set(2);
-        game_bg3.set(3);
-        game_bg4.set(4);
+        for (int i = 0; i < 5; i++) {
+            game_bgs.push_back(new Game_bg);
+            game_bgs[i]->set(i);
+            cur_scene->addItem(game_bgs[i]->game_bg_item);
+        }
+
+        // add flag pole & flag
+        cur_scene->addItem(flag_pole.flag_pole_item);
+        flag.mario = &mario;
+        cur_scene->addItem(flag.flag_item);
 
         // score text
         cur_scene->addItem(score.score_text);
 
-        // add floor_bricks_items
-        const int floor_num_in_a_scene = 1000 / Floor_brick::floor_brick_width;
-        for (int i = 0 ; i < floor_num_in_a_scene ; i++) {
-            floor_bricks.push_back(new Floor_brick);
-            floor_bricks[i]->set_x(i * Floor_brick::floor_brick_width);
-            cur_scene->addItem(floor_bricks[i]->floor_brick_item);
-        }
-        for (int i = 20 ; i < 2 * floor_num_in_a_scene ; i++) {
-            floor_bricks.push_back(new Floor_brick);
-            floor_bricks[i]->set_x(500 + i * Floor_brick::floor_brick_width);
-            cur_scene->addItem(floor_bricks[i]->floor_brick_item);
-        }
+        // hp text
+        cur_scene->addItem(hp.hp_text);
 
+        // add floor_bricks_items
+        const int max_floor_brick_num_in_a_scene = 1400 / Floor_brick::floor_brick_width;
+        for (int i = 0 ; i < 5 * max_floor_brick_num_in_a_scene ; i++) {
+            floor_bricks.push_back(new Floor_brick);
+            if ((i+5) % max_floor_brick_num_in_a_scene == 0
+                  || (i+6) % max_floor_brick_num_in_a_scene == 0)
+                floor_bricks[i]->set_x(-100);
+            else if(i > max_floor_brick_num_in_a_scene && i < 1.5 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else
+                floor_bricks[i]->set_x(i * Floor_brick::floor_brick_width);
+            cur_scene->addItem(floor_bricks[i]->floor_brick_item);
+        }
 
         // add stone_bricks
         std::vector<std::vector<int>> stone_bricks_list = {
-            {800, 620 - Floor_brick::floor_brick_height - Stone_brick::stone_brick_height},
-            {800, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
-            {800, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {650, 620 - Floor_brick::floor_brick_height - Stone_brick::stone_brick_height},
-            {500, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {200, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
+            {300, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
+            {800, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
+            {1100, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
+            {800, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {750, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {300, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {150, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {150, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {400, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {450, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {500, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {550, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {600, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {650, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {700, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {750, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {800, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {850, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {900, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {950, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {1150, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
+            {1200, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
+            {1200, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {1250, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
+            {1550, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {1600, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {1650, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {1700, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {1750, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+
+
+            //{650, 620 - Floor_brick::floor_brick_height - Stone_brick::stone_brick_height},
+            //{500, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
         };
         for (int i = 0; i < static_cast<int>(stone_bricks_list.size()); i++) {
             stone_bricks.push_back(new Stone_brick);
@@ -66,8 +99,15 @@ void MainWindow::game_init() {
 
         // add normal_bricks
         std::vector<std::vector<int>> normal_bricks_list = {
-            {950, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
-            //{950, 620 - Floor_brick::floor_brick_height - 1 * Normal_brick::normal_brick_height},
+            {400, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
+            //{450, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
+
+            {1000, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
+            {300, 620 - Floor_brick::floor_brick_height - 9 * Normal_brick::normal_brick_height},
+            {1500, 620 - Floor_brick::floor_brick_height - 5 * Normal_brick::normal_brick_height},
+
+
         };
         for (int i = 0; i < static_cast<int>(normal_bricks_list.size()); i++) {
             normal_bricks.push_back(new Normal_brick);
@@ -78,7 +118,10 @@ void MainWindow::game_init() {
 
         // add box_bricks
         std::vector<std::vector<int>> box_bricks_list = {
-            {1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
+            //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
+
         };
         for (int i = 0; i < static_cast<int>(box_bricks_list.size()); i++) {
             box_bricks.push_back(new Box_brick);
@@ -89,23 +132,27 @@ void MainWindow::game_init() {
         // add broken_bricks
         std::vector<std::vector<int>> broken_bricks_list = {
             {1250, 620 - Floor_brick::floor_brick_height - 2 * Broken_brick::broken_brick_height},
+            {0, 620 - Floor_brick::floor_brick_height - 8 * Broken_brick::broken_brick_height},
+            {750, 620 - Floor_brick::floor_brick_height - 8 * Broken_brick::broken_brick_height},
+
+
         };
         for (int i = 0; i < static_cast<int>(broken_bricks_list.size()); i++) {
             broken_bricks.push_back(new Broken_brick);
             broken_bricks[i]->set_xy(broken_bricks_list[i][0], broken_bricks_list[i][1]);
+            broken_bricks[i]->init_y = broken_bricks_list[i][1];
             cur_scene->addItem(broken_bricks[i]->broken_brick_item);
         }
 
         // add water_pipes
         std::vector<std::vector<int>> water_pipes_list = {
-            {1400, 620 - Floor_brick::floor_brick_height - 2 * Normal_brick::normal_brick_height},
+            {1350, 620 - Floor_brick::floor_brick_height - 2 * Normal_brick::normal_brick_height},
         };
         for (int i = 0; i < static_cast<int>(water_pipes_list.size()); i++) {
             water_pipes.push_back(new Water_pipe);
             water_pipes[i]->set_xy(water_pipes_list[i][0], water_pipes_list[i][1]);
             cur_scene->addItem(water_pipes[i]->water_pipe_item);
         }
-
 
         // add coins
         std::vector<std::vector<int>> coins_list = {
@@ -118,10 +165,8 @@ void MainWindow::game_init() {
             cur_scene->addItem(coins[i]->coin_item);
         }
 
-
         // add mario
         mario.cur_scene = cur_scene;
-        mario.game_bg_item = game_bg.game_bg_item;
 
         // 設定mario 的磚塊位置
         mario.floor_bricks = floor_bricks;
@@ -132,6 +177,7 @@ void MainWindow::game_init() {
         mario.water_pipes = water_pipes;
 
         cur_scene->addItem(mario.mario);
+
 }
 
 

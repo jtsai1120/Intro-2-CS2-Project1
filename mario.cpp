@@ -3,12 +3,12 @@
 #include <QString>
 #include <QDebug>
 #include <QTimer>
-#include <QTime>
 #include <QObject>
 #include <QCoreApplication>
 #include <QRectF>
+#include <QLabel>
 
-Mario::Mario() {
+Mario::Mario(QWidget *parent) : QObject(parent) {
     mario_stand_R.load(":/Dataset/image/Mario_small/s_mario_stand_R.png");
     mario_stand_L.load(":/Dataset/image/Mario_small/s_mario_stand_L.png");
     mario_jump_R.load(":/Dataset/image/Mario_small/s_mario_jump1_R.png");
@@ -30,72 +30,79 @@ Mario::Mario() {
     is_moving = 0;
     //qDebug() << "width=" << mario_stand_R.width();
     //qDebug() << "height=" << mario_stand_R.height();
+    is_passed_jump_cd = 1;
+    movable = 1;
 }
 
 void Mario::change(){
-    if (cur_direction == 'R') {
-        if (is_grounded()) {
-            if (is_moving) {
-                if (cur_pixmap != "run1_R")
-                    cur_pixmap = "run1_R";
-                else
-                    cur_pixmap = "run2_R";
+    if (movable) {
+        if (cur_direction == 'R') {
+            if (is_grounded()) {
+                if (is_moving) {
+                    if (cur_pixmap != "run1_R")
+                        cur_pixmap = "run1_R";
+                    else
+                        cur_pixmap = "run2_R";
+                }
+            }
+       }
+       else{
+            if (is_grounded()) {
+                if (is_moving) {
+                   if (cur_pixmap != "run1_L")
+                        cur_pixmap = "run1_L";
+                    else
+                        cur_pixmap = "run2_L";
+                }
             }
         }
-   }
-   else{
-        if (is_grounded()) {
-            if (is_moving) {
-               if (cur_pixmap != "run1_L")
-                    cur_pixmap = "run1_L";
-                else
-                    cur_pixmap = "run2_L";
-            }
-        }
+        //qDebug()<<"change";
+        change_direction_picture(cur_pixmap);
     }
-    qDebug()<<"change";
-    change_direction_picture(cur_pixmap);
 }
 
 void Mario::move() {
-    if (cur_direction == 'R') {
-        if (is_grounded()) {
-            if (!is_moving) {
-               cur_pixmap = "stand_R";
+    if (movable) {
+        if (cur_direction == 'R') {
+            if (is_grounded()) {
+                if (!is_moving)
+                    cur_pixmap = "stand_R";
+                else if (!is_passed_jump_cd)
+                    cur_pixmap = "stand_R";
+            }
+            else {
+                cur_pixmap = "jump_R";
+            }
+        } else {
+            if (is_grounded()) {
+                if (!is_moving)
+                    cur_pixmap = "stand_L";
+                else if (!is_passed_jump_cd)
+                    cur_pixmap = "stand_L";
+            }
+            else {
+                cur_pixmap = "jump_L";
             }
         }
-        else {
-            cur_pixmap = "jump_R";
-        }
-    } else {
-        if (is_grounded()) {
-            if (!is_moving) {
-               cur_pixmap = "stand_L";
-            }
-        }
-        else {
-            cur_pixmap = "jump_L";
-        }
+        change_direction_picture(cur_pixmap);
+        /*
+        if (is_hit_left_side())
+            qDebug() << "hit left side!";
+        if (is_hit_right_side())
+            qDebug() << "hit right side!";
+        if (is_crack_head())
+            qDebug() << "is crack head";
+        */
+        x += dx;
+        dx = 0;
+
+        y += dy;
+        if (is_crack_head()) dy = 1;
+        else if (!is_grounded()) dy += ay;
+        else dy = 0;
+
+        mario->setPos(x, y);
     }
-    change_direction_picture(cur_pixmap);
-    /*
-    if (is_hit_left_side())
-        qDebug() << "hit left side!";
-    if (is_hit_right_side())
-        qDebug() << "hit right side!";
-    if (is_crack_head())
-        qDebug() << "is crack head";
-    */
-    x += dx;
-    dx = 0;
-
-    y += dy;
-    if (is_crack_head()) dy = 1;
-    else if (!is_grounded()) dy += ay;
-    else dy = 0;
-
-    mario->setPos(x, y);
-
 }
 
 void Mario::change_direction_picture(QString s) {
@@ -121,10 +128,17 @@ void Mario::change_direction_picture(QString s) {
 }
 
 void Mario::jump() {
-    if (is_grounded()) { // 防止二次跳
+    if (is_grounded() && is_passed_jump_cd) { // 防止二次跳
         dy = vy0;
     }
 }
+
+void Mario::jump_cd_trigger() {
+    jump_cd.stop();
+    //qDebug() << "jump cd passed!";
+    is_passed_jump_cd = 1;
+}
+
 
 bool Mario::is_grounded() {
     QList<QGraphicsItem *> items = cur_scene->items();
@@ -153,6 +167,7 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
     for (Floor_brick *i : floor_bricks)
         if (i->floor_brick_item == PixmapItem)
             is_ground_brick = 1;
+
     // check whether stone brick
     for (Stone_brick *i : stone_bricks)
         if (i->stone_brick_item == PixmapItem)
@@ -186,7 +201,13 @@ bool Mario::is_crack_head() {
     QList<QGraphicsItem *> items = cur_scene->items();
     bool _is_crack_head = 0;
     bool _is_crack_noraml_brick = 0;
+    bool _is_crack_broken_brick = 0;
+    bool _is_crack_box_brick = 0;
+
     Normal_brick *hit_normal_brick;
+    Broken_brick *hit_broken_brick;
+    Box_brick *hit_box_brick;
+
     for (QGraphicsItem *item : items) {
         QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
         if (item->contains(item->mapFromScene(x + 10, y))) {
@@ -197,6 +218,17 @@ bool Mario::is_crack_head() {
                         _is_crack_noraml_brick = 1;
                         hit_normal_brick = i;
                     }
+                for (Broken_brick *i : broken_bricks)
+                    if (i->broken_brick_item == PixmapItem) {
+                        _is_crack_broken_brick = 1;
+                        hit_broken_brick = i;
+                    }
+                for (Box_brick *i : box_bricks)
+                    if (i->box_brick_item == PixmapItem) {
+                        _is_crack_box_brick = 1;
+                        hit_box_brick = i;
+                    }
+
             }
         }
         if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), y))) {
@@ -207,10 +239,37 @@ bool Mario::is_crack_head() {
                         _is_crack_noraml_brick = 1;
                         hit_normal_brick = i;
                     }
+                for (Broken_brick *i : broken_bricks)
+                    if (i->broken_brick_item == PixmapItem) {
+                        _is_crack_broken_brick = 1;
+                        hit_broken_brick = i;
+                     }
+                for (Box_brick *i : box_bricks)
+                    if (i->box_brick_item == PixmapItem) {
+                        _is_crack_box_brick = 1;
+                        hit_box_brick = i;
+                    }
             }
         }
-        if (_is_crack_head && _is_crack_noraml_brick)
+        if (_is_crack_head && _is_crack_noraml_brick) {
             hit_normal_brick->crack();
+            is_passed_jump_cd = 0;
+            QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
+            jump_cd.start(520);
+        }
+        if (_is_crack_head && _is_crack_broken_brick) {
+            hit_broken_brick->crack();
+            is_passed_jump_cd = 0;
+            QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
+            jump_cd.start(520);
+        }
+        if (_is_crack_head && _is_crack_box_brick) {
+            hit_box_brick->crack();
+            is_passed_jump_cd = 0;
+            QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
+            jump_cd.start(520);
+        }
+
 
     }
     return _is_crack_head;
@@ -247,5 +306,6 @@ bool Mario::is_hit_right_side() {
     }
     return _is_hit_right_side;
 }
+
 
 

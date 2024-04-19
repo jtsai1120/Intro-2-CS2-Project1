@@ -15,3 +15,6 @@ void Coin::set_xy(int new_x, int new_y) {
 void Coin::move(int dx, int dy) {
     set_xy(x + dx, y + dy);
 }
+
+void Coin::fly(){//獲得金幣的特效
+}

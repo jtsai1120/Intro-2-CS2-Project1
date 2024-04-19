@@ -15,7 +15,6 @@ void Game_bg::set(int bg_count) {
     game_bg_item->setPos(x, y);
 }
 
-
 void Game_bg::move(int dx, int dy) {
     x += dx;
     y += dy;

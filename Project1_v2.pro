@@ -12,8 +12,11 @@ SOURCES += \
     box_brick.cpp \
     broken_brick.cpp \
     coin.cpp \
+    flag.cpp \
+    flag_pole.cpp \
     floor_brick.cpp \
     game_bg.cpp \
+    hp.cpp \
     main.cpp \
     mainwindow.cpp \
     mario.cpp \
@@ -27,8 +30,11 @@ HEADERS += \
     box_brick.h \
     broken_brick.h \
     coin.h \
+    flag.h \
+    flag_pole.h \
     floor_brick.h \
     game_bg.h \
+    hp.h \
     mainwindow.h \
     mainwindow_game_init.h \
     mario.h \

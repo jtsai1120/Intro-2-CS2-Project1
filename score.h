@@ -12,6 +12,7 @@ class Score {
         const int x = 10;
         const int y = 0;
 
+        int get_score() {return score_point;}
         void add_score(int sc);
 
     private:

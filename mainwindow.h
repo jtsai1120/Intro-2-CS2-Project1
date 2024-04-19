@@ -12,6 +12,9 @@
 #include "box_brick.h"
 #include "broken_brick.h"
 #include "water_pipe.h"
+#include "hp.h"
+#include "flag.h"
+#include "flag_pole.h"
 #include <vector>
 #include <string>
 #include <QMainWindow>
@@ -27,6 +30,7 @@ class MainWindow : public QMainWindow {
 
     public:
         MainWindow(QWidget *parent = nullptr);
+        void end_init(); // 由 flag 物件呼叫
 
     protected:
         void keyPressEvent(QKeyEvent *event);
@@ -42,7 +46,7 @@ class MainWindow : public QMainWindow {
 
         void start_init();
         void game_init();
-        //void end_init();
+
 
         void all_move_detection(); // 檢查是馬力歐要左右動、要跳，還是其他所有物件要動(隨view)
         void all_horizontal_move(int moving_unit);
@@ -51,7 +55,7 @@ class MainWindow : public QMainWindow {
         int view_x; // Equals to mario's x coordinates between the scenes;
 
         QGraphicsScene *cur_scene;
-        QGraphicsScene start_scene, game_scene, end_scene;
+        QGraphicsScene start_scene, game_scene;
 
         QPixmap start_bg;
         QGraphicsPixmapItem *start_bg_item;
@@ -60,10 +64,18 @@ class MainWindow : public QMainWindow {
         QPixmap start_button_pic;
         ButtonItem *start_button_item;
 
+        QPixmap game_over_bg;
+        QGraphicsPixmapItem *game_over_bg_item;
+
         // game scene
         Score score;
-        Game_bg game_bg, game_bg1, game_bg2, game_bg3, game_bg4;
+        Hp hp;
         Mario mario;
+        std::vector<Game_bg*> game_bgs;
+
+        Flag_pole flag_pole;
+        Flag flag;
+
         std::vector<Coin*> coins;
         std::vector<Stone_brick*> stone_bricks;
         std::vector<Normal_brick*> normal_bricks;

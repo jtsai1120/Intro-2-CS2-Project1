@@ -6,6 +6,8 @@
 #include <QPixmap>
 #include <QGraphicsItem>
 #include <QPushButton>
+#include <QGraphicsBlurEffect>
+#include <QGraphicsDropShadowEffect>
 #include "ButtonItem.h"
 #include "mario.h"
 
@@ -29,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(start_button, SIGNAL(clicked()), this, SLOT(on_start_button_clicked()));
     // 每 1ms 觸發畫面更新
     refreshing_timer = new QTimer(this); // 建立計時器
-    refreshing_timer->start(10); // 每 1ms更新一次
+    refreshing_timer->start(10); // 每 10ms更新一次
     connect(refreshing_timer, SIGNAL(timeout()), this, SLOT(update_frame())); // 連接訊號
     /* 這段首先建立了一個計時器 refreshing_timer，
      * 並設定計時器時長為 1ms，也就是每過 1ms，
@@ -51,11 +53,16 @@ void MainWindow::update_frame() {
         case 1:
             all_move_detection();
             for(Normal_brick *i : normal_bricks) i->move();
+            for(Broken_brick *i : broken_bricks) i->move();
+
             mario.move();
             view->setScene(&game_scene);
+            if (flag.is_touched_mario) end_init();
+            if (hp.get_hp() == 0) end_init();
+            if (mario.get_y() > 620) end_init();
             break;
         case 2:
-            view->setScene(&end_scene);
+            view->setScene(&game_scene);
             break;
     }
     this->setCentralWidget(view);
@@ -87,6 +94,42 @@ void MainWindow::start_init() {
 }
 
 // void MainWindow::game_init() 已移植到 mainwindow_game_init.h
+
+void MainWindow::end_init() {
+    qDebug() << "end_init() Called";
+    game_status = 2;
+
+    // add game over bg
+    game_over_bg.load(":/Dataset/image/game_over.png");
+    game_over_bg = game_over_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
+    game_over_bg_item = new QGraphicsPixmapItem(game_over_bg);
+    game_over_bg_item->setPos(0,-200);
+    cur_scene->addItem(game_over_bg_item);
+    // add win or lose
+    QGraphicsTextItem *win_or_lose_text = new QGraphicsTextItem;
+    QFont font("Consolas");
+    win_or_lose_text->setFont(font);
+
+    win_or_lose_text->setDefaultTextColor(Qt::red);
+    win_or_lose_text->setScale(2);
+    win_or_lose_text->setPos(380, 200);
+    QString win_or_lose_text_combined = " You ";
+    if (mario.get_y() > 620) {
+        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Fall UnderGround";
+    } else
+    if (hp.get_hp() == 0) {
+        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, HP -> 0";
+    } else if (score.get_score() <= 20) {
+        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Score <= 20)";
+    } else { // win
+        win_or_lose_text_combined = win_or_lose_text_combined + "Win";
+    }
+
+    win_or_lose_text_combined =
+        win_or_lose_text_combined + " \n" + "( Total : " + QString::number(score.get_score()) + " Coin(s) )";
+    win_or_lose_text->setPlainText(win_or_lose_text_combined);
+    cur_scene->addItem(win_or_lose_text);
+}
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (game_status == 1) {
@@ -148,7 +191,8 @@ void MainWindow::all_move_detection() {
                    }
                 }
             }
-        } else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
+        }
+        else if (view_x >= 1400 * 4 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
             if (left_key_state) {
                 mario.cur_direction = 'L';
                 if (!mario.is_hit_right_side()) {
@@ -163,7 +207,8 @@ void MainWindow::all_move_detection() {
                         distance=0;
                    }
                 }
-            } else if (right_key_state && view_x < 1400 * 5 ) {
+            }
+            else if (right_key_state && view_x < 1400 * 5 ) {
                 mario.cur_direction = 'R';
                 if (!mario.is_hit_left_side()) {
                     if (view_x == 1400 * 5 - 1402 + Mario::init_x)
@@ -210,7 +255,6 @@ void MainWindow::all_move_detection() {
 
         }
 
-
         // 偵測移動過程是否與其他物件碰撞
         // coins
         for (int i = 0; i < static_cast<int>(coins.size()); i++) {
@@ -221,6 +265,13 @@ void MainWindow::all_move_detection() {
                 score.add_score(1);
             }
         }
+        // flag pole
+        if (mario.mario->collidesWithItem(flag_pole.flag_pole_item) && !flag_pole.is_touched) {
+            qDebug() << "mario touch flag pole !";
+            flag_pole.is_touched = 1;
+            mario.movable = 0;
+            flag.fall();
+        }
 
     } else {
         mario.is_moving = 0;
@@ -228,18 +279,15 @@ void MainWindow::all_move_detection() {
 }
 
 void MainWindow::all_horizontal_move(int moving_unit) {
-    game_bg.move(moving_unit, 0);
-    game_bg1.move(moving_unit, 0);
-    game_bg2.move(moving_unit, 0);
-    game_bg3.move(moving_unit, 0);
-    game_bg4.move(moving_unit, 0);
-
+    for (Game_bg* i : game_bgs) i->move(moving_unit, 0);
+    flag_pole.move(moving_unit, 0);
+    flag.move(moving_unit, 0);
     for (Coin* i : coins) i->move(moving_unit, 0);
     for (Floor_brick* i : floor_bricks) i->move(moving_unit);
     for (Stone_brick* i : stone_bricks) i->move(moving_unit);
     for (Normal_brick* i : normal_bricks) i->dx = moving_unit;
+    for (Broken_brick* i : broken_bricks) i->dx = moving_unit;
     for (Box_brick* i : box_bricks) i->move(moving_unit);
-    for (Broken_brick* i : broken_bricks) i->move(moving_unit);
     for (Water_pipe* i : water_pipes) i->move(moving_unit);
 
 }
