@@ -167,6 +167,7 @@ bool Mario::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
     for (Floor_brick *i : floor_bricks)
         if (i->floor_brick_item == PixmapItem)
             is_ground_brick = 1;
+
     // check whether stone brick
     for (Stone_brick *i : stone_bricks)
         if (i->stone_brick_item == PixmapItem)
@@ -200,7 +201,13 @@ bool Mario::is_crack_head() {
     QList<QGraphicsItem *> items = cur_scene->items();
     bool _is_crack_head = 0;
     bool _is_crack_noraml_brick = 0;
+    bool _is_crack_broken_brick = 0;
+    bool _is_crack_box_brick = 0;
+
     Normal_brick *hit_normal_brick;
+    Broken_brick *hit_broken_brick;
+    Box_brick *hit_box_brick;
+
     for (QGraphicsItem *item : items) {
         QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
         if (item->contains(item->mapFromScene(x + 10, y))) {
@@ -211,6 +218,17 @@ bool Mario::is_crack_head() {
                         _is_crack_noraml_brick = 1;
                         hit_normal_brick = i;
                     }
+                for (Broken_brick *i : broken_bricks)
+                    if (i->broken_brick_item == PixmapItem) {
+                        _is_crack_broken_brick = 1;
+                        hit_broken_brick = i;
+                    }
+                for (Box_brick *i : box_bricks)
+                    if (i->box_brick_item == PixmapItem) {
+                        _is_crack_box_brick = 1;
+                        hit_box_brick = i;
+                    }
+
             }
         }
         if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), y))) {
@@ -221,6 +239,16 @@ bool Mario::is_crack_head() {
                         _is_crack_noraml_brick = 1;
                         hit_normal_brick = i;
                     }
+                for (Broken_brick *i : broken_bricks)
+                    if (i->broken_brick_item == PixmapItem) {
+                        _is_crack_broken_brick = 1;
+                        hit_broken_brick = i;
+                     }
+                for (Box_brick *i : box_bricks)
+                    if (i->box_brick_item == PixmapItem) {
+                        _is_crack_box_brick = 1;
+                        hit_box_brick = i;
+                    }
             }
         }
         if (_is_crack_head && _is_crack_noraml_brick) {
@@ -229,6 +257,19 @@ bool Mario::is_crack_head() {
             QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
             jump_cd.start(520);
         }
+        if (_is_crack_head && _is_crack_broken_brick) {
+            hit_broken_brick->crack();
+            is_passed_jump_cd = 0;
+            QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
+            jump_cd.start(520);
+        }
+        if (_is_crack_head && _is_crack_box_brick) {
+            hit_box_brick->crack();
+            is_passed_jump_cd = 0;
+            QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
+            jump_cd.start(520);
+        }
+
 
     }
     return _is_crack_head;

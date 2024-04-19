@@ -15,6 +15,7 @@ class Coin {
 
         void set_xy(int new_x, int new_y);
         void move(int dx, int dy);
+        void fly();//射出金幣
 
     private:
         QPixmap coin_pic;

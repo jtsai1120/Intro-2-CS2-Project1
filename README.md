@@ -11,6 +11,11 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 
 // test
 
+# 0419 Log (huang)
+- 讓broken brick 順利從畫面消失
+- 讓box brick 觸發後更換造型，且不能再重複觸發
+- 畫了一張地圖
+
 # 0418 Log (huang)
 - 新增完整的5面背景
 - normal block 的 bump 機制不完整

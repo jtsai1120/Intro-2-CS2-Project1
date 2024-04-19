@@ -18,7 +18,10 @@ public:
     static const int box_brick_width = 50;
 private:
     QPixmap box_brick_pic;
+    QPixmap stone_brick_pic;
+
     int x, y;
+    bool opened;
 
 };
 
