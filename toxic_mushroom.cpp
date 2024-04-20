@@ -9,7 +9,7 @@ Toxic_mushroom::Toxic_mushroom(){
     QRandomGenerator::securelySeeded();
     int randomNumber = QRandomGenerator::global()->bounded(0, 1);
     if (randomNumber) facing_right = false;
-    else facing_right = true;
+    else facing_right = false;//好像全部往左比較多樣
 
     toxic_mushroom_pic_1.load(":/Dataset/image/toxic mushroom1.png");
     toxic_mushroom_pic_2.load(":/Dataset/image/toxic mushroom2.png");

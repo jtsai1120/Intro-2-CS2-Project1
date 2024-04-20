@@ -60,6 +60,8 @@ void MainWindow::game_init() {
         // add invisible_bricks
         std::vector<std::vector<int>> invisible_bricks_list = {
             {750 - 10, 620 - Floor_brick::floor_brick_height - 6 * Invisible_brick::invisible_brick_height},
+            {950, 620 - 10 - Floor_brick::floor_brick_height - 10 * Invisible_brick::invisible_brick_height},
+            {-50, 620 - Floor_brick::floor_brick_height - 1 * Invisible_brick::invisible_brick_height},
 
         };
         for (int i = 0; i < static_cast<int>(invisible_bricks_list.size()); i++) {
@@ -93,8 +95,8 @@ void MainWindow::game_init() {
             {900, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {950, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {1150, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
-            {1200, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
-            {1200, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            //{1200, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
+            //{1200, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {1250, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
             {1550, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
             {1600, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
@@ -149,6 +151,9 @@ void MainWindow::game_init() {
             {1250, 620 - Floor_brick::floor_brick_height - 2 * Broken_brick::broken_brick_height},
             {0, 620 - Floor_brick::floor_brick_height - 8 * Broken_brick::broken_brick_height},
             {750, 620 - Floor_brick::floor_brick_height - 8 * Broken_brick::broken_brick_height},
+            {650, 620 - Floor_brick::floor_brick_height - 9 * Broken_brick::broken_brick_height},
+            {1200, 620 - Floor_brick::floor_brick_height - 6 * Broken_brick::broken_brick_height},
+            {0, 620 - Floor_brick::floor_brick_height - 10 * Broken_brick::broken_brick_height},
 
 
         };
@@ -172,11 +177,13 @@ void MainWindow::game_init() {
         // add toxic mushrooms
         std::vector<std::vector<int>> toxic_mushrooms_list = {
             {150, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
-            {450, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
+            {350, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
             {650, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
             {650, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
             {750, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
             {250, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
+            {1200, 620 - Floor_brick::floor_brick_height - 7 * Toxic_mushroom::toxic_mushroom_height},
+            {850, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
 
         };
         for (int i = 0; i < static_cast<int>(toxic_mushrooms_list.size()); i++) {
