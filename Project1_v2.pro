@@ -24,6 +24,7 @@ SOURCES += \
     normal_brick.cpp \
     score.cpp \
     stone_brick.cpp \
+    super_mushroom.cpp \
     toxic_mushroom.cpp \
     water_pipe.cpp
 
@@ -44,6 +45,7 @@ HEADERS += \
     normal_brick.h \
     score.h \
     stone_brick.h \
+    super_mushroom.h \
     toxic_mushroom.h \
     water_pipe.h
 
