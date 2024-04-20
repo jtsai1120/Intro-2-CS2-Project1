@@ -27,6 +27,13 @@ void Toxic_mushroom::set_xy(int new_x, int new_y) {
 }
 
 void Toxic_mushroom::move() {
+    if (still){
+        x += dx;
+        dx = 0;
+        set_xy(x, y);
+        return;
+    }
+
     //檢查是否撞擊左右，若有則旋轉
     if(is_hit_right_side()){
         facing_right = false;
@@ -48,6 +55,8 @@ void Toxic_mushroom::move() {
     dx = 0;
 
     y += dy;
+
+
     if (!dead && !is_grounded() && y < 1000) dy += ay;//死亡時飛出地圖
     else if(!dead){//若不是在掉落則移動
         dy = 0;
@@ -106,6 +115,9 @@ bool Toxic_mushroom::is_grounded() {
 }
 
 bool Toxic_mushroom::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
+    // exit it
+    if(dead || still)return 0;
+
     bool is_ground_brick = 0;
     // check whether floor brick(s)
     for (Floor_brick *i : floor_bricks)

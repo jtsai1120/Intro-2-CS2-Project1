@@ -86,6 +86,12 @@ void Mario::move() {
             }
         }
         change_direction_picture(cur_pixmap);
+
+        //移動時活化毒蘑菇
+        for (Toxic_mushroom* i : toxic_mushrooms)
+            if(abs(i -> x - x) > 600) i -> still = true;
+            else i -> still = false;
+
         /*
         if (is_hit_left_side())
             qDebug() << "hit left side!";

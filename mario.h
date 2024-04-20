@@ -41,7 +41,6 @@ class Mario : public QObject {
         std::vector<Invisible_brick*> invisible_bricks;
         std::vector<Toxic_mushroom*> toxic_mushrooms;
 
-
         static const int small_mario_height = 52;
         static const int big_mario_height = 80;
         static const int small_mario_width = 36; // original = 50

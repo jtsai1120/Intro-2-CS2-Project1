@@ -48,17 +48,17 @@ public:
     int dx;
     double dy;
 
+    int x;//為了辨識距離，距離過遠則癱瘓
     double y;//為了讓別人好判斷高度，放在外面
 
     bool dead = false;
+    bool still = true;
 
 private:
     QPixmap toxic_mushroom_pic_1;
     QPixmap toxic_mushroom_pic_2;
     QPixmap toxic_mushroom_pic_3;
     QString pic;
-
-    int x;
 
     int walk_distance = 0;//換造型用
     const double vy0 = 0.06;
