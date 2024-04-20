@@ -14,6 +14,10 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 # 0420 Log (huang)
 - 新增物件: invisible brick = 顏色和背景相同的stone brick
 - 最遠起跳點用invisible brick 延長一些，大幅增加成功率
+- 加入毒蘑菇，要下落過程擊中才能擊殺
+-  修正毒蘑菇像素大小不一問題
+- 毒蘑菇起始方向隨機似乎沒有成功
+- 撞擊兩秒內免疫(之後使用無敵星星可以使用相同函式)
 
 # 0419 Log (huang)
 - 讓broken brick 順利從畫面消失

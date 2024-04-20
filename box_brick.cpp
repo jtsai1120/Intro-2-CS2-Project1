@@ -22,7 +22,7 @@ void Box_brick::move(int dx) {
 void Box_brick::crack() {
     if(!opened){
         box_brick_item->setPixmap(stone_brick_pic);
-        qDebug() << "boom";
+        //qDebug() << "boom";
         //放上隨機觸發事件
         opened = true;
     }

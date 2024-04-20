@@ -12,6 +12,7 @@
 #include "broken_brick.h"
 #include "water_pipe.h"
 #include "invisible_brick.h"
+#include "toxic_mushroom.h"
 
 
 #include <QDebug>
@@ -168,6 +169,34 @@ void MainWindow::game_init() {
             cur_scene->addItem(water_pipes[i]->water_pipe_item);
         }
 
+        // add toxic mushrooms
+        std::vector<std::vector<int>> toxic_mushrooms_list = {
+            {150, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
+            {450, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
+            {650, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
+            {650, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
+            {750, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
+            {250, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
+
+        };
+        for (int i = 0; i < static_cast<int>(toxic_mushrooms_list.size()); i++) {
+            toxic_mushrooms.push_back(new Toxic_mushroom);
+            toxic_mushrooms[i]->set_xy(toxic_mushrooms_list[i][0], toxic_mushrooms_list[i][1]);
+            toxic_mushrooms[i]->init_y = toxic_mushrooms_list[i][1];
+
+            // 設定toxic mushroom 的磚塊位置
+            toxic_mushrooms[i]->floor_bricks = floor_bricks;
+            toxic_mushrooms[i]->stone_bricks = stone_bricks;
+            toxic_mushrooms[i]->normal_bricks = normal_bricks;
+            toxic_mushrooms[i]->box_bricks = box_bricks;
+            toxic_mushrooms[i]->broken_bricks = broken_bricks;
+            toxic_mushrooms[i]->water_pipes = water_pipes;
+            toxic_mushrooms[i]->invisible_bricks = invisible_bricks;
+            toxic_mushrooms[i]->cur_scene = cur_scene;
+
+            cur_scene->addItem(toxic_mushrooms[i]->toxic_mushroom_item);
+        }
+
         // add coins
         std::vector<std::vector<int>> coins_list = {
             {1000, 620 - Floor_brick::floor_brick_height - Coin::coin_height},
@@ -190,6 +219,11 @@ void MainWindow::game_init() {
         mario.broken_bricks = broken_bricks;
         mario.water_pipes = water_pipes;
         mario.invisible_bricks = invisible_bricks;
+        mario.toxic_mushrooms = toxic_mushrooms;
+
+        // 設定mario 初始hp
+        mario.hp = &hp;
+
 
         cur_scene->addItem(mario.mario);
 

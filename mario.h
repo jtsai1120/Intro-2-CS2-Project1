@@ -14,6 +14,8 @@
 #include "broken_brick.h"
 #include "water_pipe.h"
 #include "invisible_brick.h"
+#include "toxic_mushroom.h"
+#include "hp.h"
 
 class Mario : public QObject {
     Q_OBJECT
@@ -26,6 +28,8 @@ class Mario : public QObject {
         void change_direction_picture(QString s);
         void jump();
         void change();
+        void is_taller(int i);//判斷高度
+        Hp *hp;
 
         QGraphicsScene *cur_scene;
         std::vector<Floor_brick*> floor_bricks;
@@ -35,6 +39,7 @@ class Mario : public QObject {
         std::vector<Broken_brick*> broken_bricks;
         std::vector<Water_pipe*> water_pipes;
         std::vector<Invisible_brick*> invisible_bricks;
+        std::vector<Toxic_mushroom*> toxic_mushrooms;
 
 
         static const int small_mario_height = 52;
@@ -73,9 +78,12 @@ class Mario : public QObject {
         QTimer jump_cd;
         bool is_passed_jump_cd;
 
+        QTimer immune;
+        bool immune_status;//免疫是否持續中
+
     private slots:
         void jump_cd_trigger();
-
+        void immune_time();
 };
 
 #endif // MARIO_H

@@ -54,6 +54,8 @@ void MainWindow::update_frame() {
             all_move_detection();
             for(Normal_brick *i : normal_bricks) i->move();
             for(Broken_brick *i : broken_bricks) i->move();
+            for(Toxic_mushroom *i : toxic_mushrooms) i->move();
+
 
             mario.move();
             view->setScene(&game_scene);
@@ -265,6 +267,15 @@ void MainWindow::all_move_detection() {
                 score.add_score(1);
             }
         }
+
+        // toxic mushroom
+        for (int i = 0; i < static_cast<int>(toxic_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(toxic_mushrooms[i]->toxic_mushroom_item)) {
+                qDebug() << "Ow";
+                mario.is_taller(i);
+            }
+        }
+
         // flag pole
         if (mario.mario->collidesWithItem(flag_pole.flag_pole_item) && !flag_pole.is_touched) {
             qDebug() << "mario touch flag pole !";
@@ -275,6 +286,14 @@ void MainWindow::all_move_detection() {
 
     } else {
         mario.is_moving = 0;
+
+        // toxic mushroom
+        for (int i = 0; i < static_cast<int>(toxic_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(toxic_mushrooms[i]->toxic_mushroom_item)) {
+                qDebug() << "Ow";
+                mario.is_taller(i);
+            }
+        }
     }
 }
 
@@ -290,7 +309,7 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Box_brick* i : box_bricks) i->move(moving_unit);
     for (Water_pipe* i : water_pipes) i->move(moving_unit);
     for (Invisible_brick* i : invisible_bricks) i->move(moving_unit);
-
+    for (Toxic_mushroom* i : toxic_mushrooms) i->dx = moving_unit;
 }
 
 

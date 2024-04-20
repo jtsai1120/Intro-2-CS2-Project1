@@ -31,6 +31,7 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     //qDebug() << "width=" << mario_stand_R.width();
     //qDebug() << "height=" << mario_stand_R.height();
     is_passed_jump_cd = 1;
+    immune_status = 0;
     movable = 1;
 }
 
@@ -137,6 +138,23 @@ void Mario::jump_cd_trigger() {
     jump_cd.stop();
     //qDebug() << "jump cd passed!";
     is_passed_jump_cd = 1;
+}
+
+void Mario::immune_time() {
+    immune.stop();
+    immune_status = 0;
+}
+
+void Mario::is_taller(int i){
+    if (y < toxic_mushrooms[i]->y - 42 && dy >= 0){ //扣掉毒菇本身高度&&確保馬力歐不是在上升
+        toxic_mushrooms[i]->dead = 1;
+    }
+    else if(!immune_status && !toxic_mushrooms[i]->dead){ //非免疫狀態且毒菇沒死
+        hp->sub_hp(1); //扣血
+        immune_status = 1;
+        QObject::connect(&immune, SIGNAL(timeout()), this, SLOT(immune_time()));
+        immune.start(2000);
+    }
 }
 
 

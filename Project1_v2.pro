@@ -24,6 +24,7 @@ SOURCES += \
     normal_brick.cpp \
     score.cpp \
     stone_brick.cpp \
+    toxic_mushroom.cpp \
     water_pipe.cpp
 
 HEADERS += \
@@ -43,6 +44,7 @@ HEADERS += \
     normal_brick.h \
     score.h \
     stone_brick.h \
+    toxic_mushroom.h \
     water_pipe.h
 
 # Default rules for deployment.
