@@ -3,7 +3,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
-#include <super_mushroom.h>
+
 
 class Box_brick
 {
@@ -19,6 +19,7 @@ public:
 
     static const int box_brick_height = 50;
     static const int box_brick_width = 50;
+
 private:
     QPixmap box_brick_pic;
     QPixmap stone_brick_pic;

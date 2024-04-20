@@ -15,6 +15,7 @@
 #include "water_pipe.h"
 #include "invisible_brick.h"
 #include "toxic_mushroom.h"
+#include "super_mushroom.h"
 #include "hp.h"
 
 class Mario : public QObject {
@@ -40,6 +41,7 @@ class Mario : public QObject {
         std::vector<Water_pipe*> water_pipes;
         std::vector<Invisible_brick*> invisible_bricks;
         std::vector<Toxic_mushroom*> toxic_mushrooms;
+        std::vector<Super_mushroom*> super_mushrooms;
 
         static const int small_mario_height = 52;
         static const int big_mario_height = 80;

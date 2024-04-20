@@ -23,10 +23,11 @@ void Super_mushroom::set_xy(int new_x, int new_y) {
     super_mushroom_item->setPos(x, y);
 }
 
-void Super_mushroom::move(int dx) {
-    x += dx;
-    set_xy(x, y);
+void Super_mushroom::show(){
+    set_xy(x,y-50);
+}
 
+void Super_mushroom::move() {
     if (still){
         x += dx;
         dx = 0;

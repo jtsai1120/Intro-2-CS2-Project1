@@ -23,7 +23,8 @@ public:
     QGraphicsPixmapItem *super_mushroom_item;
 
     void set_xy(int new_x, int new_y);
-    void move(int dx);
+    void show();
+    void move();
 
 
     static const int super_mushroom_height = 50;

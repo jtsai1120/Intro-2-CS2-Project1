@@ -92,6 +92,10 @@ void Mario::move() {
             if(abs(i -> x - x) > 600) i -> still = true;
             else i -> still = false;
 
+        for (Super_mushroom* i : super_mushrooms)
+            if(abs(i -> x - x) > 600) i -> still = true;
+            else i -> still = false;
+
         /*
         if (is_hit_left_side())
             qDebug() << "hit left side!";
@@ -236,6 +240,7 @@ bool Mario::is_crack_head() {
     Normal_brick *hit_normal_brick;
     Broken_brick *hit_broken_brick;
     Box_brick *hit_box_brick;
+    Super_mushroom *show_super_mushroom;
 
     for (QGraphicsItem *item : items) {
         QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
@@ -256,8 +261,13 @@ bool Mario::is_crack_head() {
                     if (i->box_brick_item == PixmapItem) {
                         _is_crack_box_brick = 1;
                         hit_box_brick = i;
-                    }
 
+                    }
+                for (Super_mushroom *i : super_mushrooms)
+                    if (i->super_mushroom_item == PixmapItem) {
+                        //_is_crack_box_brick = 1;
+                        show_super_mushroom = i;
+                    }
             }
         }
         if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), y))) {
@@ -278,6 +288,13 @@ bool Mario::is_crack_head() {
                         _is_crack_box_brick = 1;
                         hit_box_brick = i;
                     }
+                for (Super_mushroom *i : super_mushrooms)
+                    if (i->super_mushroom_item == PixmapItem) {
+                        //_is_crack_box_brick = 1;
+                        show_super_mushroom = i;
+                    }
+
+
             }
         }
         if (_is_crack_head && _is_crack_noraml_brick) {
@@ -293,10 +310,7 @@ bool Mario::is_crack_head() {
             jump_cd.start(520);
         }
         if (_is_crack_head && _is_crack_box_brick) {
-            hit_box_brick->crack();
-            is_passed_jump_cd = 0;
-            QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
-            jump_cd.start(520);
+            show_super_mushroom->show();
         }
 
 

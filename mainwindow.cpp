@@ -55,6 +55,7 @@ void MainWindow::update_frame() {
             for(Normal_brick *i : normal_bricks) i->move();
             for(Broken_brick *i : broken_bricks) i->move();
             for(Toxic_mushroom *i : toxic_mushrooms) i->move();
+            for(Super_mushroom *i : super_mushrooms) i->move();
 
 
             mario.move();
@@ -307,7 +308,7 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Normal_brick* i : normal_bricks) i->dx = moving_unit;
     for (Broken_brick* i : broken_bricks) i->dx = moving_unit;
     for (Box_brick* i : box_bricks) i->move(moving_unit);
-    for (Super_mushroom* i : super_mushrooms) i->move(moving_unit);
+    for (Super_mushroom* i : super_mushrooms) i->dx = moving_unit;
     for (Water_pipe* i : water_pipes) i->move(moving_unit);
     for (Invisible_brick* i : invisible_bricks) i->move(moving_unit);
     for (Toxic_mushroom* i : toxic_mushrooms) i->dx = moving_unit;

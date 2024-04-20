@@ -195,6 +195,32 @@ void MainWindow::game_init() {
             cur_scene->addItem(normal_bricks[i]->normal_brick_item);
         }
 
+        //add super mushroom
+        std::vector<std::vector<int>> super_mushroom_list = {
+            //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
+            {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
+        };
+        for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
+            super_mushrooms.push_back(new Super_mushroom);
+            super_mushrooms[i]->set_xy(super_mushroom_list[i][0],super_mushroom_list[i][1]);
+            //super_mushrooms[i]->set_xy(0,1000);
+            cur_scene->addItem(super_mushrooms[i]->super_mushroom_item);
+            //cur_scene->addItem(box_bricks[i]->box_brick_item);
+
+            //add super mushroom's map
+            super_mushrooms[i]->floor_bricks = floor_bricks;
+            super_mushrooms[i]->stone_bricks = stone_bricks;
+            super_mushrooms[i]->normal_bricks = normal_bricks;
+            super_mushrooms[i]->box_bricks = box_bricks;
+            super_mushrooms[i]->broken_bricks = broken_bricks;
+            super_mushrooms[i]->water_pipes = water_pipes;
+            super_mushrooms[i]->invisible_bricks = invisible_bricks;
+            super_mushrooms[i]->cur_scene = cur_scene;
+        }
+
         // add box_bricks
         std::vector<std::vector<int>> box_bricks_list = {
             //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
@@ -206,24 +232,11 @@ void MainWindow::game_init() {
         };
         for (int i = 0; i < static_cast<int>(box_bricks_list.size()); i++) {
             box_bricks.push_back(new Box_brick);
-            super_mushrooms.push_back(new Super_mushroom);
             box_bricks[i]->set_xy(box_bricks_list[i][0], box_bricks_list[i][1]);
-            //box_bricks[i]->super_mushroom.set_xy(0,1000);
-            //cur_scene->addItem(box_bricks[i]->super_mushroom.super_mushroom_item);
-            super_mushrooms[i]->set_xy(0,1000);
             cur_scene->addItem(box_bricks[i]->box_brick_item);
-
-            //add super mushroom's map
-            super_mushrooms[i]->floor_bricks = floor_bricks;
-            super_mushrooms[i]->stone_bricks = stone_bricks;
-            super_mushrooms[i]->normal_bricks = normal_bricks;
-            super_mushrooms[i]->box_bricks = box_bricks;
-            super_mushrooms[i]->broken_bricks = broken_bricks;
-            super_mushrooms[i]->water_pipes = water_pipes;
-            super_mushrooms[i]->invisible_bricks = invisible_bricks;
-            super_mushrooms[i]->cur_scene = cur_scene;
-
         }
+
+
 
 
 
@@ -262,17 +275,17 @@ void MainWindow::game_init() {
 
         // add toxic mushrooms
         std::vector<std::vector<int>> toxic_mushrooms_list = {
-            {150, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
-            {350, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
-            {650, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
-            {650, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
-            {750, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
-            {250, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
-            {1200, 620 - Floor_brick::floor_brick_height - 7 * Toxic_mushroom::toxic_mushroom_height},
-            {850, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
-            {1650, 620 + 10 - Floor_brick::floor_brick_height - 3 * Toxic_mushroom::toxic_mushroom_height},
-            {2200, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
-            {3000, 620 - Floor_brick::floor_brick_height - 5 * Toxic_mushroom::toxic_mushroom_height},
+            //{150, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
+            //{350, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
+            //{650, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
+            //{650, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
+            //{750, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
+            //{250, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
+            //{1200, 620 - Floor_brick::floor_brick_height - 7 * Toxic_mushroom::toxic_mushroom_height},
+            //{850, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
+            //{1650, 620 + 10 - Floor_brick::floor_brick_height - 3 * Toxic_mushroom::toxic_mushroom_height},
+            //{2200, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
+            //{3000, 620 - Floor_brick::floor_brick_height - 5 * Toxic_mushroom::toxic_mushroom_height},
 
         };
 
