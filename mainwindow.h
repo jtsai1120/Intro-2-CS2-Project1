@@ -14,6 +14,7 @@
 #include "water_pipe.h"
 #include "invisible_brick.h"
 #include "toxic_mushroom.h"
+#include "super_mushroom.h"
 #include "hp.h"
 #include "flag.h"
 #include "flag_pole.h"
@@ -87,6 +88,7 @@ class MainWindow : public QMainWindow {
         std::vector<Water_pipe*> water_pipes;
         std::vector<Invisible_brick*> invisible_bricks;
         std::vector<Toxic_mushroom*> toxic_mushrooms;
+        std::vector<Super_mushroom*> super_mushrooms;
 
 
 

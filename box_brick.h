@@ -15,7 +15,7 @@ public:
     void move(int dx);
     void crack();//撞擊反應
 
-    Super_mushroom super_mushroom;
+    //Super_mushroom super_mushroom;
 
     static const int box_brick_height = 50;
     static const int box_brick_width = 50;

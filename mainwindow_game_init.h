@@ -206,10 +206,23 @@ void MainWindow::game_init() {
         };
         for (int i = 0; i < static_cast<int>(box_bricks_list.size()); i++) {
             box_bricks.push_back(new Box_brick);
+            super_mushrooms.push_back(new Super_mushroom);
             box_bricks[i]->set_xy(box_bricks_list[i][0], box_bricks_list[i][1]);
-            box_bricks[i]->super_mushroom.set_xy(0,1000);
-            cur_scene->addItem(box_bricks[i]->super_mushroom.super_mushroom_item);
+            //box_bricks[i]->super_mushroom.set_xy(0,1000);
+            //cur_scene->addItem(box_bricks[i]->super_mushroom.super_mushroom_item);
+            super_mushrooms[i]->set_xy(0,1000);
             cur_scene->addItem(box_bricks[i]->box_brick_item);
+
+            //add super mushroom's map
+            super_mushrooms[i]->floor_bricks = floor_bricks;
+            super_mushrooms[i]->stone_bricks = stone_bricks;
+            super_mushrooms[i]->normal_bricks = normal_bricks;
+            super_mushrooms[i]->box_bricks = box_bricks;
+            super_mushrooms[i]->broken_bricks = broken_bricks;
+            super_mushrooms[i]->water_pipes = water_pipes;
+            super_mushrooms[i]->invisible_bricks = invisible_bricks;
+            super_mushrooms[i]->cur_scene = cur_scene;
+
         }
 
 
