@@ -6,7 +6,7 @@
 #include <QPixmap>
 #include <QGraphicsItem>
 #include <QPushButton>
-#include <QGraphicsBlurEffect>
+#include <QGraphicsRectItem>
 #include <QGraphicsDropShadowEffect>
 #include "ButtonItem.h"
 #include "mario.h"
@@ -101,21 +101,30 @@ void MainWindow::end_init() {
     qDebug() << "end_init() Called";
     game_status = 2;
 
+    // game over objects' x coordinate;
+    game_over_object_x = 1400;
+
+    // add white Rect bar
+    rectItem = new QGraphicsRectItem(0, 100, 1400, 300);
+    rectItem->setBrush(Qt::white);
+    cur_scene->addItem(rectItem);
+
     // add game over bg
     game_over_bg.load(":/Dataset/image/game_over.png");
-    game_over_bg = game_over_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
+    game_over_bg = game_over_bg.scaled(1400, 620, Qt::IgnoreAspectRatio);
     game_over_bg_item = new QGraphicsPixmapItem(game_over_bg);
-    game_over_bg_item->setPos(0,-200);
+    game_over_bg_item->setPos(game_over_object_x ,-200);
     cur_scene->addItem(game_over_bg_item);
+
     // add win or lose
-    QGraphicsTextItem *win_or_lose_text = new QGraphicsTextItem;
+    win_or_lose_text = new QGraphicsTextItem;
     QFont font("Consolas");
     win_or_lose_text->setFont(font);
 
     win_or_lose_text->setDefaultTextColor(Qt::red);
     win_or_lose_text->setScale(2);
-    win_or_lose_text->setPos(380, 200);
-    QString win_or_lose_text_combined = " You ";
+    win_or_lose_text->setPos(game_over_object_x + 350, 200);
+    QString win_or_lose_text_combined = "You ";
     if (mario.get_y() > 620) {
         win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Fall UnderGround";
     } else
@@ -128,9 +137,38 @@ void MainWindow::end_init() {
     }
 
     win_or_lose_text_combined =
-        win_or_lose_text_combined + " \n" + "( Total : " + QString::number(score.get_score()) + " Coin(s) )";
+        win_or_lose_text_combined + " \n" + "  ( Total : " + QString::number(score.get_score()) + " Coin(s) )";
     win_or_lose_text->setPlainText(win_or_lose_text_combined);
     cur_scene->addItem(win_or_lose_text);
+
+    fade_in_timer = new QTimer;
+    QObject::connect(fade_in_timer, SIGNAL(timeout()), this, SLOT(game_over_fade_in()));
+    fade_in_timer->start(1);
+
+}
+
+void MainWindow::game_over_fade_in() {
+    game_over_object_x -= 5;
+    rectItem->setX(game_over_object_x);
+    game_over_bg_item->setX(game_over_object_x);
+    win_or_lose_text->setX(game_over_object_x + 350);
+    if (game_over_object_x <= 0) {
+        fade_in_timer->stop();
+        delete fade_in_timer;
+        restart_button_pic.load(":/Dataset/image/restart_button.png");
+        restart_button_pic = restart_button_pic.scaled(100, 100, Qt::IgnoreAspectRatio);
+        restart_button->setIcon(QIcon(restart_button_pic));
+        restart_button->setIconSize(restart_button_pic.size());
+        restart_button_item = new ButtonItem(restart_button);
+        restart_button_item->setPos(700-restart_button_pic.width()/2, 400-restart_button_pic.height()/2);
+        QObject::connect(restart_button, SIGNAL(clicked()), this, SLOT(on_restart_button_clicked()));
+        cur_scene->addItem(restart_button_item);
+    }
+}
+
+void MainWindow::on_restart_button_clicked() {
+    qDebug() << "restart button clicked !";
+
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {

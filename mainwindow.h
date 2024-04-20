@@ -40,15 +40,15 @@ class MainWindow : public QMainWindow {
 
     private slots:
         void update_frame(); // 畫面更新
-
         void on_start_button_clicked();
+        void game_over_fade_in();
+        void on_restart_button_clicked();
 
     private:
         int game_status; // 0:開始畫面, 1:遊戲中, 2:結束畫面
 
         void start_init();
-        void game_init();
-
+        void game_init();    
 
         void all_move_detection(); // 檢查是馬力歐要左右動、要跳，還是其他所有物件要動(隨view)
         void all_horizontal_move(int moving_unit);
@@ -68,6 +68,13 @@ class MainWindow : public QMainWindow {
 
         QPixmap game_over_bg;
         QGraphicsPixmapItem *game_over_bg_item;
+        int game_over_object_x;
+        QTimer *fade_in_timer;
+        QGraphicsRectItem *rectItem;
+        QGraphicsTextItem *win_or_lose_text;
+        QPixmap restart_button_pic;
+        QPushButton *restart_button = new QPushButton;
+        ButtonItem *restart_button_item;
 
         // game scene
         Score score;
