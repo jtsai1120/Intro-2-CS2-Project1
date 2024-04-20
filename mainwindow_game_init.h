@@ -90,7 +90,7 @@ void MainWindow::game_init() {
             {650, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
             {700, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
             {750, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
-            {800, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            //{800, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {850, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {900, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {950, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
@@ -118,6 +118,7 @@ void MainWindow::game_init() {
         std::vector<std::vector<int>> normal_bricks_list = {
             {400, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
             //{450, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
+            {800, 620 - Floor_brick::floor_brick_height - 10 * Normal_brick::normal_brick_height},
 
             {1000, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
