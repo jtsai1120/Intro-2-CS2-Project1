@@ -1,5 +1,6 @@
 #include "box_brick.h"
 #include <QDebug>
+#include "super_mushroom.h"
 
 Box_brick::Box_brick() {
     box_brick_pic.load(":/Dataset/image/brick/box brick.png");
@@ -22,6 +23,7 @@ void Box_brick::move(int dx) {
 void Box_brick::crack() {
     if(!opened){
         box_brick_item->setPixmap(stone_brick_pic);
+        super_mushroom.set_xy(x,y-50);
         //qDebug() << "boom";
         //放上隨機觸發事件
         opened = true;

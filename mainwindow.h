@@ -89,6 +89,7 @@ class MainWindow : public QMainWindow {
         std::vector<Toxic_mushroom*> toxic_mushrooms;
 
 
+
         // KeyEvents (Pressed=1, Released=0)
         bool left_key_state, right_key_state, up_key_state;
 
