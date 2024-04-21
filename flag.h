@@ -17,7 +17,7 @@ class Flag : public QObject {
         void reset();
 
         static const int init_x = Flag_pole::init_x - 60;
-        static const int init_y = Flag_pole::init_y - 5;
+        static const int init_y = Flag_pole::init_y;
 
         void fall();
 

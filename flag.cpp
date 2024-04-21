@@ -19,6 +19,7 @@ void Flag::move(int dx, int dy) {
 
 void Flag::fall() {
     QObject::connect(&fall_timer, SIGNAL(timeout()), this, SLOT(fall_until_touch_mario()));
+    move(0, -5);
     fall_timer.start(5);
 }
 
