@@ -212,7 +212,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void MainWindow::all_move_detection() {
-    if (left_key_state || right_key_state || up_key_state) {
+    if ((left_key_state || right_key_state || up_key_state)&&mario.movable) {
         mario.is_moving = 1;
         //qDebug() << "mario is moving";
         // Move Left or Right

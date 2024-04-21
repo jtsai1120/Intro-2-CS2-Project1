@@ -13,6 +13,7 @@ class Flag_pole {
         void reset();
         //x = 1400 * 5 - 200;
         static const int init_x = 1400 * 5 - 200;
+        //static const int init_x = 900;
         static const int init_y = 620 - Floor_brick::floor_brick_height - 500;
 
         bool is_touched;

@@ -23,9 +23,9 @@ void Flag::fall() {
 }
 
 void Flag::fall_until_touch_mario() {
-    move(0, 2);
+    move(0, 3);
 
-    if (flag_item->collidesWithItem(mario->mario)) {
+    if (y >= mario->get_y()) {
         fall_timer.stop();
         qDebug() << "flag touch mario !";
         is_touched_mario = 1;
