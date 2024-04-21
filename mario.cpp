@@ -18,7 +18,24 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     mario_run1_R.load(":/Dataset/image/Mario_small/s_mario_run1_R.png");
     mario_run2_L.load(":/Dataset/image/Mario_small/s_mario_run2_L.png");
     mario_run2_R.load(":/Dataset/image/Mario_small/s_mario_run2_R.png");
+
     mario_big_stand_R.load(":/Dataset/image/Mario_big/mario_R_stand.png");
+    mario_big_stand_L.load(":/Dataset/image/Mario_big/mario_L_stand.png");
+    mario_big_jump_R_1.load(":/Dataset/image/Mario_big/mario_R_jump1.png");
+    mario_big_jump_L_1.load(":/Dataset/image/Mario_big/mario_L_jump1.png");
+    mario_big_jump_R_2.load(":/Dataset/image/Mario_big/mario_R_jump2.png");
+    mario_big_jump_L_2.load(":/Dataset/image/Mario_big/mario_L_jump2.png");
+    mario_big_jump_R_3.load(":/Dataset/image/Mario_big/mario_R_jump3.png");
+    mario_big_jump_L_3.load(":/Dataset/image/Mario_big/mario_L_jump3.png");
+    mario_big_jump_R_4.load(":/Dataset/image/Mario_big/mario_R_jump4.png");
+    mario_big_jump_L_4.load(":/Dataset/image/Mario_big/mario_L_jump4.png");
+    mario_big_die.load(":/Dataset/image/Mario_big/b_mario_die.png");
+    mario_big_run0_L.load(":/Dataset/image/Mario_big/mario_L_run0.png");
+    mario_big_run0_R.load(":/Dataset/image/Mario_big/mario_R_run0.png");
+    mario_big_run1_L.load(":/Dataset/image/Mario_big/mario_L_run1.png");
+    mario_big_run1_R.load(":/Dataset/image/Mario_big/mario_R_run1.png");
+    mario_big_run2_L.load(":/Dataset/image/Mario_big/mario_L_run2.png");
+    mario_big_run2_R.load(":/Dataset/image/Mario_big/mario_R_run2.png");
     mario = new QGraphicsPixmapItem(mario_stand_R);
     x = init_x;
     y = init_y;
@@ -36,56 +53,136 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     movable = 1;
 }
 
+int Mario::walking = 0;
+
 void Mario::change(){
     if (movable) {
-        if (cur_direction == 'R') {
-            if (is_grounded()) {
-                if (is_moving) {
-                    if (cur_pixmap != "run1_R")
-                        cur_pixmap = "run1_R";
-                    else
-                        cur_pixmap = "run2_R";
+        if (!big){
+            if (cur_direction == 'R') {
+                if (is_grounded()) {
+                    if (is_moving) {
+                        if (cur_pixmap != "run1_R")
+                            cur_pixmap = "run1_R";
+                        else
+                            cur_pixmap = "run2_R";
+                    }
+                }
+           }
+           else{
+                if (is_grounded()) {
+                    if (is_moving) {
+                       if (cur_pixmap != "run1_L")
+                            cur_pixmap = "run1_L";
+                        else
+                            cur_pixmap = "run2_L";
+                    }
                 }
             }
-       }
-       else{
-            if (is_grounded()) {
-                if (is_moving) {
-                   if (cur_pixmap != "run1_L")
-                        cur_pixmap = "run1_L";
-                    else
-                        cur_pixmap = "run2_L";
-                }
-            }
+            //qDebug()<<"change";
         }
-        //qDebug()<<"change";
+
+        if (big){
+            if (cur_direction == 'R'){
+                if (walking == 0){
+                    cur_pixmap = "big_run0_R";
+                    walking++;
+                }
+                else if (walking == 1){
+                    cur_pixmap = "big_run1_R";
+                    walking++;
+                }
+                else if (walking == 2){
+                    cur_pixmap = "big_run2_R";
+                    walking = 0;
+                }
+            }
+            else{
+                if (walking == 0){
+                    cur_pixmap = "big_run0_L";
+                    walking++;
+                }
+                else if (walking == 1){
+                    cur_pixmap = "big_run1_L";
+                    walking++;
+                }
+                else if (walking == 2){
+                    cur_pixmap = "big_run2_L";
+                    walking = 0;
+                }
+            }
+
+        }
+
         change_direction_picture(cur_pixmap);
     }
 }
 
+int Mario::jumping = 0;
+
 void Mario::move() {
     if (movable) {
-        if (cur_direction == 'R') {
-            if (is_grounded()) {
-                if (!is_moving)
-                    cur_pixmap = "stand_R";
-                else if (!is_passed_jump_cd)
-                    cur_pixmap = "stand_R";
-            }
-            else {
-                cur_pixmap = "jump_R";
-            }
-        } else {
-            if (is_grounded()) {
-                if (!is_moving)
-                    cur_pixmap = "stand_L";
-                else if (!is_passed_jump_cd)
-                    cur_pixmap = "stand_L";
-            }
-            else {
-                cur_pixmap = "jump_L";
+        if (!big){
+            if (cur_direction == 'R') {
+                if (is_grounded()) {
+                    if (!is_moving)
+                        cur_pixmap = "stand_R";
+                    else if (!is_passed_jump_cd)
+                        cur_pixmap = "stand_R";
+                }
+                else {
+                    cur_pixmap = "jump_R";
+                }
+            } else {
+                if (is_grounded()) {
+                    if (!is_moving)
+                        cur_pixmap = "stand_L";
+                    else if (!is_passed_jump_cd)
+                        cur_pixmap = "stand_L";
+                }
+                else {
+                    cur_pixmap = "jump_L";
+                }
             }
         }
+        if (big){
+            if (cur_direction == 'R') {
+                if (is_grounded()) {
+                    if (!is_moving)
+                        cur_pixmap = "big_stand_R";
+                    else if (!is_passed_jump_cd)
+                        cur_pixmap = "big_stand_R";
+                }
+                else {
+                    if (jumping == 0)
+                        cur_pixmap = "big_jump1_R";
+                    if (jumping == 1)
+                        cur_pixmap = "big_jump2_R";
+                    if (jumping == 2)
+                        cur_pixmap = "big_jump3_R";
+                    if (jumping == 3)
+                        cur_pixmap = "big_jump4_R";
+                }
+            } else {
+                if (is_grounded()) {
+                    if (!is_moving)
+                        cur_pixmap = "big_stand_L";
+                    else if (!is_passed_jump_cd)
+                        cur_pixmap = "big_stand_L";
+                }
+                else {
+                    if (jumping == 0)
+                        cur_pixmap = "big_jump1_L";
+                    if (jumping == 1)
+                        cur_pixmap = "big_jump2_L";
+                    if (jumping == 2)
+                        cur_pixmap = "big_jump3_L";
+                    if (jumping == 3)
+                        cur_pixmap = "big_jump4_L";
+
+                }
+            }
+        }
+
         change_direction_picture(cur_pixmap);
 
         //移動時活化毒蘑菇
@@ -106,11 +203,34 @@ void Mario::move() {
         dx = 0;
 
         y += dy;
+
+        if (!big)
+            ay = 0.18;
+        else if (big)
+            ay = 0.2;
+
         if (is_crack_head()) dy = 1;
-        else if (!is_grounded()) dy += ay;
+        else if (!is_grounded()) {
+            dy += ay;
+            if (big)
+                jumping_distance+=y;
+            if (jumping_distance > 8000){
+                if (jumping < 4){
+                    jumping ++;
+                    qDebug()<<jumping;
+                }
+                else jumping = 0;
+                jumping_distance = 0;
+            }
+        }
         else dy = 0;
 
-        mario->setPos(x, y);
+        if (!big){
+            mario->setPos(x, y);
+        }
+        if (big){
+            mario->setPos(x, y-32);
+        }
     }
 }
 
@@ -133,14 +253,51 @@ void Mario::change_direction_picture(QString s) {
         mario->setPixmap(mario_jump_L);
     else if (s == "jump_R")
         mario->setPixmap(mario_jump_R);
-    else if (s == "big_stand_R"){
+
+    else if (s == "big_stand_R")
         mario->setPixmap(mario_big_stand_R);
-    }
+    else if (s == "big_stand_L")
+        mario->setPixmap(mario_big_stand_L);
+    else if (s == "big_run0_L")
+        mario->setPixmap(mario_big_run0_L);
+    else if (s == "big_run1_L")
+        mario->setPixmap(mario_big_run1_L);
+    else if (s == "big_run2_L")
+        mario->setPixmap(mario_big_run2_L);
+    else if (s == "big_run0_R")
+        mario->setPixmap(mario_big_run0_R);
+    else if (s == "big_run1_R")
+        mario->setPixmap(mario_big_run1_R);
+    else if (s == "big_run2_R")
+        mario->setPixmap(mario_big_run2_R);
+    else if (s == "big_jump1_L")
+        mario->setPixmap(mario_big_jump_L_1);
+    else if (s == "big_jump2_L")
+        mario->setPixmap(mario_big_jump_L_2);
+    else if (s == "big_jump3_L")
+        mario->setPixmap(mario_big_jump_L_3);
+    else if (s == "big_jump4_L")
+        mario->setPixmap(mario_big_jump_L_4);
+    else if (s == "big_jump1_R")
+        mario->setPixmap(mario_big_jump_R_1);
+    else if (s == "big_jump2_R")
+        mario->setPixmap(mario_big_jump_R_2);
+    else if (s == "big_jump3_R")
+        mario->setPixmap(mario_big_jump_R_3);
+    else if (s == "big_jump4_R")
+        mario->setPixmap(mario_big_jump_R_4);
+    else if (s == "big_die")
+        mario->setPixmap(mario_big_die);
+
     else qDebug() << "Mario Pixmap Error";
 }
 
 void Mario::jump() {
     if (is_grounded() && is_passed_jump_cd) { // 防止二次跳
+        if (!big)
+            vy0 = -6;
+        if (big)
+            vy0 = -8;
         dy = vy0;
     }
 }
@@ -162,6 +319,7 @@ void Mario::is_taller(int i){
     }
     else if(!immune_status && !toxic_mushrooms[i]->dead){ //非免疫狀態且毒菇沒死
         hp->sub_hp(1); //扣血
+        big = false;
         immune_status = 1;
         QObject::connect(&immune, SIGNAL(timeout()), this, SLOT(immune_time()));
         immune.start(2000);
@@ -172,6 +330,8 @@ void Mario::touch_super_mushroom(){
     if (hp->get_hp()<3){
         hp->add_hp(1);
     }
+    big = true;
+
 }
 
 
@@ -248,7 +408,7 @@ bool Mario::is_crack_head() {
     Normal_brick *hit_normal_brick;
     Broken_brick *hit_broken_brick;
     Box_brick *hit_box_brick;
-    Super_mushroom *show_super_mushroom;
+    //Super_mushroom *show_super_mushroom;
 
     for (QGraphicsItem *item : items) {
         QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);

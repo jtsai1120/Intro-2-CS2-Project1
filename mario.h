@@ -61,6 +61,7 @@ class Mario : public QObject {
         bool is_hit_left_side(); // 撞到方塊兩左側
         bool is_hit_right_side(); // 撞到方塊兩右側
         bool movable;
+        bool big = false;
 
     private:
         QPixmap mario_stand_R, mario_stand_L;
@@ -68,11 +69,22 @@ class Mario : public QObject {
         QPixmap mario_run1_R, mario_run2_R;
         QPixmap mario_die;
         QPixmap mario_jump_L, mario_jump_R;
-        QPixmap mario_big_stand_R;
+
+        QPixmap mario_big_stand_R, mario_big_stand_L;
+        QPixmap mario_big_run0_L, mario_big_run1_L, mario_big_run2_L;
+        QPixmap mario_big_run0_R, mario_big_run1_R, mario_big_run2_R;
+        QPixmap mario_big_die;
+        QPixmap mario_big_jump_L_1, mario_big_jump_L_2, mario_big_jump_L_3, mario_big_jump_L_4;
+        QPixmap mario_big_jump_R_1, mario_big_jump_R_2, mario_big_jump_R_3, mario_big_jump_R_4;
+
+
+        static int walking;
+        int jumping_distance = 0;
+        static int jumping;
 
         int x; double y;
-        const double vy0 = -6;
-        const double ay = 0.18;
+        double vy0;
+        double ay;
         // since one jump = 100 pixels = v^2/(2*a)
         // let a = 0.18, v(initial) = -6
         QString cur_size;

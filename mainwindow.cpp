@@ -170,7 +170,10 @@ void MainWindow::all_move_detection() {
         mario.is_moving = 1;
         //qDebug() << "mario is moving";
         // Move Left or Right
-        const int moving_unit = 5;
+        int moving_unit;
+        if (!mario.big)
+            moving_unit = 5;
+        else moving_unit = 7;
         int distance=0;
         if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
             if (left_key_state && view_x > 0) {
@@ -178,8 +181,8 @@ void MainWindow::all_move_detection() {
                 if (!mario.is_hit_right_side()) {
                     view_x -= moving_unit;
                     mario.dx = -1 * moving_unit;
-                    distance+=5;
-                    if (distance==moving_unit){
+                    distance+=qAbs(moving_unit);
+                    if (distance>=moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -192,8 +195,8 @@ void MainWindow::all_move_detection() {
                     else
                         mario.dx = moving_unit;
                     view_x += moving_unit;
-                    distance+=5;
-                    if (distance==moving_unit){
+                    distance+=qAbs(moving_unit);
+                    if (distance>=moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -209,8 +212,8 @@ void MainWindow::all_move_detection() {
                     else
                         mario.dx = -1 * moving_unit;
                     view_x -= moving_unit;
-                    distance+=5;
-                    if (distance==moving_unit){
+                    distance+=qAbs(moving_unit);
+                    if (distance>=moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -223,8 +226,8 @@ void MainWindow::all_move_detection() {
                         mario.set_x(view_x);
                     view_x += moving_unit;
                     mario.dx = moving_unit;
-                    distance+=5;
-                    if (distance==moving_unit){
+                    distance+=qAbs(moving_unit);
+                    if (distance>=moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -236,8 +239,8 @@ void MainWindow::all_move_detection() {
                 if (!mario.is_hit_right_side()) {
                     view_x -= moving_unit;
                     all_horizontal_move(moving_unit);
-                    distance+=5;
-                    if (distance==moving_unit){
+                    distance+=qAbs(moving_unit);
+                    if (distance>=moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -247,8 +250,8 @@ void MainWindow::all_move_detection() {
                 if (!mario.is_hit_left_side()) {
                     view_x += moving_unit;
                     all_horizontal_move(-1 * moving_unit);
-                    distance+=5;
-                    if (distance==moving_unit){
+                    distance+=qAbs(moving_unit);
+                    if (distance>=moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -293,9 +296,8 @@ void MainWindow::all_move_detection() {
         // super msuhroom
         for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
             if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
-                qDebug() << "grow up";
+                //qDebug() << "grow up";
                 super_mushrooms[i]->used();
-                mario.change_direction_picture("big_stand_R");
                 mario.touch_super_mushroom();
             }
         }
@@ -316,7 +318,6 @@ void MainWindow::all_move_detection() {
             if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
                 qDebug() << "grow up";
                 super_mushrooms[i]->used();
-                mario.change_direction_picture("big_stand_R");
                 mario.touch_super_mushroom();
             }
         }

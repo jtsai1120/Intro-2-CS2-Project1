@@ -229,19 +229,6 @@ void MainWindow::game_init() {
 
         }
 
-        for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
-            //add super mushroom's map
-            super_mushrooms[i]->floor_bricks = floor_bricks;
-            super_mushrooms[i]->stone_bricks = stone_bricks;
-            super_mushrooms[i]->normal_bricks = normal_bricks;
-            super_mushrooms[i]->box_bricks = box_bricks;
-            super_mushrooms[i]->broken_bricks = broken_bricks;
-            super_mushrooms[i]->water_pipes = water_pipes;
-            super_mushrooms[i]->invisible_bricks = invisible_bricks;
-            super_mushrooms[i]->cur_scene = cur_scene;
-        }
-
-
 
 
 
@@ -280,10 +267,23 @@ void MainWindow::game_init() {
             cur_scene->addItem(water_pipes[i]->water_pipe_item);
         }
 
+        //add super mushroom's map
+        for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
+            //add super mushroom's map
+            super_mushrooms[i]->floor_bricks = floor_bricks;
+            super_mushrooms[i]->stone_bricks = stone_bricks;
+            super_mushrooms[i]->normal_bricks = normal_bricks;
+            super_mushrooms[i]->box_bricks = box_bricks;
+            super_mushrooms[i]->broken_bricks = broken_bricks;
+            super_mushrooms[i]->water_pipes = water_pipes;
+            super_mushrooms[i]->invisible_bricks = invisible_bricks;
+            super_mushrooms[i]->cur_scene = cur_scene;
+        }
+
         // add toxic mushrooms
         std::vector<std::vector<int>> toxic_mushrooms_list = {
             //{150, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
-            //{350, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
+            {350, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
             //{650, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
             //{650, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
             //{750, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
