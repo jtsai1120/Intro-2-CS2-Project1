@@ -169,6 +169,16 @@ void MainWindow::game_over_fade_in() {
 void MainWindow::on_restart_button_clicked() {
     qDebug() << "restart button clicked !";
 
+    // 移除動畫
+    game_over_object_x = 10000;
+    rectItem->setX(game_over_object_x);
+    game_over_bg_item->setX(game_over_object_x);
+    win_or_lose_text->setX(game_over_object_x + 350);
+    restart_button_item->setPos(700-restart_button_pic.width()/2, 400-restart_button_pic.height()/2);
+
+    // 呼叫 game_restart() 重置遊戲畫面物件：
+    game_status = 1;
+    game_restart();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {

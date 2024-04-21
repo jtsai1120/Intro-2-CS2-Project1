@@ -89,7 +89,7 @@ void Mario::move() {
 
         //移動時活化毒蘑菇
         for (Toxic_mushroom* i : toxic_mushrooms)
-            if(abs(i -> x - x) > 600) i -> still = true;
+            if(abs(i -> x - x) > 700) i -> still = true;
             else i -> still = false;
 
         /*
@@ -336,5 +336,9 @@ bool Mario::is_hit_right_side() {
     return _is_hit_right_side;
 }
 
-
+void Mario::reset(){
+    x = 700;
+    y = 100;
+    mario->setPos(x,y);
+}
 

@@ -1,8 +1,8 @@
 #include "invisible_brick.h"
 
 Invisible_brick::Invisible_brick(){
-    //invisible_brick_pic.load(":/Dataset/image/brick/invisible brick.png");
-    invisible_brick_pic.load(":/Dataset/image/brick/stone brick.png");
+    invisible_brick_pic.load(":/Dataset/image/brick/invisible brick.png");
+    //invisible_brick_pic.load(":/Dataset/image/brick/stone brick.png");
 
     invisible_brick_item = new QGraphicsPixmapItem(invisible_brick_pic);
 }

@@ -49,6 +49,8 @@ class MainWindow : public QMainWindow {
 
         void start_init();
         void game_init();    
+        void game_restart();
+
 
         void all_move_detection(); // 檢查是馬力歐要左右動、要跳，還是其他所有物件要動(隨view)
         void all_horizontal_move(int moving_unit);
@@ -95,6 +97,10 @@ class MainWindow : public QMainWindow {
         std::vector<Invisible_brick*> invisible_bricks;
         std::vector<Toxic_mushroom*> toxic_mushrooms;
 
+        //設定座標的，為了能重置因次宣告在外面
+        std::vector<std::vector<int>> broken_bricks_list;
+        std::vector<std::vector<int>> toxic_mushrooms_list;
+        std::vector<std::vector<int>> coins_list;
 
 
         // KeyEvents (Pressed=1, Released=0)

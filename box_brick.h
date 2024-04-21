@@ -14,11 +14,13 @@ public:
     void set_xy(int new_x, int new_y);
     void move(int dx);
     void crack();//撞擊反應
+    void reset();
 
     Super_mushroom super_mushroom;
 
     static const int box_brick_height = 50;
     static const int box_brick_width = 50;
+
 private:
     QPixmap box_brick_pic;
     QPixmap stone_brick_pic;
