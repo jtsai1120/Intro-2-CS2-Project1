@@ -54,6 +54,10 @@ public:
     bool dead = false;
     bool still = true;
 
+    bool locked = false;//若鎖死則減少運算
+    bool hit_right = false;
+    bool hit_left = false;
+
 private:
     QPixmap toxic_mushroom_pic_1;
     QPixmap toxic_mushroom_pic_2;

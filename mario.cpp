@@ -135,6 +135,9 @@ void Mario::change_direction_picture(QString s) {
 }
 
 void Mario::jump() {
+    for (Toxic_mushroom* i : toxic_mushrooms) {
+        i->locked = false;
+    }
     if (is_grounded() && is_passed_jump_cd) { // 防止二次跳
         dy = vy0;
     }
@@ -337,8 +340,19 @@ bool Mario::is_hit_right_side() {
 }
 
 void Mario::reset(){
-    x = 700;
-    y = 100;
-    mario->setPos(x,y);
+    x = init_x;
+    y = init_y;
+    dx = 0;
+    dy = 0;
+    mario->setPos(x, y);
+    cur_direction = 'R';
+    cur_size = "small";
+    cur_pixmap = "stand_R";
+    is_moving = 0;
+    //qDebug() << "width=" << mario_stand_R.width();
+    //qDebug() << "height=" << mario_stand_R.height();
+    is_passed_jump_cd = 1;
+    immune_status = 0;
+    movable = 1;
 }
 

@@ -31,3 +31,9 @@ void Flag::fall_until_touch_mario() {
     }
 }
 
+void Flag::reset(){
+    x = init_x;
+    y = init_y;
+    flag_item->setPos(x, y);
+    is_touched_mario = 0;
+}

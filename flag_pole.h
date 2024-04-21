@@ -10,6 +10,7 @@ class Flag_pole {
         Flag_pole();
         QGraphicsPixmapItem *flag_pole_item;
         void move(int dx, int dy);
+        void reset();
         //x = 1400 * 5 - 200;
         static const int init_x = 1400 * 5 - 200;
         static const int init_y = 620 - Floor_brick::floor_brick_height - 500;

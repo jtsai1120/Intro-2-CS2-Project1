@@ -14,6 +14,7 @@ class Flag : public QObject {
         Flag();
         QGraphicsPixmapItem *flag_item;
         void move(int dx, int dy);
+        void reset();
 
         static const int init_x = Flag_pole::init_x - 60;
         static const int init_y = Flag_pole::init_y;

@@ -17,13 +17,14 @@ void Broken_brick::set_xy(int new_x, int new_y) {
 }
 
 void Broken_brick::move() {
+    if(y == 1000) return;
 
     x += dx;
     dx = 0;
 
     y += dy;
     if (y > init_y) {
-        y = 100000;
+        y = 1000;
     }
     else if (y < init_y){
         dy += ay;
@@ -38,5 +39,13 @@ void Broken_brick::move() {
 void Broken_brick::crack() {
     if (y == init_y) // 確保不會在下落過程中再被頂起來
         dy = vy0;
+}
+
+void Broken_brick::reset(int new_x, int new_y) {
+    dx = 0;
+    dy = 0;
+    x = new_x;
+    y = new_y;
+    broken_brick_item->setPos(x, y);
 }
 

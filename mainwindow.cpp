@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     left_key_state = 0;
     right_key_state = 0;
     up_key_state = 0;
+    restart_button_item = new ButtonItem(restart_button);
 }
 
 void MainWindow::update_frame() {
@@ -159,7 +160,7 @@ void MainWindow::game_over_fade_in() {
         restart_button_pic = restart_button_pic.scaled(100, 100, Qt::IgnoreAspectRatio);
         restart_button->setIcon(QIcon(restart_button_pic));
         restart_button->setIconSize(restart_button_pic.size());
-        restart_button_item = new ButtonItem(restart_button);
+        restart_button->raise();
         restart_button_item->setPos(700-restart_button_pic.width()/2, 400-restart_button_pic.height()/2);
         QObject::connect(restart_button, SIGNAL(clicked()), this, SLOT(on_restart_button_clicked()));
         cur_scene->addItem(restart_button_item);
@@ -174,11 +175,14 @@ void MainWindow::on_restart_button_clicked() {
     rectItem->setX(game_over_object_x);
     game_over_bg_item->setX(game_over_object_x);
     win_or_lose_text->setX(game_over_object_x + 350);
-    restart_button_item->setPos(700-restart_button_pic.width()/2, 400-restart_button_pic.height()/2);
+    restart_button_item->setPos(10000, 0);
 
     // 呼叫 game_restart() 重置遊戲畫面物件：
     game_status = 1;
     game_restart();
+    left_key_state = 0;
+    right_key_state = 0;
+    up_key_state = 0;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -310,7 +314,6 @@ void MainWindow::all_move_detection() {
         for (int i = 0; i < static_cast<int>(coins.size()); i++) {
             if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
                 qDebug() << "mario get coin !";
-                cur_scene->removeItem(coins[i]->coin_item);
                 coins[i]->set_xy(0, 1000);
                 score.add_score(1);
             }

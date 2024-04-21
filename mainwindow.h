@@ -98,7 +98,12 @@ class MainWindow : public QMainWindow {
         std::vector<Toxic_mushroom*> toxic_mushrooms;
 
         //設定座標的，為了能重置因次宣告在外面
+        std::vector<std::vector<int>> invisible_bricks_list;
+        std::vector<std::vector<int>> stone_bricks_list;
+        std::vector<std::vector<int>> normal_bricks_list;
         std::vector<std::vector<int>> broken_bricks_list;
+        std::vector<std::vector<int>> box_bricks_list;
+        std::vector<std::vector<int>> water_pipes_list;
         std::vector<std::vector<int>> toxic_mushrooms_list;
         std::vector<std::vector<int>> coins_list;
 
