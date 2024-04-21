@@ -135,9 +135,6 @@ void Mario::change_direction_picture(QString s) {
 }
 
 void Mario::jump() {
-    for (Toxic_mushroom* i : toxic_mushrooms) {
-        i->locked = false;
-    }
     if (is_grounded() && is_passed_jump_cd) { // 防止二次跳
         dy = vy0;
     }

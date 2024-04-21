@@ -53,7 +53,6 @@ void MainWindow::game_init() {
             {2600, 620 - 10 - Floor_brick::floor_brick_height - 10 * Invisible_brick::invisible_brick_height},
             {2600, 620 - 10 - Floor_brick::floor_brick_height - 11 * Invisible_brick::invisible_brick_height},
             {2700, 620 - 10 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
-            {2700, 620 - 10 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
             {3750 + 10, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
             {4250, 620 - Floor_brick::floor_brick_height - (-1) * Stone_brick::stone_brick_height},
             {4250, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
@@ -80,6 +79,8 @@ void MainWindow::game_init() {
 
             {6830, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
             {6830, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {6830, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+            {6830, 620 - Floor_brick::floor_brick_height - 13 * Stone_brick::stone_brick_height},
 
 
         };
@@ -181,13 +182,17 @@ void MainWindow::game_init() {
             {3600, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
             {3600, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
             {3600, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
+            {3900, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {3900, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {3900, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {3900, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
 
-            {3600, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+
             {3500, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
             {3450, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {3400, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {3350, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
-            {3300, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {3600, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {3250, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {3200, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {3150, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
@@ -276,7 +281,7 @@ void MainWindow::game_init() {
 
 
             //
-            {1450, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
+            //{1450, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
 
 
             //{650, 620 - Floor_brick::floor_brick_height - Stone_brick::stone_brick_height},
@@ -298,7 +303,10 @@ void MainWindow::game_init() {
             {350, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
             {300, 620 - Floor_brick::floor_brick_height - 9 * Normal_brick::normal_brick_height},
             {1500, 620 - Floor_brick::floor_brick_height - 5 * Normal_brick::normal_brick_height},
+            {3000, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
+
             {3300, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
+            {3800, 620 - Floor_brick::floor_brick_height - 11 * Normal_brick::normal_brick_height},
 
 
         };
@@ -347,6 +355,10 @@ void MainWindow::game_init() {
             {3550, 620 - Floor_brick::floor_brick_height - 5 * Broken_brick::broken_brick_height},
             {3500, 620 - Floor_brick::floor_brick_height - 5 * Broken_brick::broken_brick_height},
             {3800, 620 - Floor_brick::floor_brick_height - 8 * Broken_brick::broken_brick_height},
+            {3800, 620 - Floor_brick::floor_brick_height - 9 * Broken_brick::broken_brick_height},
+            {3800, 620 - Floor_brick::floor_brick_height - 12 * Broken_brick::broken_brick_height},
+            {3850, 620 - Floor_brick::floor_brick_height - 11 * Broken_brick::broken_brick_height},
+
             {3950, 620 - Floor_brick::floor_brick_height - 6 * Broken_brick::broken_brick_height},
             {3850, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
             {5100, 620 - Floor_brick::floor_brick_height - (-1) * Stone_brick::stone_brick_height},
@@ -362,6 +374,7 @@ void MainWindow::game_init() {
         // add water_pipes
         water_pipes_list = {
             {1350, 620 - Floor_brick::floor_brick_height - 2 * Normal_brick::normal_brick_height},
+            //{2600, 620 - Floor_brick::floor_brick_height - 2 * Normal_brick::normal_brick_height},
         };
         for (int i = 0; i < static_cast<int>(water_pipes_list.size()); i++) {
             water_pipes.push_back(new Water_pipe);
@@ -386,6 +399,7 @@ void MainWindow::game_init() {
             {2900, 620 + 10 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
             {3050, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
             {3550, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
+            {3850, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
 
 
         };
@@ -411,7 +425,14 @@ void MainWindow::game_init() {
 
         // add coins
         coins_list = {
+            {0, 620 - Floor_brick::floor_brick_height - 11 * Coin::coin_height},
+            {550, 620 - Floor_brick::floor_brick_height - 10 * Coin::coin_height},
+            {600, 620 - Floor_brick::floor_brick_height - 14 * Coin::coin_height},
+            {650, 620 - Floor_brick::floor_brick_height - 14 * Coin::coin_height},
+
             {1000, 620 - Floor_brick::floor_brick_height - Coin::coin_height},
+            {1500, 620 - Floor_brick::floor_brick_height - 3 * Coin::coin_height},
+
             {1700, 620 - Floor_brick::floor_brick_height - 2 * Coin::coin_height},
             {1750, 620 - Floor_brick::floor_brick_height - 2 * Coin::coin_height},
             {2350, 620 - Floor_brick::floor_brick_height - 9 * Coin::coin_height},
@@ -423,6 +444,8 @@ void MainWindow::game_init() {
             {2900, 620 - Floor_brick::floor_brick_height - 11 * Coin::coin_height},
             {2950, 620 - Floor_brick::floor_brick_height - 9 * Coin::coin_height},
             {3650, 620 - Floor_brick::floor_brick_height - 2 * Coin::coin_height},
+            {3850, 620 - Floor_brick::floor_brick_height - 10 * Coin::coin_height},
+            {3850, 620 - Floor_brick::floor_brick_height - 9 * Coin::coin_height},
 
             {800, stone_bricks_list[2][1] - Coin::coin_height}
 
@@ -446,7 +469,7 @@ void MainWindow::game_init() {
         mario.invisible_bricks = invisible_bricks;
         mario.toxic_mushrooms = toxic_mushrooms;
 
-        mario.set_x(700);
+        mario.set_x(6200);
 
         // 設定mario 初始hp
         mario.hp = &hp;
@@ -459,12 +482,14 @@ void MainWindow::game_init() {
 void MainWindow::game_restart() {
     qDebug() << "game_restart() Called";
     game_status = 1;
-    cur_scene = &game_scene;
     view_x = Mario::init_x; // Equals to mario's x coordinates between the scenes;
 
 
     // Game Scene
         // add game_bg
+        for (int i = 0; i < 5; i++) {
+            game_bgs[i]->set(i);
+        }
 
         // reset flag
         flag.reset();
@@ -526,7 +551,6 @@ void MainWindow::game_restart() {
 
         // add water_pipes
         for (int i = 0; i < static_cast<int>(water_pipes_list.size()); i++) {
-            water_pipes.push_back(new Water_pipe);
             water_pipes[i]->set_xy(water_pipes_list[i][0], water_pipes_list[i][1]);
         }
 
@@ -536,6 +560,8 @@ void MainWindow::game_restart() {
             toxic_mushrooms[i]->init_y = toxic_mushrooms_list[i][1];
             toxic_mushrooms[i]->dead = false;
             toxic_mushrooms[i]->still = false;
+            toxic_mushrooms[i]->dx = 0;
+            toxic_mushrooms[i]->dy = 0;
         }
 
 

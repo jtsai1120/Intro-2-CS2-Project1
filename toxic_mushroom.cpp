@@ -34,44 +34,12 @@ void Toxic_mushroom::move() {
         return;
     }
 
-    //更改移動造型
-    if(walk_distance > 30){
-        walk_distance = 0;
-        if(pic == "toxic_mushroom_pic_1"){
-            toxic_mushroom_item->setPixmap(toxic_mushroom_pic_2);
-            pic = "toxic_mushroom_pic_2";
-            hit_right = false; hit_left = false; //走超過一定距離可以重置判斷
-        }
-        else{
-            toxic_mushroom_item->setPixmap(toxic_mushroom_pic_1);
-            pic = "toxic_mushroom_pic_1";
-            hit_right = false; hit_left = false; //走超過一定距離可以重置判斷
-       }
-    }
-
-    else{
-        if (locked){
-            x += dx;
-            dx = 0;
-            if(facing_right)
-                x += 0;
-            else
-                x -= 0;
-            walk_distance += 1;
-
-            set_xy(x, y);
-            return;
-        }
-    }
-
     //檢查是否撞擊左右，若有則旋轉
     if(is_hit_right_side()){
         facing_right = true;
-        hit_left = true;
     }
     else if(is_hit_left_side()){
         facing_right = false;
-        hit_right = true;
     }
 
     x += dx;
@@ -87,12 +55,20 @@ void Toxic_mushroom::move() {
         else
             x -= walk_speed;
         walk_distance += walk_speed;
-        if (hit_right && hit_left) locked = true;
-        else locked = false;
     }
-    else{
-        hit_right = false; hit_left = false; //重新判斷
-        if (!dead && y < 1000) dy += ay;//死亡、非落地時飛出地圖
+    else if (!dead && y < 1000) dy += ay;//死亡、非落地時飛出地圖
+
+    //更改移動造型
+    if(walk_distance > 30){
+        walk_distance = 0;
+        if(pic == "toxic_mushroom_pic_1"){
+            toxic_mushroom_item->setPixmap(toxic_mushroom_pic_2);
+            pic = "toxic_mushroom_pic_2";
+        }
+        else{
+            toxic_mushroom_item->setPixmap(toxic_mushroom_pic_1);
+            pic = "toxic_mushroom_pic_1";
+       }
     }
 
     if(dead){//死亡

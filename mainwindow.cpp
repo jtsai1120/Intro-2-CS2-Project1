@@ -43,6 +43,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     right_key_state = 0;
     up_key_state = 0;
     restart_button_item = new ButtonItem(restart_button);
+    rectItem = new QGraphicsRectItem(0, 100, 1400, 300);
+    game_over_bg.load(":/Dataset/image/game_over.png");
+    game_over_bg = game_over_bg.scaled(1400, 620, Qt::IgnoreAspectRatio);
+    game_over_bg_item = new QGraphicsPixmapItem(game_over_bg);
+    win_or_lose_text = new QGraphicsTextItem;
 }
 
 void MainWindow::update_frame() {
@@ -106,19 +111,14 @@ void MainWindow::end_init() {
     game_over_object_x = 1400;
 
     // add white Rect bar
-    rectItem = new QGraphicsRectItem(0, 100, 1400, 300);
     rectItem->setBrush(Qt::white);
     cur_scene->addItem(rectItem);
 
     // add game over bg
-    game_over_bg.load(":/Dataset/image/game_over.png");
-    game_over_bg = game_over_bg.scaled(1400, 620, Qt::IgnoreAspectRatio);
-    game_over_bg_item = new QGraphicsPixmapItem(game_over_bg);
     game_over_bg_item->setPos(game_over_object_x ,-200);
     cur_scene->addItem(game_over_bg_item);
 
     // add win or lose
-    win_or_lose_text = new QGraphicsTextItem;
     QFont font("Consolas");
     win_or_lose_text->setFont(font);
 
@@ -138,7 +138,7 @@ void MainWindow::end_init() {
     }
 
     win_or_lose_text_combined =
-        win_or_lose_text_combined + " \n" + "  ( Total : " + QString::number(score.get_score()) + " Coin(s) )";
+    win_or_lose_text_combined + " \n" + "  ( Total : " + QString::number(score.get_score()) + " Coin(s) )";
     win_or_lose_text->setPlainText(win_or_lose_text_combined);
     cur_scene->addItem(win_or_lose_text);
 
@@ -343,6 +343,15 @@ void MainWindow::all_move_detection() {
             if (mario.mario->collidesWithItem(toxic_mushrooms[i]->toxic_mushroom_item)) {
                 qDebug() << "Ow";
                 mario.is_taller(i);
+            }
+        }
+
+        // coins
+        for (int i = 0; i < static_cast<int>(coins.size()); i++) {
+            if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
+                qDebug() << "mario get coin !";
+                coins[i]->set_xy(0, 1000);
+                score.add_score(1);
             }
         }
     }
