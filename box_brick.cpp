@@ -13,6 +13,8 @@ Box_brick::Box_brick() {
 void Box_brick::set_xy(int new_x, int new_y) {
     x = new_x;
     y = new_y;
+    x_corresonding = new_x;
+    y_corresponding = new_y;
     box_brick_item->setPos(x, y);
 }
 

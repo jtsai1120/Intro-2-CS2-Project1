@@ -20,46 +20,72 @@ Super_mushroom::Super_mushroom() {
 void Super_mushroom::set_xy(int new_x, int new_y) {
     x = new_x;
     y = new_y;
+    posx = x;
+    posy = y;
     super_mushroom_item->setPos(x, y);
 }
 
 void Super_mushroom::show(){
+    qDebug()<<"show activate";
     set_xy(x,y-50);
+    open = true;
+    //qDebug()<<is_grounded();
+    move();
+
+
+}
+void Super_mushroom::normal_move(int dx){
+    x += dx;
+    set_xy(x, y);
+
+}
+
+void Super_mushroom::used(){
+    set_xy(0,1000);
+    //qDebug() << "bye";
 }
 
 void Super_mushroom::move() {
-    if (still){
+    if (open == true){
+        //qDebug() << "start moving";
+        //檢查是否撞擊左右，若有則旋轉
+        if(is_hit_right_side()){
+            facing_right = false;
+        }
+        else if(is_hit_right_side()){
+            facing_right = true;
+        }
+
+
+        //檢查是否撞擊左右，若有則旋轉
+        if(is_hit_right_side()){
+            facing_right = true;
+        }
+        else if(is_hit_left_side()){
+            facing_right = false;
+        }
+
+
         x += dx;
         dx = 0;
-        set_xy(x, y);
-        return;
-    }
 
-    //檢查是否撞擊左右，若有則旋轉
-    if(is_hit_right_side()){
-        facing_right = false;
-    }
-    else if(is_hit_right_side()){
-        facing_right = true;
-    }
+        y += dy;
 
 
-
-    x += dx;
-    dx = 0;
-
-    y += dy;
-
-
-    if (!is_grounded() && y < 1000) dy += ay;//死亡時飛出地圖
-    else if(is_grounded()){//若不是在掉落則移動
-        dy = 0;
-        if(facing_right){
-            x += walk_speed;
+        if (!is_grounded() && y < 1000) dy += ay;//死亡時飛出地圖
+        else if(is_grounded()){//若不是在掉落則移動
+            dy = 0;
+            if(facing_right){
+                x += walk_speed;
+            }
+            else
+                x -= walk_speed;
         }
-        else
-            x -= walk_speed;
+
+        set_xy(x,y);
     }
+
+
 }
 
 bool Super_mushroom::is_grounded() {
@@ -87,7 +113,7 @@ bool Super_mushroom::is_grounded() {
 
 bool Super_mushroom::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem) {
     // exit it
-    if(still)return 0;
+    //if(still)return 0;
 
     bool is_ground_brick = 0;
     // check whether floor brick(s)

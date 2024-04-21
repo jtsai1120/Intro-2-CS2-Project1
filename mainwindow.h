@@ -92,6 +92,7 @@ class MainWindow : public QMainWindow {
 
 
 
+
         // KeyEvents (Pressed=1, Released=0)
         bool left_key_state, right_key_state, up_key_state;
 

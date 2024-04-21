@@ -20,6 +20,8 @@ public:
     static const int box_brick_height = 50;
     static const int box_brick_width = 50;
 
+    int x_corresonding;
+    int y_corresponding;
 private:
     QPixmap box_brick_pic;
     QPixmap stone_brick_pic;

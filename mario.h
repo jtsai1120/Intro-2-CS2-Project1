@@ -30,6 +30,7 @@ class Mario : public QObject {
         void jump();
         void change();
         void is_taller(int i);//判斷高度
+        void touch_super_mushroom();
         Hp *hp;
 
         QGraphicsScene *cur_scene;
@@ -67,6 +68,7 @@ class Mario : public QObject {
         QPixmap mario_run1_R, mario_run2_R;
         QPixmap mario_die;
         QPixmap mario_jump_L, mario_jump_R;
+        QPixmap mario_big_stand_R;
 
         int x; double y;
         const double vy0 = -6;

@@ -179,7 +179,6 @@ void MainWindow::game_init() {
             {400, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
             //{450, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
             {800, 620 - Floor_brick::floor_brick_height - 10 * Normal_brick::normal_brick_height},
-
             {1000, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
             {400, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
             {300, 620 - Floor_brick::floor_brick_height - 9 * Normal_brick::normal_brick_height},
@@ -190,10 +189,12 @@ void MainWindow::game_init() {
         };
         for (int i = 0; i < static_cast<int>(normal_bricks_list.size()); i++) {
             normal_bricks.push_back(new Normal_brick);
-            normal_bricks[i]->set_xy(normal_bricks_list[i][0], normal_bricks_list[i][1]);
             normal_bricks[i]->init_y = normal_bricks_list[i][1];
+             normal_bricks[i]->set_xy(normal_bricks_list[i][0], normal_bricks_list[i][1]);
             cur_scene->addItem(normal_bricks[i]->normal_brick_item);
         }
+
+
 
         //add super mushroom
         std::vector<std::vector<int>> super_mushroom_list = {
@@ -203,23 +204,14 @@ void MainWindow::game_init() {
             {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
         };
+
         for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
             super_mushrooms.push_back(new Super_mushroom);
             super_mushrooms[i]->set_xy(super_mushroom_list[i][0],super_mushroom_list[i][1]);
-            //super_mushrooms[i]->set_xy(0,1000);
             cur_scene->addItem(super_mushrooms[i]->super_mushroom_item);
-            //cur_scene->addItem(box_bricks[i]->box_brick_item);
 
-            //add super mushroom's map
-            super_mushrooms[i]->floor_bricks = floor_bricks;
-            super_mushrooms[i]->stone_bricks = stone_bricks;
-            super_mushrooms[i]->normal_bricks = normal_bricks;
-            super_mushrooms[i]->box_bricks = box_bricks;
-            super_mushrooms[i]->broken_bricks = broken_bricks;
-            super_mushrooms[i]->water_pipes = water_pipes;
-            super_mushrooms[i]->invisible_bricks = invisible_bricks;
-            super_mushrooms[i]->cur_scene = cur_scene;
         }
+
 
         // add box_bricks
         std::vector<std::vector<int>> box_bricks_list = {
@@ -234,7 +226,22 @@ void MainWindow::game_init() {
             box_bricks.push_back(new Box_brick);
             box_bricks[i]->set_xy(box_bricks_list[i][0], box_bricks_list[i][1]);
             cur_scene->addItem(box_bricks[i]->box_brick_item);
+
         }
+
+        for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
+            //add super mushroom's map
+            super_mushrooms[i]->floor_bricks = floor_bricks;
+            super_mushrooms[i]->stone_bricks = stone_bricks;
+            super_mushrooms[i]->normal_bricks = normal_bricks;
+            super_mushrooms[i]->box_bricks = box_bricks;
+            super_mushrooms[i]->broken_bricks = broken_bricks;
+            super_mushrooms[i]->water_pipes = water_pipes;
+            super_mushrooms[i]->invisible_bricks = invisible_bricks;
+            super_mushrooms[i]->cur_scene = cur_scene;
+        }
+
+
 
 
 
@@ -337,6 +344,7 @@ void MainWindow::game_init() {
         mario.water_pipes = water_pipes;
         mario.invisible_bricks = invisible_bricks;
         mario.toxic_mushrooms = toxic_mushrooms;
+        mario.super_mushrooms = super_mushrooms;
 
 
         // 設定mario 初始hp

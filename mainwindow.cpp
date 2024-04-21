@@ -55,7 +55,12 @@ void MainWindow::update_frame() {
             for(Normal_brick *i : normal_bricks) i->move();
             for(Broken_brick *i : broken_bricks) i->move();
             for(Toxic_mushroom *i : toxic_mushrooms) i->move();
-            for(Super_mushroom *i : super_mushrooms) i->move();
+            for(Super_mushroom *i : super_mushrooms) {
+                if (i->open == true){
+                    i->move();
+                }
+            }
+
 
 
             mario.move();
@@ -285,6 +290,16 @@ void MainWindow::all_move_detection() {
             flag.fall();
         }
 
+        // super msuhroom
+        for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
+                qDebug() << "grow up";
+                super_mushrooms[i]->used();
+                mario.change_direction_picture("big_stand_R");
+                mario.touch_super_mushroom();
+            }
+        }
+
     } else {
         mario.is_moving = 0;
 
@@ -293,6 +308,16 @@ void MainWindow::all_move_detection() {
             if (mario.mario->collidesWithItem(toxic_mushrooms[i]->toxic_mushroom_item)) {
                 qDebug() << "Ow";
                 mario.is_taller(i);
+            }
+        }
+
+        // super mushroom
+        for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
+                qDebug() << "grow up";
+                super_mushrooms[i]->used();
+                mario.change_direction_picture("big_stand_R");
+                mario.touch_super_mushroom();
             }
         }
     }
@@ -308,7 +333,7 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Normal_brick* i : normal_bricks) i->dx = moving_unit;
     for (Broken_brick* i : broken_bricks) i->dx = moving_unit;
     for (Box_brick* i : box_bricks) i->move(moving_unit);
-    for (Super_mushroom* i : super_mushrooms) i->dx = moving_unit;
+    for (Super_mushroom* i : super_mushrooms) i->normal_move(moving_unit);
     for (Water_pipe* i : water_pipes) i->move(moving_unit);
     for (Invisible_brick* i : invisible_bricks) i->move(moving_unit);
     for (Toxic_mushroom* i : toxic_mushrooms) i->dx = moving_unit;

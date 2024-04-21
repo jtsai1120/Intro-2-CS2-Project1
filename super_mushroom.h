@@ -25,6 +25,8 @@ public:
     void set_xy(int new_x, int new_y);
     void show();
     void move();
+    void normal_move(int dx);
+    void used();
 
 
     static const int super_mushroom_height = 50;
@@ -46,11 +48,12 @@ public:
 
     int dx;
     double dy;
+    int posx,posy;
 
     int x;//為了辨識距離，距離過遠則癱瘓
     double y;//為了讓別人好判斷高度，放在外面
 
-    bool still = true;
+    bool open = false;
 
 
 private:

@@ -18,6 +18,7 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     mario_run1_R.load(":/Dataset/image/Mario_small/s_mario_run1_R.png");
     mario_run2_L.load(":/Dataset/image/Mario_small/s_mario_run2_L.png");
     mario_run2_R.load(":/Dataset/image/Mario_small/s_mario_run2_R.png");
+    mario_big_stand_R.load(":/Dataset/image/Mario_big/mario_R_stand.png");
     mario = new QGraphicsPixmapItem(mario_stand_R);
     x = init_x;
     y = init_y;
@@ -92,9 +93,6 @@ void Mario::move() {
             if(abs(i -> x - x) > 600) i -> still = true;
             else i -> still = false;
 
-        for (Super_mushroom* i : super_mushrooms)
-            if(abs(i -> x - x) > 600) i -> still = true;
-            else i -> still = false;
 
         /*
         if (is_hit_left_side())
@@ -135,6 +133,9 @@ void Mario::change_direction_picture(QString s) {
         mario->setPixmap(mario_jump_L);
     else if (s == "jump_R")
         mario->setPixmap(mario_jump_R);
+    else if (s == "big_stand_R"){
+        mario->setPixmap(mario_big_stand_R);
+    }
     else qDebug() << "Mario Pixmap Error";
 }
 
@@ -164,6 +165,12 @@ void Mario::is_taller(int i){
         immune_status = 1;
         QObject::connect(&immune, SIGNAL(timeout()), this, SLOT(immune_time()));
         immune.start(2000);
+    }
+}
+
+void Mario::touch_super_mushroom(){
+    if (hp->get_hp()<3){
+        hp->add_hp(1);
     }
 }
 
@@ -236,6 +243,7 @@ bool Mario::is_crack_head() {
     bool _is_crack_noraml_brick = 0;
     bool _is_crack_broken_brick = 0;
     bool _is_crack_box_brick = 0;
+    bool mushroom_move = false;
 
     Normal_brick *hit_normal_brick;
     Broken_brick *hit_broken_brick;
@@ -263,11 +271,8 @@ bool Mario::is_crack_head() {
                         hit_box_brick = i;
 
                     }
-                for (Super_mushroom *i : super_mushrooms)
-                    if (i->super_mushroom_item == PixmapItem) {
-                        //_is_crack_box_brick = 1;
-                        show_super_mushroom = i;
-                    }
+
+
             }
         }
         if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), y))) {
@@ -288,12 +293,6 @@ bool Mario::is_crack_head() {
                         _is_crack_box_brick = 1;
                         hit_box_brick = i;
                     }
-                for (Super_mushroom *i : super_mushrooms)
-                    if (i->super_mushroom_item == PixmapItem) {
-                        //_is_crack_box_brick = 1;
-                        show_super_mushroom = i;
-                    }
-
 
             }
         }
@@ -310,8 +309,20 @@ bool Mario::is_crack_head() {
             jump_cd.start(520);
         }
         if (_is_crack_head && _is_crack_box_brick) {
-            show_super_mushroom->show();
+            hit_box_brick->crack();
+            mushroom_move = false;
+            for (Super_mushroom *i : super_mushrooms){
+                if ((i->posx == hit_box_brick->x_corresonding) && (i->posy == hit_box_brick->y_corresponding) && mushroom_move == false){
+                    i->show();
+                    mushroom_move=true;
+                    break;
+                }
+            }
+            is_passed_jump_cd = 0;
+            QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
+            jump_cd.start(520);
         }
+
 
 
     }
