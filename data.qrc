@@ -72,5 +72,6 @@
         <file>Dataset/image/Mario_small/s_mario_stop_R.png</file>
         <file>Dataset/image/game_over.png</file>
         <file>Dataset/image/brick/invisible brick.png</file>
+        <file>Dataset/image/restart_button.png</file>
     </qresource>
 </RCC>

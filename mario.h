@@ -31,6 +31,7 @@ class Mario : public QObject {
         void change();
         void is_taller(int i);//判斷高度
         void touch_super_mushroom();
+        void reset();
         Hp *hp;
 
         QGraphicsScene *cur_scene;
@@ -48,7 +49,7 @@ class Mario : public QObject {
         static const int big_mario_height = 80;
         static const int small_mario_width = 36; // original = 50
         static const int big_mario_width = 40; // original = 56
-        static const int init_x = 450;
+        static const int init_x = 700 - 32;
         static const int init_y = 620 - Floor_brick::floor_brick_height - small_mario_height;
 
         int dx;

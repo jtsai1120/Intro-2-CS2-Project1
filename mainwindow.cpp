@@ -6,7 +6,7 @@
 #include <QPixmap>
 #include <QGraphicsItem>
 #include <QPushButton>
-#include <QGraphicsBlurEffect>
+#include <QGraphicsRectItem>
 #include <QGraphicsDropShadowEffect>
 #include "ButtonItem.h"
 #include "mario.h"
@@ -42,6 +42,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     left_key_state = 0;
     right_key_state = 0;
     up_key_state = 0;
+    restart_button_item = new ButtonItem(restart_button);
+    rectItem = new QGraphicsRectItem(0, 100, 1400, 300);
+    game_over_bg.load(":/Dataset/image/game_over.png");
+    game_over_bg = game_over_bg.scaled(1400, 620, Qt::IgnoreAspectRatio);
+    game_over_bg_item = new QGraphicsPixmapItem(game_over_bg);
+    win_or_lose_text = new QGraphicsTextItem;
 }
 
 void MainWindow::update_frame() {
@@ -55,12 +61,6 @@ void MainWindow::update_frame() {
             for(Normal_brick *i : normal_bricks) i->move();
             for(Broken_brick *i : broken_bricks) i->move();
             for(Toxic_mushroom *i : toxic_mushrooms) i->move();
-            for(Super_mushroom *i : super_mushrooms) {
-                if (i->open == true){
-                    i->move();
-                }
-            }
-
 
 
             mario.move();
@@ -107,21 +107,25 @@ void MainWindow::end_init() {
     qDebug() << "end_init() Called";
     game_status = 2;
 
+    // game over objects' x coordinate;
+    game_over_object_x = 1400;
+
+    // add white Rect bar
+    rectItem->setBrush(Qt::white);
+    cur_scene->addItem(rectItem);
+
     // add game over bg
-    game_over_bg.load(":/Dataset/image/game_over.png");
-    game_over_bg = game_over_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
-    game_over_bg_item = new QGraphicsPixmapItem(game_over_bg);
-    game_over_bg_item->setPos(0,-200);
+    game_over_bg_item->setPos(game_over_object_x ,-200);
     cur_scene->addItem(game_over_bg_item);
+
     // add win or lose
-    QGraphicsTextItem *win_or_lose_text = new QGraphicsTextItem;
     QFont font("Consolas");
     win_or_lose_text->setFont(font);
 
     win_or_lose_text->setDefaultTextColor(Qt::red);
     win_or_lose_text->setScale(2);
-    win_or_lose_text->setPos(380, 200);
-    QString win_or_lose_text_combined = " You ";
+    win_or_lose_text->setPos(game_over_object_x + 350, 200);
+    QString win_or_lose_text_combined = "You ";
     if (mario.get_y() > 620) {
         win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Fall UnderGround";
     } else
@@ -134,9 +138,51 @@ void MainWindow::end_init() {
     }
 
     win_or_lose_text_combined =
-        win_or_lose_text_combined + " \n" + "( Total : " + QString::number(score.get_score()) + " Coin(s) )";
+    win_or_lose_text_combined + " \n" + "  ( Total : " + QString::number(score.get_score()) + " Coin(s) )";
     win_or_lose_text->setPlainText(win_or_lose_text_combined);
     cur_scene->addItem(win_or_lose_text);
+
+    fade_in_timer = new QTimer;
+    QObject::connect(fade_in_timer, SIGNAL(timeout()), this, SLOT(game_over_fade_in()));
+    fade_in_timer->start(1);
+
+}
+
+void MainWindow::game_over_fade_in() {
+    game_over_object_x -= 5;
+    rectItem->setX(game_over_object_x);
+    game_over_bg_item->setX(game_over_object_x);
+    win_or_lose_text->setX(game_over_object_x + 350);
+    if (game_over_object_x <= 0) {
+        fade_in_timer->stop();
+        delete fade_in_timer;
+        restart_button_pic.load(":/Dataset/image/restart_button.png");
+        restart_button_pic = restart_button_pic.scaled(100, 100, Qt::IgnoreAspectRatio);
+        restart_button->setIcon(QIcon(restart_button_pic));
+        restart_button->setIconSize(restart_button_pic.size());
+        restart_button->raise();
+        restart_button_item->setPos(700-restart_button_pic.width()/2, 400-restart_button_pic.height()/2);
+        QObject::connect(restart_button, SIGNAL(clicked()), this, SLOT(on_restart_button_clicked()));
+        cur_scene->addItem(restart_button_item);
+    }
+}
+
+void MainWindow::on_restart_button_clicked() {
+    qDebug() << "restart button clicked !";
+
+    // 移除動畫
+    game_over_object_x = 10000;
+    rectItem->setX(game_over_object_x);
+    game_over_bg_item->setX(game_over_object_x);
+    win_or_lose_text->setX(game_over_object_x + 350);
+    restart_button_item->setPos(10000, 0);
+
+    // 呼叫 game_restart() 重置遊戲畫面物件：
+    game_status = 1;
+    game_restart();
+    left_key_state = 0;
+    right_key_state = 0;
+    up_key_state = 0;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -166,14 +212,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void MainWindow::all_move_detection() {
-    if (left_key_state || right_key_state || up_key_state) {
+    if ((left_key_state || right_key_state || up_key_state)&&mario.movable) {
         mario.is_moving = 1;
         //qDebug() << "mario is moving";
         // Move Left or Right
-        int moving_unit;
-        if (!mario.big)
-            moving_unit = 5;
-        else moving_unit = 7;
+        const int moving_unit = 5;
         int distance=0;
         if(view_x <= Mario::init_x) { // 螢幕不能再往左了，讓 mario 移動
             if (left_key_state && view_x > 0) {
@@ -181,8 +224,8 @@ void MainWindow::all_move_detection() {
                 if (!mario.is_hit_right_side()) {
                     view_x -= moving_unit;
                     mario.dx = -1 * moving_unit;
-                    distance+=qAbs(moving_unit);
-                    if (distance>=moving_unit){
+                    distance+=5;
+                    if (distance==moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -195,8 +238,8 @@ void MainWindow::all_move_detection() {
                     else
                         mario.dx = moving_unit;
                     view_x += moving_unit;
-                    distance+=qAbs(moving_unit);
-                    if (distance>=moving_unit){
+                    distance+=5;
+                    if (distance==moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -212,8 +255,8 @@ void MainWindow::all_move_detection() {
                     else
                         mario.dx = -1 * moving_unit;
                     view_x -= moving_unit;
-                    distance+=qAbs(moving_unit);
-                    if (distance>=moving_unit){
+                    distance+=5;
+                    if (distance==moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -226,8 +269,8 @@ void MainWindow::all_move_detection() {
                         mario.set_x(view_x);
                     view_x += moving_unit;
                     mario.dx = moving_unit;
-                    distance+=qAbs(moving_unit);
-                    if (distance>=moving_unit){
+                    distance+=5;
+                    if (distance==moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -239,8 +282,8 @@ void MainWindow::all_move_detection() {
                 if (!mario.is_hit_right_side()) {
                     view_x -= moving_unit;
                     all_horizontal_move(moving_unit);
-                    distance+=qAbs(moving_unit);
-                    if (distance>=moving_unit){
+                    distance+=5;
+                    if (distance==moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -250,8 +293,8 @@ void MainWindow::all_move_detection() {
                 if (!mario.is_hit_left_side()) {
                     view_x += moving_unit;
                     all_horizontal_move(-1 * moving_unit);
-                    distance+=qAbs(moving_unit);
-                    if (distance>=moving_unit){
+                    distance+=5;
+                    if (distance==moving_unit){
                         mario.change();
                         distance=0;
                    }
@@ -271,7 +314,6 @@ void MainWindow::all_move_detection() {
         for (int i = 0; i < static_cast<int>(coins.size()); i++) {
             if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
                 qDebug() << "mario get coin !";
-                cur_scene->removeItem(coins[i]->coin_item);
                 coins[i]->set_xy(0, 1000);
                 score.add_score(1);
             }
@@ -293,15 +335,6 @@ void MainWindow::all_move_detection() {
             flag.fall();
         }
 
-        // super msuhroom
-        for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
-            if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
-                //qDebug() << "grow up";
-                super_mushrooms[i]->used();
-                mario.touch_super_mushroom();
-            }
-        }
-
     } else {
         mario.is_moving = 0;
 
@@ -313,12 +346,12 @@ void MainWindow::all_move_detection() {
             }
         }
 
-        // super mushroom
-        for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
-            if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
-                qDebug() << "grow up";
-                super_mushrooms[i]->used();
-                mario.touch_super_mushroom();
+        // coins
+        for (int i = 0; i < static_cast<int>(coins.size()); i++) {
+            if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
+                qDebug() << "mario get coin !";
+                coins[i]->set_xy(0, 1000);
+                score.add_score(1);
             }
         }
     }

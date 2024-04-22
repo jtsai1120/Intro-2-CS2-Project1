@@ -14,6 +14,7 @@ public:
     void set_xy(int new_x, int new_y);
     void move(int dx);
     void crack();//撞擊反應
+    void reset();
 
     //Super_mushroom super_mushroom;
 

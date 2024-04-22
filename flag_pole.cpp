@@ -16,3 +16,9 @@ void Flag_pole::move(int dx, int dy) {
     flag_pole_item->setPos(x, y);
 }
 
+void Flag_pole::reset(){
+    x = init_x;
+    y = init_y;
+    flag_pole_item->setPos(x, y);
+    is_touched = 0;
+}

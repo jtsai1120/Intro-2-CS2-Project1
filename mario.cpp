@@ -53,8 +53,6 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     movable = 1;
 }
 
-int Mario::walking = 0;
-
 void Mario::change(){
     if (movable) {
         if (!big){
@@ -334,7 +332,6 @@ void Mario::touch_super_mushroom(){
 
 }
 
-
 bool Mario::is_grounded() {
     QList<QGraphicsItem *> items = cur_scene->items();
     bool _is_grounded = 0;
@@ -521,5 +518,20 @@ bool Mario::is_hit_right_side() {
     return _is_hit_right_side;
 }
 
-
+void Mario::reset(){
+    x = init_x;
+    y = init_y;
+    dx = 0;
+    dy = 0;
+    mario->setPos(x, y);
+    cur_direction = 'R';
+    cur_size = "small";
+    cur_pixmap = "stand_R";
+    is_moving = 0;
+    //qDebug() << "width=" << mario_stand_R.width();
+    //qDebug() << "height=" << mario_stand_R.height();
+    is_passed_jump_cd = 1;
+    immune_status = 0;
+    movable = 1;
+}
 

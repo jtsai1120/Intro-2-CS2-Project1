@@ -27,21 +27,12 @@ void Toxic_mushroom::set_xy(int new_x, int new_y) {
 }
 
 void Toxic_mushroom::move() {
-    if (still){
+    if (still || dead && y > 1000){ //超出地圖則癱瘓
         x += dx;
         dx = 0;
         set_xy(x, y);
         return;
     }
-
-    //檢查是否撞擊左右，若有則旋轉
-    if(is_hit_right_side()){
-        facing_right = false;
-    }
-    else if(is_hit_right_side()){
-        facing_right = true;
-    }
-
 
     //檢查是否撞擊左右，若有則旋轉
     if(is_hit_right_side()){
@@ -57,30 +48,27 @@ void Toxic_mushroom::move() {
     y += dy;
 
 
-    if (!dead && !is_grounded() && y < 1000) dy += ay;//死亡時飛出地圖
-    else if(!dead){//若不是在掉落則移動
+    if (is_grounded()){
         dy = 0;
-        if(facing_right){
+        if(facing_right)
             x += walk_speed;
-            walk_distance += walk_speed;
-        }
         else
             x -= walk_speed;
         walk_distance += walk_speed;
     }
+    else if (!dead && y < 1000) dy += ay;//死亡、非落地時飛出地圖
 
     //更改移動造型
     if(walk_distance > 30){
         walk_distance = 0;
         if(pic == "toxic_mushroom_pic_1"){
             toxic_mushroom_item->setPixmap(toxic_mushroom_pic_2);
-             pic = "toxic_mushroom_pic_2";
+            pic = "toxic_mushroom_pic_2";
         }
         else{
             toxic_mushroom_item->setPixmap(toxic_mushroom_pic_1);
             pic = "toxic_mushroom_pic_1";
        }
-
     }
 
     if(dead){//死亡

@@ -33,3 +33,8 @@ void Box_brick::crack() {
         opened = true;
     }
 }
+
+void Box_brick::reset() {
+    box_brick_item->setPixmap(box_brick_pic);
+    opened = false;
+}

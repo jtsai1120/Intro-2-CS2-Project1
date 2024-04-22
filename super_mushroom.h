@@ -65,8 +65,6 @@ private:
     const int walk_speed = 1;
     bool facing_right = true;
 
-
-
 };
 
 
