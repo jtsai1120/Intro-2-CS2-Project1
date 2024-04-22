@@ -53,6 +53,8 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     movable = 1;
 }
 
+int Mario::walking = 0;
+
 void Mario::change(){
     if (movable) {
         if (!big){

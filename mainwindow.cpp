@@ -61,6 +61,10 @@ void MainWindow::update_frame() {
             for(Normal_brick *i : normal_bricks) i->move();
             for(Broken_brick *i : broken_bricks) i->move();
             for(Toxic_mushroom *i : toxic_mushrooms) i->move();
+            for(Super_mushroom *i : super_mushrooms){
+                if (i->open)
+                    i->move();
+            }
 
 
             mario.move();
@@ -327,6 +331,14 @@ void MainWindow::all_move_detection() {
             }
         }
 
+        // super msuhroom
+        for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
+                //qDebug() << "grow up";
+                super_mushrooms[i]->used();
+                mario.touch_super_mushroom();
+            }
+        }
         // flag pole
         if (mario.mario->collidesWithItem(flag_pole.flag_pole_item) && !flag_pole.is_touched) {
             qDebug() << "mario touch flag pole !";
@@ -352,6 +364,15 @@ void MainWindow::all_move_detection() {
                 qDebug() << "mario get coin !";
                 coins[i]->set_xy(0, 1000);
                 score.add_score(1);
+            }
+        }
+
+        // super msuhroom
+        for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
+                //qDebug() << "grow up";
+                super_mushrooms[i]->used();
+                mario.touch_super_mushroom();
             }
         }
     }
