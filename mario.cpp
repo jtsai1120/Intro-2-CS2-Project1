@@ -186,10 +186,16 @@ void Mario::move() {
         change_direction_picture(cur_pixmap);
 
         //移動時活化毒蘑菇
-        for (Toxic_mushroom* i : toxic_mushrooms)
-            if(abs(i -> x - x) > 600) i -> still = true;
-            else i -> still = false;
+        if(x > 6300 || x < 700){
+            for (Toxic_mushroom* i : toxic_mushrooms)
+                if(abs(i -> x - x) > 1400) i -> still = true;
+                else i -> still = false;
 
+        }
+        else
+            for (Toxic_mushroom* i : toxic_mushrooms)
+                if(abs(i -> x - x) > 800) i -> still = true;
+                else i -> still = false;
 
         /*
         if (is_hit_left_side())
@@ -314,7 +320,7 @@ void Mario::immune_time() {
 }
 
 void Mario::is_taller(int i){
-    if (y < toxic_mushrooms[i]->y - 42 && dy >= 0){ //扣掉毒菇本身高度&&確保馬力歐不是在上升
+    if (y < toxic_mushrooms[i]->y - 42 && dy >= 0 || y < toxic_mushrooms[i]->y - 35 && dy >= 0 && big == true){ //扣掉毒菇本身高度&&確保馬力歐不是在上升
         toxic_mushrooms[i]->dead = 1;
     }
     else if(!immune_status && !toxic_mushrooms[i]->dead){ //非免疫狀態且毒菇沒死
@@ -339,7 +345,7 @@ bool Mario::is_grounded() {
     bool _is_grounded = 0;
     for (QGraphicsItem *item : items) {
         QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
-        if (item->contains(item->mapFromScene(x + 10, y + ((cur_size=="small")? small_mario_height : big_mario_height)))) {  
+        if (item->contains(item->mapFromScene(x + 10, y + ((cur_size=="small")? small_mario_height : big_mario_height)))) {
             if(check_whether_ground_brick(PixmapItem)) {
                 //qDebug() << "left foot is grounded";
                 _is_grounded = 1;
@@ -534,6 +540,7 @@ void Mario::reset(){
     //qDebug() << "height=" << mario_stand_R.height();
     is_passed_jump_cd = 1;
     immune_status = 0;
+    big = false;
     movable = 1;
 }
 

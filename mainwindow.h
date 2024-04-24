@@ -49,7 +49,7 @@ class MainWindow : public QMainWindow {
         int game_status; // 0:開始畫面, 1:遊戲中, 2:結束畫面
 
         void start_init();
-        void game_init();    
+        void game_init();
         void game_restart();
 
 
@@ -104,6 +104,7 @@ class MainWindow : public QMainWindow {
         std::vector<std::vector<int>> stone_bricks_list;
         std::vector<std::vector<int>> normal_bricks_list;
         std::vector<std::vector<int>> broken_bricks_list;
+        std::vector<std::vector<int>> super_mushroom_list;
         std::vector<std::vector<int>> box_bricks_list;
         std::vector<std::vector<int>> water_pipes_list;
         std::vector<std::vector<int>> toxic_mushrooms_list;

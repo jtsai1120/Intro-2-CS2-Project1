@@ -50,6 +50,8 @@ void MainWindow::game_init() {
             {950, 620 - 10 - Floor_brick::floor_brick_height - 10 * Invisible_brick::invisible_brick_height},
             {-50, 620 - Floor_brick::floor_brick_height - 1 * Invisible_brick::invisible_brick_height},
             {1800, 620 - 10 - Floor_brick::floor_brick_height - 1 * Invisible_brick::invisible_brick_height},
+            {2000, 620 - 10 - Floor_brick::floor_brick_height - 12 * Invisible_brick::invisible_brick_height},
+            {2000, 620 - 10 - Floor_brick::floor_brick_height - 13 * Invisible_brick::invisible_brick_height},
             {2600, 620 - 10 - Floor_brick::floor_brick_height - 10 * Invisible_brick::invisible_brick_height},
             {2600, 620 - 10 - Floor_brick::floor_brick_height - 11 * Invisible_brick::invisible_brick_height},
             {2700, 620 - 10 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
@@ -318,7 +320,7 @@ void MainWindow::game_init() {
         }
 
         //add super mushroom
-        std::vector<std::vector<int>> super_mushroom_list = {
+        super_mushroom_list = {
             //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
@@ -334,12 +336,14 @@ void MainWindow::game_init() {
         }
 
         // add box_bricks
-        std::vector<std::vector<int>> box_bricks_list = {
+        box_bricks_list = {
             //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
             {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
+            {3750, 620 - Floor_brick::floor_brick_height - 8 * Box_brick::box_brick_height},
+
 
         };
         for (int i = 0; i < static_cast<int>(box_bricks_list.size()); i++) {
@@ -561,6 +565,12 @@ void MainWindow::game_restart() {
         for (int i = 0; i < static_cast<int>(normal_bricks_list.size()); i++) {
             normal_bricks[i]->set_xy(normal_bricks_list[i][0], normal_bricks_list[i][1]);
             normal_bricks[i]->init_y = normal_bricks_list[i][1];
+        }
+
+        // super_mushroom
+        for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
+            super_mushrooms[i]->set_xy(super_mushroom_list[i][0],super_mushroom_list[i][1]);
+            super_mushrooms[i]->open = false;
         }
 
         // add box_bricks //蘑菇等獎勵的重新設置還未完成

@@ -8,6 +8,7 @@ Broken_brick::Broken_brick() {
     broken_brick_item = new QGraphicsPixmapItem(broken_brick_pic);
     dx = 0;
     dy = 0;
+    broken = false;
 }
 
 void Broken_brick::set_xy(int new_x, int new_y) {
@@ -37,6 +38,7 @@ void Broken_brick::move() {
 }
 
 void Broken_brick::crack() {
+    broken = true;
     if (y == init_y) // 確保不會在下落過程中再被頂起來
         dy = vy0;
 }
@@ -46,6 +48,7 @@ void Broken_brick::reset(int new_x, int new_y) {
     dy = 0;
     x = new_x;
     y = new_y;
+    broken = false;
     broken_brick_item->setPos(x, y);
 }
 

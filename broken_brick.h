@@ -21,6 +21,7 @@ public:
 
     int dx;
     double dy;
+    bool broken;
 
 private:
     QPixmap broken_brick_pic;

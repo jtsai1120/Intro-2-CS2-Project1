@@ -119,7 +119,7 @@ bool Toxic_mushroom::check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem)
 
     // check whether broken brick
     for (Broken_brick *i : broken_bricks)
-        if (i->broken_brick_item == PixmapItem)
+        if (i->broken_brick_item == PixmapItem && i->broken == false)
             is_ground_brick = 1;
 
     // check whether normal brick
