@@ -163,7 +163,7 @@ void MainWindow::game_init() {
             {2100, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
             {2150, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
             {2050, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {2750, 620 - 10 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
+            {2750, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
             {2800, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
             {2850, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
             {2925, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
@@ -415,10 +415,7 @@ void MainWindow::game_init() {
         // add toxic mushrooms
         toxic_mushrooms_list = {
             {150, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
-            //{350, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
-            //{650, 620 - Floor_brick::floor_brick_height - 4 * Toxic_mushroom::toxic_mushroom_height},
-            //{750, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
-
+            ///*
             {750, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
             {250, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
             {1200, 620 - Floor_brick::floor_brick_height - 7 * Toxic_mushroom::toxic_mushroom_height},
@@ -430,7 +427,7 @@ void MainWindow::game_init() {
             {3050, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
             {3550, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
             {3850, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
-
+//*/
 
         };
 
@@ -455,6 +452,7 @@ void MainWindow::game_init() {
 
         // add coins
         coins_list = {
+            {0, 620 - Floor_brick::floor_brick_height - 9 * Coin::coin_height},
             {0, 620 - Floor_brick::floor_brick_height - 11 * Coin::coin_height},
             {550, 620 - Floor_brick::floor_brick_height - 10 * Coin::coin_height},
             {600, 620 - Floor_brick::floor_brick_height - 14 * Coin::coin_height},
@@ -599,6 +597,8 @@ void MainWindow::game_restart() {
             toxic_mushrooms[i]->still = false;
             toxic_mushrooms[i]->dx = 0;
             toxic_mushrooms[i]->dy = 0;
+            toxic_mushrooms[i]->hitted_left = false;
+            toxic_mushrooms[i]->locked_in = false;
         }
 
 

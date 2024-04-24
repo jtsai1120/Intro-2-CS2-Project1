@@ -470,6 +470,10 @@ bool Mario::is_crack_head() {
         if (_is_crack_head && _is_crack_broken_brick) {
             hit_broken_brick->crack();
             is_passed_jump_cd = 0;
+            for (Toxic_mushroom* i : toxic_mushrooms){
+                i->hitted_left = false;
+                i->locked_in = false;
+            }
             QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
             jump_cd.start(520);
         }

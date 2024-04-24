@@ -27,36 +27,14 @@ void Toxic_mushroom::set_xy(int new_x, int new_y) {
 }
 
 void Toxic_mushroom::move() {
-    if (still || dead && y > 1000){ //超出地圖則癱瘓
-        x += dx;
-        dx = 0;
-        set_xy(x, y);
-        return;
-    }
-
-    //檢查是否撞擊左右，若有則旋轉
-    if(is_hit_right_side()){
-        facing_right = true;
-    }
-    else if(is_hit_left_side()){
-        facing_right = false;
-    }
-
     x += dx;
     dx = 0;
 
-    y += dy;
-
-
-    if (is_grounded()){
-        dy = 0;
-        if(facing_right)
-            x += walk_speed;
-        else
-            x -= walk_speed;
-        walk_distance += walk_speed;
+    if (still || dead && y > 1000){ //超出地圖則癱瘓
+        set_xy(x, y);
+        hitted_left = false; locked_in = false;
+        return;
     }
-    else if (!dead && y < 1000) dy += ay;//死亡、非落地時飛出地圖
 
     //更改移動造型
     if(walk_distance > 30){
@@ -69,6 +47,64 @@ void Toxic_mushroom::move() {
             toxic_mushroom_item->setPixmap(toxic_mushroom_pic_1);
             pic = "toxic_mushroom_pic_1";
        }
+    }
+
+    if (locked_in && !dead){
+        if(facing_right){ //walk right side
+            if(walk_lock < hitted_right){
+                walk_lock += walk_speed;
+                x -= walk_speed;
+                walk_distance += walk_speed;
+            }
+            else {
+                walk_lock -= walk_speed;
+                x += walk_speed;
+                walk_distance += walk_speed;
+                facing_right = false; //face left side
+            }
+        }
+        else
+            if(walk_lock > 0){
+                walk_lock -= walk_speed;
+                x += walk_speed;
+                walk_distance += walk_speed;
+            }
+            else {
+                walk_lock += walk_speed;
+                x -= walk_speed;
+                walk_distance += walk_speed;
+                facing_right = true;
+            }
+        set_xy(x, y);
+        return;
+    }
+
+    //檢查是否撞擊左右，若有則旋轉
+    if(is_hit_right_side()){ //hit left
+        facing_right = true; hitted_left = true; hitted_right = 0; walk_lock = 0;
+    }
+    else if(is_hit_left_side()){ //hit right
+        facing_right = false;
+        if (hitted_left)
+            locked_in = true;
+    }
+
+    y += dy;
+
+
+    if (is_grounded()){
+        dy = 0;
+        if(facing_right){
+            x += walk_speed;
+            hitted_right += walk_speed;
+        }
+        else
+            x -= walk_speed;
+        walk_distance += walk_speed;
+    }
+    else if (!dead && y < 1000) {
+        dy += ay;//死亡、非落地時飛出地圖
+        hitted_left = false; locked_in = false;
     }
 
     if(dead){//死亡

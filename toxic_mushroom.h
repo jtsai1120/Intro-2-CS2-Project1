@@ -54,6 +54,10 @@ public:
     bool dead = false;
     bool still = true;
 
+    bool locked_in = false;
+    bool hitted_left = false;
+    int hitted_right = 0;
+
 private:
     QPixmap toxic_mushroom_pic_1;
     QPixmap toxic_mushroom_pic_2;
@@ -63,6 +67,8 @@ private:
     int walk_distance = 0;//換造型用
     const double vy0 = 0.06;
     const double ay = 0.18;
+
+    int walk_lock = 0;
 
     const int walk_speed = 1;
     bool facing_right = true;
