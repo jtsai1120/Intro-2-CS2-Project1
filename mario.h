@@ -50,6 +50,7 @@ class Mario : public QObject {
         std::vector<Super_mushroom*> super_mushrooms;
         std::vector<Fire_flower*> fire_flowers;
         std::vector<Bullet*> bullets;
+        std::vector<Hp*> hps;
 
 
         static const int small_mario_height = 52;

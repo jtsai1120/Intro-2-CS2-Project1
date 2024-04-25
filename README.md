@@ -11,6 +11,17 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 
 // test
 
+# o424 (hsin)
+ - 新增fire flower 、bullet 
+ - 將血量改以愛心表示
+ - 修改檔案
+ - fire flower .h .cpp
+ - bullet .h .cpp
+ - game_init.h
+ - hp .h .cpp
+ - mairo .h .cpp
+ - mainwindow .h .cpp
+
 # 0420 Log (huang)
 - 新增物件: invisible brick = 顏色和背景相同的stone brick
 - 最遠起跳點用invisible brick 延長一些，大幅增加成功率

@@ -15,6 +15,7 @@
 #include "toxic_mushroom.h"
 #include "super_mushroom.h"
 #include "fire_flower.h"
+#include "hp.h"
 
 
 #include <QDebug>
@@ -43,7 +44,20 @@ void MainWindow::game_init() {
         cur_scene->addItem(score.score_text);
 
         // hp text
-        cur_scene->addItem(hp.hp_text);
+        //cur_scene->addItem(hp.hp_text);
+        //add hp icon
+        hp_list = {
+            {110,7},
+            {150,7},
+            {190,7},
+        };
+
+        for (int i = 0; i < static_cast<int>(hp_list.size()); i++) {
+            hps.push_back(new Hp);
+            hps[i]->set_xy(hp_list[i][0],hp_list[i][1]);
+            cur_scene->addItem(hps[i]->hp_item);
+
+        }
 
         // add invisible_bricks
         invisible_bricks_list = {
@@ -323,7 +337,7 @@ void MainWindow::game_init() {
         //add super mushroom
         super_mushroom_list = {
             //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
-            //{350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             //{350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
             {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
@@ -339,7 +353,7 @@ void MainWindow::game_init() {
         //add fire flowers
         fire_flowers_list = {
             //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
-            {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            //{350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
             //{2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             //{2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
@@ -538,6 +552,7 @@ void MainWindow::game_init() {
         mario.super_mushrooms = super_mushrooms;
         mario.fire_flowers = fire_flowers;
         mario.bullets = bullets;
+        mario.hps = hps;
 
         mario.set_x(700);
 

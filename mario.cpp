@@ -325,6 +325,7 @@ void Mario::is_taller(int i){
     }
     else if(!immune_status && !toxic_mushrooms[i]->dead){ //非免疫狀態且毒菇沒死
         hp->sub_hp(1); //扣血
+        hps[hp->get_hp()]->set_xy(0,1000);
         big = false;
         immune_status = 1;
         QObject::connect(&immune, SIGNAL(timeout()), this, SLOT(immune_time()));
@@ -335,6 +336,7 @@ void Mario::is_taller(int i){
 void Mario::touch_super_mushroom(){
     if (hp->get_hp()<3){
         hp->add_hp(1);
+        hps[hp->get_hp()-1]->set_xy(70+40*hp->get_hp(),7);
     }
     big = true;
 

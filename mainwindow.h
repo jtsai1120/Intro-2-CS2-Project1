@@ -103,6 +103,7 @@ class MainWindow : public QMainWindow {
         std::vector<Super_mushroom*> super_mushrooms;
         std::vector<Fire_flower*> fire_flowers;
         std::vector<Bullet*> bullets;
+        std::vector<Hp*> hps;
 
 
         //設定座標的，為了能重置因次宣告在外面
@@ -116,6 +117,7 @@ class MainWindow : public QMainWindow {
         std::vector<std::vector<int>> toxic_mushrooms_list;
         std::vector<std::vector<int>> coins_list;
         std::vector<std::vector<int>> fire_flowers_list;
+        std::vector<std::vector<int>> hp_list;
 
 
         // KeyEvents (Pressed=1, Released=0)
