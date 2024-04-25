@@ -3,6 +3,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include <coin.h>
 
 
 class Box_brick
@@ -15,6 +16,7 @@ public:
     void move(int dx);
     void crack();//撞擊反應
     void reset();
+    std::vector<Coin*> coins;
 
     //Super_mushroom super_mushroom;
 

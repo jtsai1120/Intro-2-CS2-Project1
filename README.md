@@ -11,6 +11,9 @@ Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUE
 
 // test
 
+# 0425 Log (huang)
+- 新增彈跳金幣特效及獲得上限
+
 # 0420 Log (huang)
 - 新增物件: invisible brick = 顏色和背景相同的stone brick
 - 最遠起跳點用invisible brick 延長一些，大幅增加成功率

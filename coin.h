@@ -14,12 +14,19 @@ class Coin {
         static const int coin_height = 50;
 
         void set_xy(int new_x, int new_y);
-        void move(int dx, int dy);
-        void fly();//射出金幣
+        void move();
+        void fly(int new_x, int new_y);//射出金幣
+        double y; int init_y;
+
+        int dx;
+
+        bool flying = false;
 
     private:
         QPixmap coin_pic;
-        int x, y;
+        int x; double dy;
+        const double vy0 = -7;
+        const double ay = 0.15;
 };
 
 #endif // COIN_H

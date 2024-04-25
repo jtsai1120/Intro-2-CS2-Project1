@@ -60,6 +60,7 @@ void MainWindow::update_frame() {
             all_move_detection();
             for(Normal_brick *i : normal_bricks) i->move();
             for(Broken_brick *i : broken_bricks) i->move();
+            for(Coin *i : coins) i->move();
             for(Toxic_mushroom *i : toxic_mushrooms) i->move();
             for(Super_mushroom *i : super_mushrooms){
                 if (i->open)
@@ -382,7 +383,7 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Game_bg* i : game_bgs) i->move(moving_unit, 0);
     flag_pole.move(moving_unit, 0);
     flag.move(moving_unit, 0);
-    for (Coin* i : coins) i->move(moving_unit, 0);
+    for (Coin* i : coins) i->dx = moving_unit;
     for (Floor_brick* i : floor_bricks) i->move(moving_unit);
     for (Stone_brick* i : stone_bricks) i->move(moving_unit);
     for (Normal_brick* i : normal_bricks) i->dx = moving_unit;

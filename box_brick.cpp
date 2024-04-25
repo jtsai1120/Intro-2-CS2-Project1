@@ -27,9 +27,9 @@ void Box_brick::move(int dx) {
 void Box_brick::crack() {
     if(!opened){
         box_brick_item->setPixmap(stone_brick_pic);
-        //super.set_xy(x,y-50);
-        //qDebug() << "boom";
-        //放上隨機觸發事件
+        if (coins[1]->flying == false) {
+            coins[1]->fly(x, y);
+        }
         opened = true;
     }
 }

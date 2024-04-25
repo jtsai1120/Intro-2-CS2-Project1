@@ -200,7 +200,6 @@ void MainWindow::game_init() {
             {3150, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
             {3000, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
-            {3000, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {3000, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
             {3100, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
@@ -452,6 +451,11 @@ void MainWindow::game_init() {
 
         // add coins
         coins_list = {
+            // 觸發特效用金幣
+            {0, 1000},
+            {0, 1000},
+            //
+
             {0, 620 - Floor_brick::floor_brick_height - 9 * Coin::coin_height},
             {0, 620 - Floor_brick::floor_brick_height - 11 * Coin::coin_height},
             {550, 620 - Floor_brick::floor_brick_height - 10 * Coin::coin_height},
@@ -482,7 +486,15 @@ void MainWindow::game_init() {
             coins.push_back(new Coin);
             coins[i]->set_xy(coins_list[i][0], coins_list[i][1]);
             cur_scene->addItem(coins[i]->coin_item);
+            coins[i]->init_y = coins_list[i][1];
         }
+
+        // 填充特效金幣
+        for (int i = 0; i < static_cast<int>(box_bricks_list.size()); i++)
+            box_bricks[i]->coins = coins;
+        for (int i = 0; i < static_cast<int>(normal_bricks_list.size()); i++)
+            normal_bricks[i]->coins = coins;
+
 
         // add mario
         mario.cur_scene = cur_scene;
@@ -562,7 +574,7 @@ void MainWindow::game_restart() {
         // add normal_bricks
         for (int i = 0; i < static_cast<int>(normal_bricks_list.size()); i++) {
             normal_bricks[i]->set_xy(normal_bricks_list[i][0], normal_bricks_list[i][1]);
-            normal_bricks[i]->init_y = normal_bricks_list[i][1];
+            normal_bricks[i]->reset();
         }
 
         // super_mushroom
@@ -605,6 +617,7 @@ void MainWindow::game_restart() {
         // add coins
         for (int i = 0; i < static_cast<int>(coins_list.size()); i++) {
             coins[i]->set_xy(coins_list[i][0], coins_list[i][1]);
+            coins[i]->flying = false;
         }
 
         // reset mario
