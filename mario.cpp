@@ -340,6 +340,24 @@ void Mario::touch_super_mushroom(){
 
 }
 
+void Mario::touch_fire_flower(){
+    bullet = 3;
+}
+
+void Mario::shoot(int tx, int ty){
+    m = (ty-y)/(tx-x);
+    qDebug()<<"mario shoot"<<bullet;
+    qDebug()<<m;
+    for (Bullet *i : bullets){
+        if (i->posx == 0 && i->posy == 1000 && bullet >= 1){
+            qDebug()<<"enter shoot function";
+            i->shoot(m,x,y,tx);
+            bullet --;
+            break;
+        }
+    }
+}
+
 bool Mario::is_grounded() {
     QList<QGraphicsItem *> items = cur_scene->items();
     bool _is_grounded = 0;
@@ -484,6 +502,12 @@ bool Mario::is_crack_head() {
                 if ((i->posx == hit_box_brick->x_corresonding) && (i->posy == hit_box_brick->y_corresponding) && mushroom_move == false){
                     i->show();
                     mushroom_move=true;
+                    break;
+                }
+            }
+            for (Fire_flower *i : fire_flowers){
+                if ((i->posx == hit_box_brick->x_corresonding) && (i->posy == hit_box_brick->y_corresponding) && mushroom_move == false){
+                    i->show();
                     break;
                 }
             }

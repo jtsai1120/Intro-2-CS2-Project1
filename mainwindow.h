@@ -18,6 +18,8 @@
 #include "hp.h"
 #include "flag.h"
 #include "flag_pole.h"
+#include "fire_flower.h"
+#include "bullet.h"
 #include <vector>
 #include <string>
 #include <QMainWindow>
@@ -38,6 +40,7 @@ class MainWindow : public QMainWindow {
     protected:
         void keyPressEvent(QKeyEvent *event);
         void keyReleaseEvent(QKeyEvent *event);
+        void mousePressEvent(QMouseEvent *event);
 
     private slots:
         void update_frame(); // 畫面更新
@@ -98,6 +101,9 @@ class MainWindow : public QMainWindow {
         std::vector<Invisible_brick*> invisible_bricks;
         std::vector<Toxic_mushroom*> toxic_mushrooms;
         std::vector<Super_mushroom*> super_mushrooms;
+        std::vector<Fire_flower*> fire_flowers;
+        std::vector<Bullet*> bullets;
+
 
         //設定座標的，為了能重置因次宣告在外面
         std::vector<std::vector<int>> invisible_bricks_list;
@@ -109,6 +115,7 @@ class MainWindow : public QMainWindow {
         std::vector<std::vector<int>> water_pipes_list;
         std::vector<std::vector<int>> toxic_mushrooms_list;
         std::vector<std::vector<int>> coins_list;
+        std::vector<std::vector<int>> fire_flowers_list;
 
 
         // KeyEvents (Pressed=1, Released=0)

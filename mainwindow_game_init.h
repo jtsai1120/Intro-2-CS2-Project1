@@ -14,6 +14,7 @@
 #include "invisible_brick.h"
 #include "toxic_mushroom.h"
 #include "super_mushroom.h"
+#include "fire_flower.h"
 
 
 #include <QDebug>
@@ -322,8 +323,8 @@ void MainWindow::game_init() {
         //add super mushroom
         super_mushroom_list = {
             //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
-            {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
-            {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
+            //{350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            //{350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
             {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
         };
@@ -332,6 +333,22 @@ void MainWindow::game_init() {
             super_mushrooms.push_back(new Super_mushroom);
             super_mushrooms[i]->set_xy(super_mushroom_list[i][0],super_mushroom_list[i][1]);
             cur_scene->addItem(super_mushrooms[i]->super_mushroom_item);
+
+        }
+
+        //add fire flowers
+        fire_flowers_list = {
+            //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
+            //{2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            //{2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
+        };
+
+        for (int i = 0; i < static_cast<int>(fire_flowers_list.size()); i++) {
+            fire_flowers.push_back(new Fire_flower);
+            fire_flowers[i]->set_xy(fire_flowers_list[i][0],fire_flowers_list[i][1]);
+            cur_scene->addItem(fire_flowers[i]->fire_flower_item);
 
         }
 
@@ -398,6 +415,14 @@ void MainWindow::game_init() {
             cur_scene->addItem(water_pipes[i]->water_pipe_item);
         }
 
+        //add bullets
+        for (int i = 0; i < 3; i++) {
+            bullets.push_back(new Bullet);
+            bullets[i]->set_xy(0,1000);
+            cur_scene->addItem(bullets[i]->bullet_item);
+        }
+
+
         //add super mushroom's map
         for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
             //add super mushroom's map
@@ -427,7 +452,7 @@ void MainWindow::game_init() {
             {3050, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
             {3550, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
             {3850, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
-//*/
+
 
         };
 
@@ -446,7 +471,21 @@ void MainWindow::game_init() {
             toxic_mushrooms[i]->invisible_bricks = invisible_bricks;
             toxic_mushrooms[i]->cur_scene = cur_scene;
 
+
             cur_scene->addItem(toxic_mushrooms[i]->toxic_mushroom_item);
+        }
+
+        //add bullet's map
+        for (int i = 0; i < 3; i++) {
+            bullets[i]->floor_bricks = floor_bricks;
+            bullets[i]->stone_bricks = stone_bricks;
+            bullets[i]->normal_bricks = normal_bricks;
+            bullets[i]->box_bricks = box_bricks;
+            bullets[i]->broken_bricks = broken_bricks;
+            bullets[i]->water_pipes = water_pipes;
+            bullets[i]->invisible_bricks = invisible_bricks;
+            bullets[i]->toxic_mushrooms = toxic_mushrooms;
+            bullets[i]->cur_scene = cur_scene;
         }
 
 
@@ -497,6 +536,8 @@ void MainWindow::game_init() {
         mario.invisible_bricks = invisible_bricks;
         mario.toxic_mushrooms = toxic_mushrooms;
         mario.super_mushrooms = super_mushrooms;
+        mario.fire_flowers = fire_flowers;
+        mario.bullets = bullets;
 
         mario.set_x(700);
 

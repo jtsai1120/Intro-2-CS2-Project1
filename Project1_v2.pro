@@ -11,7 +11,9 @@ CONFIG += c++11
 SOURCES += \
     box_brick.cpp \
     broken_brick.cpp \
+    bullet.cpp \
     coin.cpp \
+    fire_flower.cpp \
     flag.cpp \
     flag_pole.cpp \
     floor_brick.cpp \
@@ -32,7 +34,9 @@ HEADERS += \
     ButtonItem.h \
     box_brick.h \
     broken_brick.h \
+    bullet.h \
     coin.h \
+    fire_flower.h \
     flag.h \
     flag_pole.h \
     floor_brick.h \

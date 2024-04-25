@@ -65,6 +65,11 @@ void MainWindow::update_frame() {
                 if (i->open)
                     i->move();
             }
+            for (Bullet *i : bullets){
+                if (i->already_shot == true && i->posy>=0 && i->posy<=620 && i->posx>=0){
+                    i->fly();
+                }
+            }
 
 
             mario.move();
@@ -215,6 +220,14 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
     }
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *event){
+    if (event->button() == Qt::LeftButton) {
+            QPoint mousePos = event->pos(); // 獲取滑鼠按下時的位置
+            qDebug() << "Mouse press position: " << mousePos;
+            mario.shoot(mousePos.x(),mousePos.y());
+        }
+}
+
 void MainWindow::all_move_detection() {
     if ((left_key_state || right_key_state || up_key_state)&&mario.movable) {
         mario.is_moving = 1;
@@ -331,6 +344,7 @@ void MainWindow::all_move_detection() {
             }
         }
 
+
         // super msuhroom
         for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
             if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
@@ -339,6 +353,16 @@ void MainWindow::all_move_detection() {
                 mario.touch_super_mushroom();
             }
         }
+
+        // fire flower
+        for (int i = 0; i < static_cast<int>(fire_flowers.size()); i++) {
+            if (mario.mario->collidesWithItem(fire_flowers[i]->fire_flower_item) && fire_flowers[i]->opened == true) {
+                //qDebug() << "grow up";
+                fire_flowers[i]->used();
+                mario.touch_fire_flower();
+            }
+        }
+
         // flag pole
         if (mario.mario->collidesWithItem(flag_pole.flag_pole_item) && !flag_pole.is_touched) {
             qDebug() << "mario touch flag pole !";
@@ -392,6 +416,7 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Water_pipe* i : water_pipes) i->move(moving_unit);
     for (Invisible_brick* i : invisible_bricks) i->move(moving_unit);
     for (Toxic_mushroom* i : toxic_mushrooms) i->dx = moving_unit;
+    for (Fire_flower* i : fire_flowers) i->move(moving_unit);
 }
 
 

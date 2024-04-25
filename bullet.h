@@ -1,6 +1,7 @@
-#ifndef TOXIC_MUSHROOM_H
-#define TOXIC_MUSHROOM_H
+#ifndef BULLET_H
+#define BULLET_H
 
+#include <vector>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 #include <QGraphicsScene>
@@ -15,22 +16,29 @@
 #include "broken_brick.h"
 #include "water_pipe.h"
 #include "invisible_brick.h"
+#include "toxic_mushroom.h"
 
-
-
-class Toxic_mushroom{
+class Bullet
+{
 public:
-    Toxic_mushroom();
-    QGraphicsPixmapItem *toxic_mushroom_item;
+    Bullet();
+    QGraphicsPixmapItem *bullet_item;
 
     void set_xy(int new_x, int new_y);
-    void move();
-    void go_die();
-
+    void move(int dx);
     bool is_grounded();
     bool check_whether_ground_brick(QGraphicsPixmapItem *PixmapItem);
     bool is_hit_left_side(); // 撞到方塊兩左側
     bool is_hit_right_side(); // 撞到方塊兩右側
+    void shoot(float m , int x0, int y0, int tx);
+    void fly();
+    void reset();
+    bool already_shot = false;
+
+    int posx,posy;
+    float direction;
+    float m1;
+    float x2,y2;
 
     QGraphicsScene *cur_scene;
     std::vector<Floor_brick*> floor_bricks;
@@ -40,40 +48,16 @@ public:
     std::vector<Broken_brick*> broken_bricks;
     std::vector<Water_pipe*> water_pipes;
     std::vector<Invisible_brick*> invisible_bricks;
+    std::vector<Toxic_mushroom*> toxic_mushrooms;
 
 
-    static const int toxic_mushroom_height = 50;
-    static const int toxic_mushroom_width = 50;
-
-    int init_y;
-
-    int dx;
-    double dy;
-
-    int x;//為了辨識距離，距離過遠則癱瘓
-    double y;//為了讓別人好判斷高度，放在外面
-
-    bool dead = false;
-    bool still = true;
-
-    bool locked_in = false;
-    bool hitted_left = false;
-    int hitted_right = 0;
 
 private:
-    QPixmap toxic_mushroom_pic_1;
-    QPixmap toxic_mushroom_pic_2;
-    QPixmap toxic_mushroom_pic_3;
-    QString pic;
+    QPixmap bullet_pic;
+    int x, y;
 
-    int walk_distance = 0;//換造型用
-    const double vy0 = 0.06;
-    const double ay = 0.18;
 
-    int walk_lock = 0;
-
-    const int walk_speed = 1;
-    bool facing_right = true;
 };
 
-#endif // TOXIC_MUSHROOM_H
+#endif // BULLET_H
+
