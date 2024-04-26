@@ -73,5 +73,6 @@
         <file>Dataset/image/game_over.png</file>
         <file>Dataset/image/brick/invisible brick.png</file>
         <file>Dataset/image/restart_button.png</file>
+        <file>Dataset/image/heart.png</file>
     </qresource>
 </RCC>

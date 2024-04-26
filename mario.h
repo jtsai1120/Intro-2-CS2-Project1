@@ -16,7 +16,9 @@
 #include "invisible_brick.h"
 #include "toxic_mushroom.h"
 #include "super_mushroom.h"
+#include "fire_flower.h"
 #include "hp.h"
+#include "bullet.h"
 
 class Mario : public QObject {
     Q_OBJECT
@@ -31,7 +33,9 @@ class Mario : public QObject {
         void change();
         void is_taller(int i);//判斷高度
         void touch_super_mushroom();
+        void touch_fire_flower();
         void reset();
+        void shoot(int tx, int ty);
         Hp *hp;
 
         QGraphicsScene *cur_scene;
@@ -44,6 +48,9 @@ class Mario : public QObject {
         std::vector<Invisible_brick*> invisible_bricks;
         std::vector<Toxic_mushroom*> toxic_mushrooms;
         std::vector<Super_mushroom*> super_mushrooms;
+        std::vector<Fire_flower*> fire_flowers;
+        std::vector<Bullet*> bullets;
+        std::vector<Hp*> hps;
 
         static const int small_mario_height = 52;
         static const int big_mario_height = 80;
@@ -53,6 +60,8 @@ class Mario : public QObject {
         static const int init_y = 620 - Floor_brick::floor_brick_height - small_mario_height;
 
         int dx;
+        int bullet = 0;
+        float m = 0;
         double dy;
         char cur_direction;
         bool is_moving;

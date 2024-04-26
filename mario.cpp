@@ -325,8 +325,10 @@ void Mario::is_taller(int i){
     }
     else if(!immune_status && !toxic_mushrooms[i]->dead){ //非免疫狀態且毒菇沒死
         hp->sub_hp(1); //扣血
+        hps[hp->get_hp()]->set_xy(0,1000);
         big = false;
         immune_status = 1;
+        qDebug() << "Ow";
         QObject::connect(&immune, SIGNAL(timeout()), this, SLOT(immune_time()));
         immune.start(2000);
     }
@@ -335,10 +337,30 @@ void Mario::is_taller(int i){
 void Mario::touch_super_mushroom(){
     if (hp->get_hp()<3){
         hp->add_hp(1);
+        hps[hp->get_hp()-1]->set_xy(70+40*hp->get_hp(),7);
     }
     big = true;
 
 }
+
+void Mario::touch_fire_flower(){
+    bullet = 3;
+}
+
+void Mario::shoot(int tx, int ty){
+    m = (ty-y)/(tx-x);
+    qDebug()<<"mario shoot"<<bullet;
+    qDebug()<<m;
+    for (Bullet *i : bullets){
+        if (i->posx == 0 && i->posy == 1000 && bullet >= 1){
+            qDebug()<<"enter shoot function";
+            i->shoot(m,x,y,tx);
+            bullet --;
+            break;
+        }
+    }
+}
+
 
 bool Mario::is_grounded() {
     QList<QGraphicsItem *> items = cur_scene->items();
@@ -487,6 +509,12 @@ bool Mario::is_crack_head() {
                     break;
                 }
             }
+            for (Fire_flower *i : fire_flowers){
+                if ((i->posx == hit_box_brick->x_corresonding) && (i->posy == hit_box_brick->y_corresponding) && mushroom_move == false){
+                    i->show();
+                    break;
+                }
+            }
             is_passed_jump_cd = 0;
             QObject::connect(&jump_cd, SIGNAL(timeout()), this, SLOT(jump_cd_trigger()));
             jump_cd.start(520);
@@ -546,5 +574,7 @@ void Mario::reset(){
     immune_status = 0;
     big = false;
     movable = 1;
+    bullet = 0;
+    m = 0;
 }
 

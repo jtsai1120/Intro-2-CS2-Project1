@@ -14,6 +14,8 @@
 #include "invisible_brick.h"
 #include "toxic_mushroom.h"
 #include "super_mushroom.h"
+#include "fire_flower.h"
+#include "hp.h"
 
 
 #include <QDebug>
@@ -42,7 +44,20 @@ void MainWindow::game_init() {
         cur_scene->addItem(score.score_text);
 
         // hp text
-        cur_scene->addItem(hp.hp_text);
+        //cur_scene->addItem(hp.hp_text);
+        //add hp icon
+        hp_list = {
+            {110,7},
+            {150,7},
+            {190,7},
+        };
+
+        for (int i = 0; i < static_cast<int>(hp_list.size()); i++) {
+            hps.push_back(new Hp);
+            hps[i]->set_xy(hp_list[i][0],hp_list[i][1]);
+            cur_scene->addItem(hps[i]->hp_item);
+
+        }
 
         // add invisible_bricks
         invisible_bricks_list = {
@@ -320,11 +335,18 @@ void MainWindow::game_init() {
 
         //add super mushroom
         super_mushroom_list = {
-            //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
-            {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
+            //{350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
             {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
+        };
+
+        //add fire flowers
+        fire_flowers_list = {
+            //{350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
+            //{2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
+            //{2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
         };
 
         for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
@@ -334,6 +356,13 @@ void MainWindow::game_init() {
 
         }
 
+        for (int i = 0; i < static_cast<int>(fire_flowers_list.size()); i++) {
+            fire_flowers.push_back(new Fire_flower);
+            fire_flowers[i]->set_xy(fire_flowers_list[i][0],fire_flowers_list[i][1]);
+            cur_scene->addItem(fire_flowers[i]->fire_flower_item);
+        }
+
+
         // add box_bricks
         box_bricks_list = {
             //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
@@ -342,8 +371,6 @@ void MainWindow::game_init() {
             {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
             {3750, 620 - Floor_brick::floor_brick_height - 8 * Box_brick::box_brick_height},
-
-
         };
         for (int i = 0; i < static_cast<int>(box_bricks_list.size()); i++) {
             box_bricks.push_back(new Box_brick);
@@ -397,6 +424,15 @@ void MainWindow::game_init() {
             cur_scene->addItem(water_pipes[i]->water_pipe_item);
         }
 
+
+        //add bullets
+        for (int i = 0; i < 3; i++) {
+            bullets.push_back(new Bullet);
+            bullets[i]->set_xy(0,1000);
+            cur_scene->addItem(bullets[i]->bullet_item);
+        }
+
+
         //add super mushroom's map
         for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
             //add super mushroom's map
@@ -448,6 +484,18 @@ void MainWindow::game_init() {
             cur_scene->addItem(toxic_mushrooms[i]->toxic_mushroom_item);
         }
 
+        //add bullet's map
+        for (int i = 0; i < 3; i++) {
+            bullets[i]->floor_bricks = floor_bricks;
+            bullets[i]->stone_bricks = stone_bricks;
+            bullets[i]->normal_bricks = normal_bricks;
+            bullets[i]->box_bricks = box_bricks;
+            bullets[i]->broken_bricks = broken_bricks;
+            bullets[i]->water_pipes = water_pipes;
+            bullets[i]->invisible_bricks = invisible_bricks;
+            bullets[i]->toxic_mushrooms = toxic_mushrooms;
+            bullets[i]->cur_scene = cur_scene;
+        }
 
         // add coins
         coins_list = {
@@ -509,8 +557,11 @@ void MainWindow::game_init() {
         mario.invisible_bricks = invisible_bricks;
         mario.toxic_mushrooms = toxic_mushrooms;
         mario.super_mushrooms = super_mushrooms;
+        mario.fire_flowers = fire_flowers;
+        mario.bullets = bullets;
+        mario.hps = hps;
 
-        mario.set_x(700);
+        mario.set_x(668);
 
         // 設定mario 初始hp
         mario.hp = &hp;
@@ -543,6 +594,11 @@ void MainWindow::game_restart() {
         while(hp.get_hp()<3){
             hp.add_hp(1);
         }
+
+        for (int i = 0; i < static_cast<int>(hp_list.size()); i++) {
+            hps[i]->set_xy(hp_list[i][0],hp_list[i][1]);
+        }
+
 
         // add invisible_bricks
         for (int i = 0; i < static_cast<int>(invisible_bricks_list.size()); i++) {
@@ -613,6 +669,16 @@ void MainWindow::game_restart() {
             toxic_mushrooms[i]->locked_in = false;
         }
 
+        // add fire flowers
+        for (int i = 0; i < static_cast<int>(fire_flowers_list.size()); i++) {
+            fire_flowers[i]->set_xy(fire_flowers_list[i][0],fire_flowers_list[i][1]);
+            fire_flowers[i]->opened = false;
+        }
+
+        // add bullets
+        for (int i = 0; i < 3; i++) {
+            bullets[i]->set_xy(0,1000);
+        }
 
         // add coins
         for (int i = 0; i < static_cast<int>(coins_list.size()); i++) {
