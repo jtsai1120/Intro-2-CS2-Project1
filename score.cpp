@@ -7,6 +7,7 @@ Score::Score() {
     score_text->setScale(1.3);
     score_text->setPos(x, y);
     set_text();
+    score_text->setZValue(100);
 }
 
 void Score::add_score(int sc = 1) {
