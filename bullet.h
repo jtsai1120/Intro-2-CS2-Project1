@@ -55,7 +55,7 @@ public:
 private:
     QPixmap bullet_pic;
     int x, y;
-
+    int bullet_dx;
 
 };
 

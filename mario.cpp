@@ -348,7 +348,7 @@ void Mario::touch_fire_flower(){
 }
 
 void Mario::shoot(int tx, int ty){
-    m = (ty-y)/(tx-x);
+    m = static_cast<float>(ty-y)/static_cast<float>(tx-x);
     qDebug()<<"mario shoot"<<bullet;
     qDebug()<<m;
     for (Bullet *i : bullets){

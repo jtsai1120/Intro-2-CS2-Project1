@@ -143,7 +143,7 @@ void MainWindow::end_init() {
     if (hp.get_hp() == 0) {
         win_or_lose_text_combined = win_or_lose_text_combined + "Lose, HP -> 0";
     } else if (score.get_score() <= 20) {
-        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Score <= 20)";
+        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Score <= 20";
     } else { // win
         win_or_lose_text_combined = win_or_lose_text_combined + "Win";
     }
@@ -414,6 +414,7 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Invisible_brick* i : invisible_bricks) i->move(moving_unit);
     for (Toxic_mushroom* i : toxic_mushrooms) i->dx = moving_unit;
     for (Fire_flower* i : fire_flowers) i->move(moving_unit);
+    //for (Bullet* i : bullets) i->move(moving_unit);
 }
 
 

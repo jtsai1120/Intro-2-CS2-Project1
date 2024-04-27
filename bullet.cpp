@@ -19,8 +19,6 @@ void Bullet::set_xy(int new_x, int new_y) {
     bullet_item->setPos(x, y);
 }
 
-
-
 void Bullet::move(int dx) {
     x += dx;
     set_xy(x, y);
