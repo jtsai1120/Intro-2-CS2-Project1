@@ -326,6 +326,7 @@ void Mario::is_taller(int i){
     else if(!immune_status && !toxic_mushrooms[i]->dead){ //非免疫狀態且毒菇沒死
         hp->sub_hp(1); //扣血
         hps[hp->get_hp()]->set_xy(0,1000);
+        bullet = 0;
         big = false;
         immune_status = 1;
         qDebug() << "Ow";

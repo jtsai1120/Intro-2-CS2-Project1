@@ -414,7 +414,10 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Invisible_brick* i : invisible_bricks) i->move(moving_unit);
     for (Toxic_mushroom* i : toxic_mushrooms) i->dx = moving_unit;
     for (Fire_flower* i : fire_flowers) i->move(moving_unit);
-    //for (Bullet* i : bullets) i->move(moving_unit);
+    for (Bullet* i : bullets) {
+        if (i->already_shot)
+            i->move(moving_unit);
+    }
 }
 
 
