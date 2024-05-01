@@ -62,37 +62,21 @@ void MainWindow::game_init() {
         // add invisible_bricks
         invisible_bricks_list = {
             {750 - 10, 620 - Floor_brick::floor_brick_height - 6 * Invisible_brick::invisible_brick_height},
-            {950, 620 - 10 - Floor_brick::floor_brick_height - 10 * Invisible_brick::invisible_brick_height},
             {-50, 620 - Floor_brick::floor_brick_height - 1 * Invisible_brick::invisible_brick_height},
             {1800, 620 - 10 - Floor_brick::floor_brick_height - 1 * Invisible_brick::invisible_brick_height},
             {2000, 620 - 10 - Floor_brick::floor_brick_height - 12 * Invisible_brick::invisible_brick_height},
             {2000, 620 - 10 - Floor_brick::floor_brick_height - 13 * Invisible_brick::invisible_brick_height},
             {2600, 620 - 10 - Floor_brick::floor_brick_height - 10 * Invisible_brick::invisible_brick_height},
             {2600, 620 - 10 - Floor_brick::floor_brick_height - 11 * Invisible_brick::invisible_brick_height},
+            {2600, 620 - 10 - Floor_brick::floor_brick_height - 12 * Invisible_brick::invisible_brick_height},
+            {2600, 620 - 10 - Floor_brick::floor_brick_height - 13 * Invisible_brick::invisible_brick_height},
+
             {2700, 620 - 10 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
             {3750 + 10, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {4250, 620 - Floor_brick::floor_brick_height - (-1) * Stone_brick::stone_brick_height},
-            {4250, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4300, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4350, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4400, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4450, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4500, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4550, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4600, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4650, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4700, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4750, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4800, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4850, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4900, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {4950, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {5000, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {5050, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
-            {5100, 620 - Floor_brick::floor_brick_height - (-2) * Stone_brick::stone_brick_height},
+            {5300 - 10, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
 
-            {6550, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {6550, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {6650, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
+            //{6650, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
 
             {6830, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
             {6830, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
@@ -116,7 +100,21 @@ void MainWindow::game_init() {
                 floor_bricks[i]->set_x(-100);
             else if(i > max_floor_brick_num_in_a_scene && i < 1.5 * max_floor_brick_num_in_a_scene)
                 floor_bricks[i]->set_x(-100);
-            else if(i > 2.65 * max_floor_brick_num_in_a_scene && i < 4 * max_floor_brick_num_in_a_scene)
+            else if(i > 2.65 * max_floor_brick_num_in_a_scene && i < 3 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.1 * max_floor_brick_num_in_a_scene && i < 3.12 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.16 * max_floor_brick_num_in_a_scene && i < 3.21 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.24 * max_floor_brick_num_in_a_scene && i < 3.27 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.29 * max_floor_brick_num_in_a_scene && i < 3.33 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.38 * max_floor_brick_num_in_a_scene && i < 3.42 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.45 * max_floor_brick_num_in_a_scene && i < 3.64 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.67 * max_floor_brick_num_in_a_scene && i < 3.8 * max_floor_brick_num_in_a_scene)
                 floor_bricks[i]->set_x(-100);
             else if(i > 4.6 * max_floor_brick_num_in_a_scene && i < 4.8 * max_floor_brick_num_in_a_scene)
                 floor_bricks[i]->set_x(-100);
@@ -226,72 +224,125 @@ void MainWindow::game_init() {
             {3750, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
             {3650, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
             {4000, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {4200, 620 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
+            //{4200, 620 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
             {4150, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
             {4100, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
             {4100, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
-            {4250, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {4300, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {4400, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {4500, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {4600, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {4700, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {4800, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {4900, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {5000, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {5100, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
-            {5200, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
+
+            //start
+            //{4250, 620 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
+            //{4300, 620 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
+            //{4400, 620 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
+            //{4500, 620 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
+            //{4600, 620 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
+            //{4700, 620 - Floor_brick::floor_brick_height - 0 * Stone_brick::stone_brick_height},
+            {4300, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {4400, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {4500, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {4600, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {4700, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
             {4300, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {4400, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {4400, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
             {4500, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {4600, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {4600, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
             {4700, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {4800, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {4900, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {5000, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {5100, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {5200, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {4300, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {4400, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {4500, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {4600, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {4700, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {4800, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {4900, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {5000, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {5100, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {5200, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
+            //
+            {4000, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
+            {4050, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
+
+
+            {4100, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {4200, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
+            {4250, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {4350, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {4450, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {4550, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {4650, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {4750, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+
+            //end
+
+
+            {4850, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+
+            {4500, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {4550, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {4600, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {4650, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {4700, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {4750, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {4800, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {4850, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+
+            {4900, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {4950, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+            {5000, 620 - Floor_brick::floor_brick_height - 11 * Stone_brick::stone_brick_height},
+
+            {5300, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5350, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5400, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5450, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5500, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5550, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5600, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5650, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            //{5700, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5750, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+            {5800, 620 - Floor_brick::floor_brick_height - 9 * Stone_brick::stone_brick_height},
+
+            {5500, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+            {5500, 620 - Floor_brick::floor_brick_height - 13 * Stone_brick::stone_brick_height},
+            {5550, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+            {5600, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+            {5650, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+            //{5700, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+            {5750, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+            {5800, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+            {5650, 620 - Floor_brick::floor_brick_height - 13 * Stone_brick::stone_brick_height},
+            {5750, 620 - Floor_brick::floor_brick_height - 13 * Stone_brick::stone_brick_height},
+
+
+            {5300, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+
+
+            //{5850, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
+            {5850, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {5850, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
+            {5850, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
+            {5850, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {5850, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {5850, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
+            {5850, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
+
+            {5950, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
+            {5950, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {5950, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
+
+
+            {5700, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
+            {5700, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+
             {5300, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
-            {5400, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
-            {5450, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
-            {5500, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
-            {5550, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
-            {5600, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
-            {5650, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
-            {5650, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {5750, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
-            {5800, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
-            {5800, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-            {5900, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
-            {5950, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
-            {5950, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {5350, 620 - Floor_brick::floor_brick_height - 1 * Stone_brick::stone_brick_height},
 
             {6050, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
             {6100, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
             {6100, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
 
-            {6250, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
-            {6300, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
-            {6400, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
-
-
-            {6200, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
             {6150, 620 - Floor_brick::floor_brick_height - 2 * Stone_brick::stone_brick_height},
 
-            {6650, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
+            {6200, 620 - Floor_brick::floor_brick_height - 3 * Stone_brick::stone_brick_height},
+
+            {6300, 620 - Floor_brick::floor_brick_height - 4 * Stone_brick::stone_brick_height},
+            {6300, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
+
+            {6400, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+
             {6450, 620 - Floor_brick::floor_brick_height - 6 * Stone_brick::stone_brick_height},
 
-            {6300, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
+
+            {6650, 620 - Floor_brick::floor_brick_height - 7 * Stone_brick::stone_brick_height},
+
 
 
 
@@ -311,18 +362,17 @@ void MainWindow::game_init() {
 
         // add normal_bricks
         normal_bricks_list = {
-            {400, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
-            //{450, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
+            {300, 620 - Floor_brick::floor_brick_height - 9 * Normal_brick::normal_brick_height},
+            {350, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
             {800, 620 - Floor_brick::floor_brick_height - 10 * Normal_brick::normal_brick_height},
 
             {1000, 620 - Floor_brick::floor_brick_height - 4 * Normal_brick::normal_brick_height},
-            {350, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
-            {300, 620 - Floor_brick::floor_brick_height - 9 * Normal_brick::normal_brick_height},
             {1500, 620 - Floor_brick::floor_brick_height - 5 * Normal_brick::normal_brick_height},
             {3000, 620 - Floor_brick::floor_brick_height - 6 * Normal_brick::normal_brick_height},
 
             {3300, 620 - Floor_brick::floor_brick_height - 3 * Normal_brick::normal_brick_height},
             {3800, 620 - Floor_brick::floor_brick_height - 11 * Normal_brick::normal_brick_height},
+            {6400, 620 - Floor_brick::floor_brick_height - 1 * Normal_brick::normal_brick_height},
 
 
         };
@@ -333,12 +383,18 @@ void MainWindow::game_init() {
             cur_scene->addItem(normal_bricks[i]->normal_brick_item);
         }
 
+        //add coins into normal bricks, enter = 0 for 5 coins
+        normal_bricks[2]->no_more_coins = 3;
+        normal_bricks[4]->no_more_coins = 1;
+
         //add super mushroom
         super_mushroom_list = {
             {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             //{350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
             {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
+            {5350, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
+
         };
 
         //add fire flowers
@@ -365,12 +421,14 @@ void MainWindow::game_init() {
 
         // add box_bricks
         box_bricks_list = {
-            //{1100, 620 - Floor_brick::floor_brick_height - 2 * Box_brick::box_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {350, 620 - Floor_brick::floor_brick_height - 9 * Box_brick::box_brick_height},
             {2300, 620 - Floor_brick::floor_brick_height - 3 * Box_brick::box_brick_height},
             {2950, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
             {3750, 620 - Floor_brick::floor_brick_height - 8 * Box_brick::box_brick_height},
+            {5350, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
+            {6250, 620 - Floor_brick::floor_brick_height - 4 * Box_brick::box_brick_height},
+
         };
         for (int i = 0; i < static_cast<int>(box_bricks_list.size()); i++) {
             box_bricks.push_back(new Box_brick);
@@ -378,10 +436,15 @@ void MainWindow::game_init() {
             cur_scene->addItem(box_bricks[i]->box_brick_item);
 
         }
+        // contain coins
+        box_bricks[4]->have_coin = true;
+        box_bricks[6]->have_coin = true;
 
 
         // add broken_bricks
         broken_bricks_list = {
+            {950, 620 - Floor_brick::floor_brick_height - 11 * Broken_brick::broken_brick_height},
+
             {1250, 620 - Floor_brick::floor_brick_height - 2 * Broken_brick::broken_brick_height},
             {0, 620 - Floor_brick::floor_brick_height - 8 * Broken_brick::broken_brick_height},
             {750, 620 - Floor_brick::floor_brick_height - 8 * Broken_brick::broken_brick_height},
@@ -403,7 +466,12 @@ void MainWindow::game_init() {
 
             {3950, 620 - Floor_brick::floor_brick_height - 6 * Broken_brick::broken_brick_height},
             {3850, 620 - Floor_brick::floor_brick_height - 8 * Stone_brick::stone_brick_height},
-            {5100, 620 - Floor_brick::floor_brick_height - (-1) * Stone_brick::stone_brick_height},
+
+            {4400, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {4600, 620 - Floor_brick::floor_brick_height - 5 * Stone_brick::stone_brick_height},
+            {5700, 620 - Floor_brick::floor_brick_height - 10 * Stone_brick::stone_brick_height},
+            {5700, 620 - Floor_brick::floor_brick_height - 12 * Stone_brick::stone_brick_height},
+
 
         };
         for (int i = 0; i < static_cast<int>(broken_bricks_list.size()); i++) {
@@ -462,7 +530,13 @@ void MainWindow::game_init() {
             {3050, 620 - Floor_brick::floor_brick_height - 10 * Toxic_mushroom::toxic_mushroom_height},
             {3550, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
             {3850, 620 - Floor_brick::floor_brick_height - 12 * Toxic_mushroom::toxic_mushroom_height},
-//*/
+            {4400, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
+            {4600, 620 - Floor_brick::floor_brick_height - 6 * Toxic_mushroom::toxic_mushroom_height},
+            {5700, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
+            {6000, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
+            {6100, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
+            {6250, 620 - Floor_brick::floor_brick_height - 13 * Toxic_mushroom::toxic_mushroom_height},
+
 
         };
 
@@ -510,7 +584,6 @@ void MainWindow::game_init() {
             {600, 620 - Floor_brick::floor_brick_height - 14 * Coin::coin_height},
             {650, 620 - Floor_brick::floor_brick_height - 14 * Coin::coin_height},
 
-            {1000, 620 - Floor_brick::floor_brick_height - Coin::coin_height},
             {1500, 620 - Floor_brick::floor_brick_height - 3 * Coin::coin_height},
 
             {1700, 620 - Floor_brick::floor_brick_height - 2 * Coin::coin_height},
@@ -526,6 +599,14 @@ void MainWindow::game_init() {
             {3650, 620 - Floor_brick::floor_brick_height - 2 * Coin::coin_height},
             {3850, 620 - Floor_brick::floor_brick_height - 10 * Coin::coin_height},
             {3850, 620 - Floor_brick::floor_brick_height - 9 * Coin::coin_height},
+            {3950, 620 - Floor_brick::floor_brick_height - 5 * Coin::coin_height},
+            {4100, 620 - Floor_brick::floor_brick_height - 12 * Coin::coin_height},
+
+            {4800, 620 - Floor_brick::floor_brick_height - 11 * Coin::coin_height},
+            {4850, 620 - Floor_brick::floor_brick_height - 11 * Coin::coin_height},
+            {5100, 620 - Floor_brick::floor_brick_height - 2 * Coin::coin_height},
+            {5900, 620 - Floor_brick::floor_brick_height - 3 * Coin::coin_height},
+
 
             {800, stone_bricks_list[2][1] - Coin::coin_height}
 
@@ -535,6 +616,7 @@ void MainWindow::game_init() {
             coins[i]->set_xy(coins_list[i][0], coins_list[i][1]);
             cur_scene->addItem(coins[i]->coin_item);
             coins[i]->init_y = coins_list[i][1];
+            coins[i]->score = &score;
         }
 
         // 填充特效金幣
@@ -613,7 +695,21 @@ void MainWindow::game_restart() {
                 floor_bricks[i]->set_x(-100);
             else if(i > max_floor_brick_num_in_a_scene && i < 1.5 * max_floor_brick_num_in_a_scene)
                 floor_bricks[i]->set_x(-100);
-            else if(i > 2.65 * max_floor_brick_num_in_a_scene && i < 4 * max_floor_brick_num_in_a_scene)
+            else if(i > 2.65 * max_floor_brick_num_in_a_scene && i < 3 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.1 * max_floor_brick_num_in_a_scene && i < 3.12 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.16 * max_floor_brick_num_in_a_scene && i < 3.21 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.24 * max_floor_brick_num_in_a_scene && i < 3.27 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.29 * max_floor_brick_num_in_a_scene && i < 3.33 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.38 * max_floor_brick_num_in_a_scene && i < 3.42 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.45 * max_floor_brick_num_in_a_scene && i < 3.64 * max_floor_brick_num_in_a_scene)
+                floor_bricks[i]->set_x(-100);
+            else if(i > 3.67 * max_floor_brick_num_in_a_scene && i < 3.8 * max_floor_brick_num_in_a_scene)
                 floor_bricks[i]->set_x(-100);
             else if(i > 4.6 * max_floor_brick_num_in_a_scene && i < 4.8 * max_floor_brick_num_in_a_scene)
                 floor_bricks[i]->set_x(-100);
@@ -632,6 +728,10 @@ void MainWindow::game_restart() {
             normal_bricks[i]->set_xy(normal_bricks_list[i][0], normal_bricks_list[i][1]);
             normal_bricks[i]->reset();
         }
+
+        //add coins into normal bricks, enter = 0 for 5 coins
+        normal_bricks[2]->no_more_coins = 3;
+        normal_bricks[4]->no_more_coins = 1;
 
         // super_mushroom
         for (int i = 0; i < static_cast<int>(super_mushroom_list.size()); i++) {
@@ -667,6 +767,7 @@ void MainWindow::game_restart() {
             toxic_mushrooms[i]->dy = 0;
             toxic_mushrooms[i]->hitted_left = false;
             toxic_mushrooms[i]->locked_in = false;
+            toxic_mushrooms[i]->immune_status = false;
         }
 
         // add fire flowers

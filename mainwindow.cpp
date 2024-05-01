@@ -334,7 +334,7 @@ void MainWindow::all_move_detection() {
             if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
                 qDebug() << "mario get coin !";
                 coins[i]->set_xy(0, 1000);
-                score.add_score(1);
+                if(coins[i]->flying == false) score.add_score(1);
             }
         }
 
@@ -384,7 +384,7 @@ void MainWindow::all_move_detection() {
             if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
                 qDebug() << "mario get coin !";
                 coins[i]->set_xy(0, 1000);
-                score.add_score(1);
+                if(coins[i]->flying == false) score.add_score(1);
             }
         }
 

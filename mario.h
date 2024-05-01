@@ -103,12 +103,8 @@ class Mario : public QObject {
         QTimer jump_cd;
         bool is_passed_jump_cd;
 
-        QTimer immune;
-        bool immune_status;//免疫是否持續中
-
     private slots:
         void jump_cd_trigger();
-        void immune_time();
 };
 
 #endif // MARIO_H

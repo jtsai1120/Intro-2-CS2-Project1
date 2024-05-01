@@ -18,6 +18,7 @@ Toxic_mushroom::Toxic_mushroom(){
     pic = "toxic_mushroom_pic_1";
     dx = 0;
     dy = 0;
+    count_immune = 0;
 }
 
 void Toxic_mushroom::set_xy(int new_x, int new_y) {
@@ -29,6 +30,9 @@ void Toxic_mushroom::set_xy(int new_x, int new_y) {
 void Toxic_mushroom::move() {
     x += dx;
     dx = 0;
+
+    if (count_immune == 0) immune_status = false;
+    else count_immune--;
 
     if (still || dead && y > 1000){ //超出地圖則癱瘓
         set_xy(x, y);

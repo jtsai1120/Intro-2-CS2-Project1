@@ -25,7 +25,7 @@ public:
     double dy;
 
     bool cracked = false;
-    int no_more_coins = 0;
+    int no_more_coins = -1;
 
 private:
     QPixmap normal_brick_pic;

@@ -35,7 +35,12 @@ void Normal_brick::move() {
 }
 
 void Normal_brick::crack() {
-    if (y == init_y && no_more_coins <= 4) {// 確保不會在下落過程中再被頂起來
+    if (y == init_y && no_more_coins == -1){
+        dy = vy0;
+        cracked = true;
+        qDebug()<<no_more_coins;
+    }
+    else if (y == init_y && no_more_coins <= 4) {// 確保不會在下落過程中再被頂起來
         dy = vy0;
         cracked = true;
         if (coins[0]->flying == false) {
@@ -53,5 +58,5 @@ void Normal_brick::crack() {
 void Normal_brick::reset(){
     normal_brick_item->setPixmap(normal_brick_pic);
     cracked = false;
-    no_more_coins = 0;
+    no_more_coins = -1;
 }

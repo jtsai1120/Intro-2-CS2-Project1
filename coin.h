@@ -3,6 +3,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include "score.h"
 
 class Coin {
     public:
@@ -21,11 +22,12 @@ class Coin {
         int dx;
 
         bool flying = false;
+        Score* score;
 
     private:
         QPixmap coin_pic;
         int x; double dy;
-        const double vy0 = -7;
+        const double vy0 = -4.5;
         const double ay = 0.15;
 };
 

@@ -31,6 +31,9 @@ public:
     bool is_hit_left_side(); // 撞到方塊兩左側
     bool is_hit_right_side(); // 撞到方塊兩右側
 
+    bool immune_status = false;//免疫是否持續中
+    int count_immune;
+
     QGraphicsScene *cur_scene;
     std::vector<Floor_brick*> floor_bricks;
     std::vector<Stone_brick*> stone_bricks;
@@ -72,6 +75,7 @@ private:
 
     const int walk_speed = 1;
     bool facing_right = true;
+
 };
 
 #endif // TOXIC_MUSHROOM_H

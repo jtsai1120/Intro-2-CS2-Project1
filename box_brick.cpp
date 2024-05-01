@@ -27,7 +27,7 @@ void Box_brick::move(int dx) {
 void Box_brick::crack() {
     if(!opened){
         box_brick_item->setPixmap(stone_brick_pic);
-        if (coins[1]->flying == false) {
+        if (coins[1]->flying == false && have_coin) {
             coins[1]->fly(x, y);
         }
         opened = true;

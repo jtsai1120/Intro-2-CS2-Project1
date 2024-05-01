@@ -49,7 +49,6 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     //qDebug() << "width=" << mario_stand_R.width();
     //qDebug() << "height=" << mario_stand_R.height();
     is_passed_jump_cd = 1;
-    immune_status = 0;
     movable = 1;
 }
 
@@ -314,24 +313,18 @@ void Mario::jump_cd_trigger() {
     is_passed_jump_cd = 1;
 }
 
-void Mario::immune_time() {
-    immune.stop();
-    immune_status = 0;
-}
-
 void Mario::is_taller(int i){
-    if (y < toxic_mushrooms[i]->y - 42 && dy >= 0 || y < toxic_mushrooms[i]->y - 35 && dy >= 0 && big == true){ //扣掉毒菇本身高度&&確保馬力歐不是在上升
+    if ((y < toxic_mushrooms[i]->y - 42 && dy >= 0 )||(y < toxic_mushrooms[i]->y - 35 && dy >= 0 && big == true) ){ //扣掉毒菇本身高度&&確保馬力歐不是在上升
         toxic_mushrooms[i]->dead = 1;
     }
-    else if(!immune_status && !toxic_mushrooms[i]->dead){ //非免疫狀態且毒菇沒死
+    else if(!toxic_mushrooms[i]->immune_status && !toxic_mushrooms[i]->dead){ //非免疫狀態且毒菇沒死
         hp->sub_hp(1); //扣血
         hps[hp->get_hp()]->set_xy(0,1000);
         bullet = 0;
         big = false;
-        immune_status = 1;
         qDebug() << "Ow";
-        QObject::connect(&immune, SIGNAL(timeout()), this, SLOT(immune_time()));
-        immune.start(2000);
+        toxic_mushrooms[i]->immune_status = true;
+        toxic_mushrooms[i]->count_immune = 200;
     }
 }
 
@@ -572,7 +565,6 @@ void Mario::reset(){
     //qDebug() << "width=" << mario_stand_R.width();
     //qDebug() << "height=" << mario_stand_R.height();
     is_passed_jump_cd = 1;
-    immune_status = 0;
     big = false;
     movable = 1;
     bullet = 0;

@@ -25,6 +25,9 @@ public:
 
     int x_corresonding;
     int y_corresponding;
+
+    bool have_coin = false;
+
 private:
     QPixmap box_brick_pic;
     QPixmap stone_brick_pic;
