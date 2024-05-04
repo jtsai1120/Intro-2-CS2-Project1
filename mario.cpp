@@ -13,6 +13,8 @@ Mario::Mario(QWidget *parent) : QObject(parent) {
     mario_stand_L.load(":/Dataset/image/Mario_small/s_mario_stand_L.png");
     mario_jump_R.load(":/Dataset/image/Mario_small/s_mario_jump1_R.png");
     mario_jump_L.load(":/Dataset/image/Mario_small/s_mario_jump1_L.png");
+    mario_jump_R2.load(":/Dataset/image/Mario_small/s_mario_jump2_R.png");
+    mario_jump_L2.load(":/Dataset/image/Mario_small/s_mario_jump2_L.png");
     mario_die.load(":/Dataset/image/Mario_small/s_mario_die.png");
     mario_run1_L.load(":/Dataset/image/Mario_small/s_mario_run1_L.png");
     mario_run1_R.load(":/Dataset/image/Mario_small/s_mario_run1_R.png");
@@ -129,7 +131,10 @@ void Mario::move() {
                         cur_pixmap = "stand_R";
                 }
                 else {
-                    cur_pixmap = "jump_R";
+                    if (dy < 0)
+                        cur_pixmap = "jump_R";
+                    else
+                        cur_pixmap = "jump_R2";
                 }
             } else {
                 if (is_grounded()) {
@@ -139,7 +144,10 @@ void Mario::move() {
                         cur_pixmap = "stand_L";
                 }
                 else {
-                    cur_pixmap = "jump_L";
+                    if (dy < 0)
+                        cur_pixmap = "jump_L";
+                    else
+                        cur_pixmap = "jump_L2";
                 }
             }
         }
@@ -217,8 +225,7 @@ void Mario::move() {
         if (is_crack_head()) dy = 1;
         else if (!is_grounded()) {
             dy += ay;
-            if (big)
-                jumping_distance+=y;
+            jumping_distance+=y;
             if (jumping_distance > 8000){
                 if (jumping < 4){
                     jumping ++;
@@ -229,13 +236,14 @@ void Mario::move() {
             }
         }
         else dy = 0;
-
-        if (!big){
-            mario->setPos(x, y);
-        }
         if (big){
-            mario->setPos(x, y-32);
+            mario->setPos(x,y-32);
+            cur_size = "big";
+            //big = false;
         }
+        else
+            mario->setPos(x,y);
+
     }
 }
 
@@ -258,6 +266,10 @@ void Mario::change_direction_picture(QString s) {
         mario->setPixmap(mario_jump_L);
     else if (s == "jump_R")
         mario->setPixmap(mario_jump_R);
+    else if (s == "jump_R2")
+        mario->setPixmap(mario_jump_R2);
+    else if (s == "jump_L2")
+        mario->setPixmap(mario_jump_L2);
 
     else if (s == "big_stand_R")
         mario->setPixmap(mario_big_stand_R);
@@ -322,6 +334,7 @@ void Mario::is_taller(int i){
         hps[hp->get_hp()]->set_xy(0,1000);
         bullet = 0;
         big = false;
+        cur_size = "small";
         qDebug() << "Ow";
         toxic_mushrooms[i]->immune_status = true;
         toxic_mushrooms[i]->count_immune = 200;
@@ -333,9 +346,13 @@ void Mario::touch_super_mushroom(){
         hp->add_hp(1);
         hps[hp->get_hp()-1]->set_xy(70+40*hp->get_hp(),7);
     }
+    //mario->setPos(x,y-32);
+    temp = true;
     big = true;
-
+    cur_size = "big";
 }
+
+
 
 void Mario::touch_fire_flower(){
     bullet = 3;
@@ -361,13 +378,13 @@ bool Mario::is_grounded() {
     bool _is_grounded = 0;
     for (QGraphicsItem *item : items) {
         QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
-        if (item->contains(item->mapFromScene(x + 10, y + ((cur_size=="small")? small_mario_height : big_mario_height)))) {
+        if (item->contains(item->mapFromScene(x + 10, y + small_mario_height))) {
             if(check_whether_ground_brick(PixmapItem)) {
                 //qDebug() << "left foot is grounded";
                 _is_grounded = 1;
             }
         }
-        if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), (y + ((cur_size=="small")? small_mario_height : big_mario_height))))) {
+        if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), (y +  small_mario_height )))) {
             if(check_whether_ground_brick(PixmapItem)) {
                 //qDebug() << "right foot is grounded";
                 _is_grounded = 1;
@@ -433,7 +450,7 @@ bool Mario::is_crack_head() {
 
     for (QGraphicsItem *item : items) {
         QGraphicsPixmapItem *PixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item);
-        if (item->contains(item->mapFromScene(x + 10, y))) {
+        if (item->contains(item->mapFromScene(x + 10, y - ((cur_size=="small")? 0 : 32)))) {
             if(check_whether_ground_brick(PixmapItem)) {
                 _is_crack_head = 1;
                 for (Normal_brick *i : normal_bricks)

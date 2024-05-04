@@ -345,7 +345,7 @@ void MainWindow::all_move_detection() {
             }
         }
 
-        // super msuhroom
+        // super mushroom
         for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
             if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
                 //qDebug() << "grow up";

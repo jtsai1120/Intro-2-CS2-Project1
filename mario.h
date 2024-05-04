@@ -36,6 +36,7 @@ class Mario : public QObject {
         void touch_fire_flower();
         void reset();
         void shoot(int tx, int ty);
+        void up();
         Hp *hp;
 
         QGraphicsScene *cur_scene;
@@ -72,6 +73,7 @@ class Mario : public QObject {
         bool is_hit_right_side(); // 撞到方塊兩右側
         bool movable;
         bool big = false;
+        bool temp;
 
     private:
         QPixmap mario_stand_R, mario_stand_L;
@@ -79,6 +81,7 @@ class Mario : public QObject {
         QPixmap mario_run1_R, mario_run2_R;
         QPixmap mario_die;
         QPixmap mario_jump_L, mario_jump_R;
+        QPixmap mario_jump_R2,mario_jump_L2;
 
         QPixmap mario_big_stand_R, mario_big_stand_L;
         QPixmap mario_big_run0_L, mario_big_run1_L, mario_big_run2_L;
