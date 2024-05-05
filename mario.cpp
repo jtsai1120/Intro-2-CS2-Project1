@@ -473,7 +473,7 @@ bool Mario::is_crack_head() {
 
             }
         }
-        if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), y))) {
+        if (item->contains(item->mapFromScene(x + ((cur_size=="small")? small_mario_width : big_mario_width), y - ((cur_size=="small")? 0 : 32)))) {
             if(check_whether_ground_brick(PixmapItem)) {
                 _is_crack_head = 1;
                 for (Normal_brick *i : normal_bricks)
