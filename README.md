@@ -74,4 +74,31 @@ before you actually run the executable file.
 
 # Project Attainment
     What requirements and bonus we had done and implement in this project.
-1. 
+## Basic Requirements (All accomplished)
+0. Game Rules
+1. Player (Mario)
+    - Jump with Gravity
+    - Size
+    - Bullet
+    - HP
+    - Score
+2. Bricks 
+    - Floor Brick
+    - Stone Brick
+    - Normal Brick
+    - Broken Brick
+    - Box Brick
+    - Water Pipe
+3. Items 
+    - Super Mushroom
+    - Coin
+    - Fire Flower
+    - Flag & Flag Pole
+4. Toxic Mushroom
+5. Background
+    - Frame Movement
+
+## Bonus
+1. Bricks
+    - Invisible Brick
+
