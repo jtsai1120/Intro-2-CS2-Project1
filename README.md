@@ -5,7 +5,7 @@
     Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUEE.
 
 ### Group 16
-- 蔡承希 E24126270
+- 蔡承希
 - 蔡辰鑫 
 - 黃士洵
 
@@ -46,13 +46,18 @@
 6. **Water pipe** : a huge brick without specifix function.
 
 ### About Items
-    There are several items with different characteristics. Item will disappear after begin touch by Mario.
+    There are several items with different characteristics. Item will disappear after begin touched by Mario.
 1. **Super mushroom** : will moving around or fall to ground. When Mario touch it, Mario Increase 1 HP and turn into bigger size if he was in smaller size before.   
-2. **Fire flower** : // 打到第１７頁
+2. **Fire flower** : when Mario gets it, he can shoot 3 bullets.
+3. **Coin** : when Mario gets 1 coin, the score increases 1.
+4. **Flag** : when Mario touches the flag pole, the flag will fall down. Then, when Mario touches the flag, game overs. 
 
 ### About Enemy
     There is only 1 kind of enemy.
 - **Toxic Mushroom** : 
+    - will moving around or fall to ground. When Mario touch it, Mario Decrease 1 Hp and turn into smaller size if he was in bigger size. Meanwhile, if Mario still has left bullets, all of them will be removed!
+    - To kill the Toxic Mushroom, Mario can either jump on its head or use bullets to shoot them.
+    - When Mario touches a particular Toxic Mushroom, he will get an independent immune time (2s) for that Toxic Mushroom.
 
 # How to Compile & Run
 

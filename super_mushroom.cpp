@@ -1,14 +1,15 @@
 #include "super_mushroom.h"
 #include "mainwindow.h"
 #include <QCoreApplication>
-#include <QRandomGenerator>
+//#include <QRandomGenerator>
 #include <QDebug>
 
 Super_mushroom::Super_mushroom() {
-    QRandomGenerator::securelySeeded();
-    int randomNumber = QRandomGenerator::global()->bounded(0, 1);
-    if (randomNumber) facing_right = false;
-    else facing_right = false;//好像全部往左比較多樣
+    //QRandomGenerator::securelySeeded();
+    //int randomNumber = QRandomGenerator::global()->bounded(0, 1);
+    //if (randomNumber) facing_right = false;
+    //else facing_right = false;//好像全部往左比較多樣
+    facing_right = false;
 
     super_mushroom_pic.load(":/Dataset/image/item/super mushroom.png");
     super_mushroom_item = new QGraphicsPixmapItem(super_mushroom_pic);
