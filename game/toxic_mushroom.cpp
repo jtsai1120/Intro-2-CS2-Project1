@@ -35,7 +35,7 @@ void Toxic_mushroom::move() {
     if (count_immune == 0) immune_status = false;
     else count_immune--;
 
-    if (still || dead && y > 1000){ //超出地圖則癱瘓
+    if (still || (dead && y > 1000)){ //超出地圖則癱瘓
         set_xy(x, y);
         hitted_left = false; locked_in = false;
         return;

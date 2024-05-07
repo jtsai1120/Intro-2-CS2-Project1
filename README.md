@@ -59,7 +59,17 @@
     - To kill the Toxic Mushroom, Mario can either jump on its head or use bullets to shoot them.
     - When Mario touches a particular Toxic Mushroom, he will get an independent immune time (2s) for that Toxic Mushroom.
 
-# How to Compile & Run
+# How to Compile & Run (for Linux Bash)
+- In the game folder ( /game/ ) , use the following command :
+```bash
+$ make
+$ ./Project1_v2
+```
+> Notice : If you are using Cygwin, you should open another terminal and input:<br> 
+```$ startxwin```<br>
+then back to the initial terminal and input:<br>
+```$ export DISPLAY=:0.0```<br>
+before you actually run the executable file.
 
 
 # Project Attainment
