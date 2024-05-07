@@ -13,6 +13,7 @@ public:
     void set_xy(int new_x, int new_y);
     void move();
     void crack();//撞擊反應
+    void reset(int new_x, int new_y);
 
     static const int broken_brick_height = 50;
     static const int broken_brick_width = 50;
@@ -20,6 +21,7 @@ public:
 
     int dx;
     double dy;
+    bool broken;
 
 private:
     QPixmap broken_brick_pic;

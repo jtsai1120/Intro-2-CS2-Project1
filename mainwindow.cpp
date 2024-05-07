@@ -6,7 +6,7 @@
 #include <QPixmap>
 #include <QGraphicsItem>
 #include <QPushButton>
-#include <QGraphicsBlurEffect>
+#include <QGraphicsRectItem>
 #include <QGraphicsDropShadowEffect>
 #include "ButtonItem.h"
 #include "mario.h"
@@ -29,19 +29,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     start_init();
     // 將開始按鈕連接至訊號槽
     connect(start_button, SIGNAL(clicked()), this, SLOT(on_start_button_clicked()));
-    // 每 1ms 觸發畫面更新
+    // 每 10ms 觸發畫面更新
     refreshing_timer = new QTimer(this); // 建立計時器
     refreshing_timer->start(10); // 每 10ms更新一次
     connect(refreshing_timer, SIGNAL(timeout()), this, SLOT(update_frame())); // 連接訊號
     /* 這段首先建立了一個計時器 refreshing_timer，
-     * 並設定計時器時長為 1ms，也就是每過 1ms，
+     * 並設定計時器時長為 10ms，也就是每過 10ms，
      * 計時器的 timeout() 成員函數會觸發一次。
      * 再來，我們把此計時器的 timeout()訊號(Signal)連接到 this(此MainWindow物件) 的 update_object()訊號槽(Slot)
-     * 也就是每當計時器的 timeout() 被觸發，就會執行 this 的 update_object() -> 每 1 ms更新一次畫面
+     * 也就是每當計時器的 timeout() 被觸發，就會執行 this 的 update_object() -> 每 10ms 更新一次畫面
      */
     left_key_state = 0;
     right_key_state = 0;
     up_key_state = 0;
+    restart_button_item = new ButtonItem(restart_button);
+    rectItem = new QGraphicsRectItem(0, 100, 1400, 300);
+    game_over_bg.load(":/Dataset/image/game_over.png");
+    game_over_bg = game_over_bg.scaled(1400, 620, Qt::IgnoreAspectRatio);
+    game_over_bg_item = new QGraphicsPixmapItem(game_over_bg);
+    win_or_lose_text = new QGraphicsTextItem;
 }
 
 void MainWindow::update_frame() {
@@ -54,6 +60,19 @@ void MainWindow::update_frame() {
             all_move_detection();
             for(Normal_brick *i : normal_bricks) i->move();
             for(Broken_brick *i : broken_bricks) i->move();
+            for(Coin *i : coins) i->move();
+            for(Toxic_mushroom *i : toxic_mushrooms) i->move();
+            for(Super_mushroom *i : super_mushrooms){
+                if (i->open)
+                    i->move();
+            }
+            for (Bullet *i : bullets){
+                if (i->already_shot == true && i->posy>=0 && i->posy<=620 && i->posx>=0){
+                    i->fly();
+                }
+            }
+
+
 
             mario.move();
             view->setScene(&game_scene);
@@ -99,36 +118,82 @@ void MainWindow::end_init() {
     qDebug() << "end_init() Called";
     game_status = 2;
 
+    // game over objects' x coordinate;
+    game_over_object_x = 1400;
+
+    // add white Rect bar
+    rectItem->setBrush(Qt::white);
+    cur_scene->addItem(rectItem);
+
     // add game over bg
-    game_over_bg.load(":/Dataset/image/game_over.png");
-    game_over_bg = game_over_bg.scaled(1400, 618, Qt::IgnoreAspectRatio);
-    game_over_bg_item = new QGraphicsPixmapItem(game_over_bg);
-    game_over_bg_item->setPos(0,-200);
+    game_over_bg_item->setPos(game_over_object_x ,-200);
     cur_scene->addItem(game_over_bg_item);
+
     // add win or lose
-    QGraphicsTextItem *win_or_lose_text = new QGraphicsTextItem;
     QFont font("Consolas");
     win_or_lose_text->setFont(font);
 
     win_or_lose_text->setDefaultTextColor(Qt::red);
     win_or_lose_text->setScale(2);
-    win_or_lose_text->setPos(380, 200);
-    QString win_or_lose_text_combined = " You ";
+    win_or_lose_text->setPos(game_over_object_x + 350, 200);
+    QString win_or_lose_text_combined = "You ";
     if (mario.get_y() > 620) {
         win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Fall UnderGround";
     } else
     if (hp.get_hp() == 0) {
         win_or_lose_text_combined = win_or_lose_text_combined + "Lose, HP -> 0";
     } else if (score.get_score() <= 20) {
-        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Score <= 20)";
+        win_or_lose_text_combined = win_or_lose_text_combined + "Lose, Score <= 20";
     } else { // win
         win_or_lose_text_combined = win_or_lose_text_combined + "Win";
     }
 
     win_or_lose_text_combined =
-        win_or_lose_text_combined + " \n" + "( Total : " + QString::number(score.get_score()) + " Coin(s) )";
+    win_or_lose_text_combined + " \n" + "  ( Total : " + QString::number(score.get_score()) + " Coin(s) )";
     win_or_lose_text->setPlainText(win_or_lose_text_combined);
     cur_scene->addItem(win_or_lose_text);
+
+    fade_in_timer = new QTimer;
+    QObject::connect(fade_in_timer, SIGNAL(timeout()), this, SLOT(game_over_fade_in()));
+    fade_in_timer->start(1);
+
+}
+
+void MainWindow::game_over_fade_in() {
+    game_over_object_x -= 5;
+    rectItem->setX(game_over_object_x);
+    game_over_bg_item->setX(game_over_object_x);
+    win_or_lose_text->setX(game_over_object_x + 350);
+    if (game_over_object_x <= 0) {
+        fade_in_timer->stop();
+        delete fade_in_timer;
+        restart_button_pic.load(":/Dataset/image/restart_button.png");
+        restart_button_pic = restart_button_pic.scaled(100, 100, Qt::IgnoreAspectRatio);
+        restart_button->setIcon(QIcon(restart_button_pic));
+        restart_button->setIconSize(restart_button_pic.size());
+        restart_button->raise();
+        restart_button_item->setPos(700-restart_button_pic.width()/2, 400-restart_button_pic.height()/2);
+        QObject::connect(restart_button, SIGNAL(clicked()), this, SLOT(on_restart_button_clicked()));
+        cur_scene->addItem(restart_button_item);
+    }
+}
+
+void MainWindow::on_restart_button_clicked() {
+    qDebug() << "restart button clicked !";
+
+    // 移除動畫
+    game_over_object_x = 10000;
+    rectItem->setX(game_over_object_x);
+    game_over_bg_item->setX(game_over_object_x);
+    win_or_lose_text->setX(game_over_object_x + 350);
+    restart_button_item->setPos(10000, 0);
+
+    // 呼叫 game_restart() 重置遊戲畫面物件：
+    game_status = 1;
+    game_restart();
+    left_key_state = 0;
+    right_key_state = 0;
+    up_key_state = 0;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -157,8 +222,16 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
     }
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *event){
+    if (event->button() == Qt::LeftButton) {
+            QPoint mousePos = event->pos(); // 獲取滑鼠按下時的位置
+            qDebug() << "Mouse press position: " << mousePos;
+            mario.shoot(mousePos.x(),mousePos.y());
+        }
+}
+
 void MainWindow::all_move_detection() {
-    if (left_key_state || right_key_state || up_key_state) {
+    if ((left_key_state || right_key_state || up_key_state)&&mario.movable) {
         mario.is_moving = 1;
         //qDebug() << "mario is moving";
         // Move Left or Right
@@ -192,7 +265,7 @@ void MainWindow::all_move_detection() {
                 }
             }
         }
-        else if (view_x >= 1400 * 4 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
+        else if (view_x >= 1400 * 5 - 1402 + Mario::init_x) { // 螢幕不能再往右了，讓 mario 移動
             if (left_key_state) {
                 mario.cur_direction = 'L';
                 if (!mario.is_hit_right_side()) {
@@ -260,9 +333,32 @@ void MainWindow::all_move_detection() {
         for (int i = 0; i < static_cast<int>(coins.size()); i++) {
             if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
                 qDebug() << "mario get coin !";
-                cur_scene->removeItem(coins[i]->coin_item);
                 coins[i]->set_xy(0, 1000);
-                score.add_score(1);
+                if(coins[i]->flying == false) score.add_score(1);
+            }
+        }
+
+        // toxic mushroom
+        for (int i = 0; i < static_cast<int>(toxic_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(toxic_mushrooms[i]->toxic_mushroom_item)) {
+                mario.is_taller(i);
+            }
+        }
+
+        // super mushroom
+        for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
+                //qDebug() << "grow up";
+                super_mushrooms[i]->used();
+                mario.touch_super_mushroom();
+            }
+        }
+        // fire flower
+        for (int i = 0; i < static_cast<int>(fire_flowers.size()); i++) {
+            if (mario.mario->collidesWithItem(fire_flowers[i]->fire_flower_item) && fire_flowers[i]->opened == true) {
+                //qDebug() << "grow up";
+                fire_flowers[i]->used();
+                mario.touch_fire_flower();
             }
         }
         // flag pole
@@ -275,6 +371,31 @@ void MainWindow::all_move_detection() {
 
     } else {
         mario.is_moving = 0;
+
+        // toxic mushroom
+        for (int i = 0; i < static_cast<int>(toxic_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(toxic_mushrooms[i]->toxic_mushroom_item)) {
+                mario.is_taller(i);
+            }
+        }
+
+        // coins
+        for (int i = 0; i < static_cast<int>(coins.size()); i++) {
+            if (mario.mario->collidesWithItem(coins[i]->coin_item)) {
+                qDebug() << "mario get coin !";
+                coins[i]->set_xy(0, 1000);
+                if(coins[i]->flying == false) score.add_score(1);
+            }
+        }
+
+        // super msuhroom
+        for (int i = 0; i < static_cast<int>(super_mushrooms.size()); i++) {
+            if (mario.mario->collidesWithItem(super_mushrooms[i]->super_mushroom_item) && super_mushrooms[i]->open == true) {
+                //qDebug() << "grow up";
+                super_mushrooms[i]->used();
+                mario.touch_super_mushroom();
+            }
+        }
     }
 }
 
@@ -282,14 +403,21 @@ void MainWindow::all_horizontal_move(int moving_unit) {
     for (Game_bg* i : game_bgs) i->move(moving_unit, 0);
     flag_pole.move(moving_unit, 0);
     flag.move(moving_unit, 0);
-    for (Coin* i : coins) i->move(moving_unit, 0);
+    for (Coin* i : coins) i->dx = moving_unit;
     for (Floor_brick* i : floor_bricks) i->move(moving_unit);
     for (Stone_brick* i : stone_bricks) i->move(moving_unit);
     for (Normal_brick* i : normal_bricks) i->dx = moving_unit;
     for (Broken_brick* i : broken_bricks) i->dx = moving_unit;
     for (Box_brick* i : box_bricks) i->move(moving_unit);
+    for (Super_mushroom* i : super_mushrooms) i->normal_move(moving_unit);
     for (Water_pipe* i : water_pipes) i->move(moving_unit);
-
+    for (Invisible_brick* i : invisible_bricks) i->move(moving_unit);
+    for (Toxic_mushroom* i : toxic_mushrooms) i->dx = moving_unit;
+    for (Fire_flower* i : fire_flowers) i->move(moving_unit);
+    for (Bullet* i : bullets) {
+        if (i->already_shot)
+            i->move(moving_unit);
+    }
 }
 
 

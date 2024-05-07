@@ -7,10 +7,16 @@ Score::Score() {
     score_text->setScale(1.3);
     score_text->setPos(x, y);
     set_text();
+    score_text->setZValue(100);
 }
 
 void Score::add_score(int sc = 1) {
     score_point += sc;
+    set_text();
+}
+
+void Score::reset_score() {
+    score_point = 0;
     set_text();
 }
 

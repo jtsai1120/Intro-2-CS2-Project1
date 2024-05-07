@@ -12,9 +12,14 @@
 #include "box_brick.h"
 #include "broken_brick.h"
 #include "water_pipe.h"
+#include "invisible_brick.h"
+#include "toxic_mushroom.h"
+#include "super_mushroom.h"
 #include "hp.h"
 #include "flag.h"
 #include "flag_pole.h"
+#include "fire_flower.h"
+#include "bullet.h"
 #include <vector>
 #include <string>
 #include <QMainWindow>
@@ -35,17 +40,20 @@ class MainWindow : public QMainWindow {
     protected:
         void keyPressEvent(QKeyEvent *event);
         void keyReleaseEvent(QKeyEvent *event);
+        void mousePressEvent(QMouseEvent *event);
 
     private slots:
         void update_frame(); // 畫面更新
-
         void on_start_button_clicked();
+        void game_over_fade_in();
+        void on_restart_button_clicked();
 
     private:
         int game_status; // 0:開始畫面, 1:遊戲中, 2:結束畫面
 
         void start_init();
         void game_init();
+        void game_restart();
 
 
         void all_move_detection(); // 檢查是馬力歐要左右動、要跳，還是其他所有物件要動(隨view)
@@ -66,6 +74,13 @@ class MainWindow : public QMainWindow {
 
         QPixmap game_over_bg;
         QGraphicsPixmapItem *game_over_bg_item;
+        int game_over_object_x;
+        QTimer *fade_in_timer;
+        QGraphicsRectItem *rectItem;
+        QGraphicsTextItem *win_or_lose_text;
+        QPixmap restart_button_pic;
+        QPushButton *restart_button = new QPushButton;
+        ButtonItem *restart_button_item;
 
         // game scene
         Score score;
@@ -83,6 +98,25 @@ class MainWindow : public QMainWindow {
         std::vector<Box_brick*> box_bricks;
         std::vector<Broken_brick*> broken_bricks;
         std::vector<Water_pipe*> water_pipes;
+        std::vector<Invisible_brick*> invisible_bricks;
+        std::vector<Toxic_mushroom*> toxic_mushrooms;
+        std::vector<Super_mushroom*> super_mushrooms;
+        std::vector<Fire_flower*> fire_flowers;
+        std::vector<Bullet*> bullets;
+        std::vector<Hp*> hps;
+
+        //設定座標的，為了能重置因此宣告在外面
+        std::vector<std::vector<int>> invisible_bricks_list;
+        std::vector<std::vector<int>> stone_bricks_list;
+        std::vector<std::vector<int>> normal_bricks_list;
+        std::vector<std::vector<int>> broken_bricks_list;
+        std::vector<std::vector<int>> super_mushroom_list;
+        std::vector<std::vector<int>> box_bricks_list;
+        std::vector<std::vector<int>> water_pipes_list;
+        std::vector<std::vector<int>> toxic_mushrooms_list;
+        std::vector<std::vector<int>> coins_list;
+        std::vector<std::vector<int>> fire_flowers_list;
+        std::vector<std::vector<int>> hp_list;
 
 
         // KeyEvents (Pressed=1, Released=0)

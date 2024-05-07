@@ -11,36 +11,46 @@ CONFIG += c++11
 SOURCES += \
     box_brick.cpp \
     broken_brick.cpp \
+    bullet.cpp \
     coin.cpp \
+    fire_flower.cpp \
     flag.cpp \
     flag_pole.cpp \
     floor_brick.cpp \
     game_bg.cpp \
     hp.cpp \
+    invisible_brick.cpp \
     main.cpp \
     mainwindow.cpp \
     mario.cpp \
     normal_brick.cpp \
     score.cpp \
     stone_brick.cpp \
+    super_mushroom.cpp \
+    toxic_mushroom.cpp \
     water_pipe.cpp
 
 HEADERS += \
     ButtonItem.h \
     box_brick.h \
     broken_brick.h \
+    bullet.h \
     coin.h \
+    fire_flower.h \
     flag.h \
     flag_pole.h \
     floor_brick.h \
     game_bg.h \
     hp.h \
+    invisible_brick.h \
     mainwindow.h \
     mainwindow_game_init.h \
     mario.h \
     normal_brick.h \
     score.h \
     stone_brick.h \
+    super_mushroom.h \
+    toxic_mushroom.h \
     water_pipe.h
 
 # Default rules for deployment.

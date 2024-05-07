@@ -3,6 +3,8 @@
 
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include <coin.h>
+
 
 class Box_brick
 {
@@ -13,13 +15,22 @@ public:
     void set_xy(int new_x, int new_y);
     void move(int dx);
     void crack();//撞擊反應
+    void reset();
+    std::vector<Coin*> coins;
+
+    //Super_mushroom super_mushroom;
 
     static const int box_brick_height = 50;
     static const int box_brick_width = 50;
+
+    int x_corresonding;
+    int y_corresponding;
+
+    bool have_coin = false;
+
 private:
     QPixmap box_brick_pic;
     QPixmap stone_brick_pic;
-
     int x, y;
     bool opened;
 
