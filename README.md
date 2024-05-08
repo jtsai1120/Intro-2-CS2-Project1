@@ -5,9 +5,10 @@
     Introduction to Computer Science 2 lectured by Prof. Yean-Ru Chen, in 2024 NCKUEE.
 
 ### Group 16
-- 蔡承希
-- 蔡辰鑫 
-- 黃士洵
+#### Member & Work Contribution
+- **蔡承希**：*30%* （Mainwindow Functions, Floor Brick, Mario Basic Functions, Flag & Flag Pole, GameOver Animation and Restart button, Compilation)
+- **蔡辰鑫**：*30%* ( Mario running and jumping action, Super mushroom, fire flower, bullet)
+- **黃士洵**：*40%* ( Floor Brick, Stone Brick, Normal Brick, Broken Brick, Box Brick, Water Pipe, Invisible Brick, Coin, Toxic Mushroom, Reset Objects for Restart, Map Designing )
 
 # Basic Intro.
 
@@ -70,7 +71,6 @@ $ ./Project1_v2
 then back to the initial terminal and input:<br>
 ```$ export DISPLAY=:0.0```<br>
 before you actually run the executable file.
-
 
 # Project Attainment
     What requirements and bonus we had done and implement in this project.
